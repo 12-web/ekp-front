@@ -1,0 +1,445 @@
+/* страница Просто Огонь */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a,
+button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: transparent;
+}
+
+input,
+textarea {
+    background: transparent;
+    border: none;
+    color: currentColor;
+    outline: none;
+    padding: 0;
+    width: 100%;
+}
+
+button {
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Inter, Arial, sans-serif;
+    background-color: var(--bg-default);
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.with-custom-scrollbar {
+    @-moz-document url-prefix("") {
+        scrollbar-width: thin;
+        scrollbar-color: #0042693d #0042690f;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: #0042693d;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background-color: #0042690f;
+    }
+}
+
+._hidden {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.text {
+    line-height: 1.5;
+    color: var(--typo-primary);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.title-1 {
+    font-weight: 700;
+    font-size: var(--space-l);
+    line-height: 1.8;
+}
+
+.title-2 {
+    font-size: var(--space-l);
+    line-height: 1.5;
+    color: var(--typo-primary);
+    font-weight: 400;
+}
+
+.title-3 {
+    font-size: var(--space-m-2);
+    line-height: 1.5;
+    color: var(--typo-secondary);
+    font-weight: 400;
+}
+
+/* вертикальный виджет с 1 багодарностью */
+
+.widget-1 {
+    width: 272px;
+    height: 287px;
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.widget-1__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 0;
+}
+
+.widget-1__card {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.widget-1__card-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.widget-1__card-avatar-name {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.widget-1__user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.widget-1__card-text {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #002033;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-top: 8px;
+}
+
+.widget-1__card-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.widget-1__card-avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.widget-1__card-name {
+    color: #002033;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.widget-1__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 40px;
+    width: 100%;
+    z-index: 1;
+    background-color: #0078d2;
+    color: #fff;
+    border-radius: 99px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-top: 12px;
+}
+
+/* вертикальный виджет с 2 багодарностями */
+
+.widget-2 {
+    width: 272px;
+    height: 372px;
+    border-radius: 8px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.widget-2__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 0;
+}
+
+.widget-2__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.widget-2__card {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.widget-2__card-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.widget-2__card-avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.widget-2__card-avatar-name {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.widget-2__user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.widget-2__card-text {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #002033;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-top: 8px;
+}
+
+.widget-2__card-name {
+    color: #002033;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.widget-2__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 40px;
+    width: 100%;
+    z-index: 1;
+    background-color: #0078d2;
+    color: #fff;
+    border-radius: 99px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-top: 12px;
+}
+
+/* горизонтальный виджет с 3 багодарностями */
+
+.widget-3 {
+    width: 592px;
+    height: 287px;
+    border-radius: 8px;
+    padding: 24px 24px 16px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    gap: 32px;
+}
+
+.widget-3__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+
+    z-index: 0;
+}
+
+.widget-3__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.widget-3__card-avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.widget-3__card-avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.widget-3__card-avatar-name {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.widget-3__card {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 8px;
+    width: 242px;
+}
+
+.widget-3__user {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.widget-3__card-text {
+    position: relative;
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #002033;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    margin-top: 8px;
+}
+
+.widget-3__card-name {
+    color: #002033;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+}
+
+.widget-3__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 40px;
+    width: 100%;
+    z-index: 1;
+    background-color: #0078d2;
+    color: #fff;
+    border-radius: 99px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    margin-top: auto;
+}
+
+/* технические стили, при интеграции можно убрать */
+.widgets {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+}
