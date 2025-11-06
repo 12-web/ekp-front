@@ -277,13 +277,22 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .user-label__avatar img {
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+.user-label__avatar-name {
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .user-label__description {
@@ -393,6 +402,21 @@ body {
     overflow: hidden;
     border-radius: 50%;
     margin-right: var(--space-s);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.thanks-stats-user__avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.thanks-stats-user__avatar-name {
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .thanks-stats {
@@ -675,6 +699,21 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.combobox-tag__avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.combobox-tag__avatar-name {
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .combobox-tag__name {
@@ -850,13 +889,21 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .thanks-modal-list__item-avatar img {
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+.thanks-modal-list__item-avatar-name {
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .footer {
@@ -921,11 +968,32 @@ body {
     display: flex;
     align-items: center;
     gap: var(--space-s);
+    display: flex;
+    justify-content: start;
+    position: relative;
 }
 
 .footer-user__contacts-item img {
     width: 16px;
     height: 16px;
+}
+
+.footer-user__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.footer-user__avatar img {
+    position: absolute;
+    inset: 0;
+}
+
+.footer-user__avatar-name {
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 500;
 }
 
 .footer-user__contacts-item-text {
