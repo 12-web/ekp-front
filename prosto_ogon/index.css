@@ -645,7 +645,6 @@ body {
     border-radius: var(--space-xs);
     border: 1px solid var(--control-default-bg-border);
     overflow: auto;
-    padding: var(--space-s);
     display: none;
 }
 
@@ -657,6 +656,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
+    padding: var(--space-s);
 }
 
 .combobox-tag {
