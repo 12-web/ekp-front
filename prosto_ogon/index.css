@@ -166,11 +166,14 @@ body {
 }
 
 .thanks-item {
+    width: 100%;
+}
+
+.thanks-item__card {
+    cursor: pointer;
     background-color: var(--white);
     padding: var(--space-m-2);
     border-radius: var(--space-m-2);
-    width: 100%;
-    cursor: pointer;
 }
 
 .thanks-item__avatars {
