@@ -1,0 +1,236 @@
+/* страница Просто Огонь */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-m-2: 18px;
+    --space-l: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    --white: #fff;
+    --typo-primary: #002033;
+    --typo-secondary: #00203399;
+    --control-default-bg-border: #00426947;
+    --bg-default: #f2f2f2;
+    --control-primary-bg: #0078d2;
+    --bg-tone: #002033d9;
+    --control-default-typo-placeholder: #00203359;
+    --control-ghost-bg: #00426912;
+    --bg-ghost: #00203314;
+    --bg-border: #00416633;
+    --color-control-bg-primary-hover: #0091ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+a,
+button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: transparent;
+}
+
+input,
+textarea {
+    background: transparent;
+    border: none;
+    color: currentColor;
+    outline: none;
+    padding: 0;
+    width: 100%;
+}
+
+button {
+    padding: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: Inter, Arial, sans-serif;
+    background-color: var(--bg-default);
+}
+
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.with-custom-scrollbar {
+    @-moz-document url-prefix("") {
+        scrollbar-width: thin;
+        scrollbar-color: #0042693d #0042690f;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: #0042693d;
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+        background-color: #0042690f;
+    }
+}
+
+.text {
+    line-height: 1.5;
+    color: var(--typo-primary);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.title-1 {
+    font-weight: 700;
+    font-size: var(--space-l);
+    line-height: 1.8;
+}
+
+.title-2 {
+    font-size: var(--space-l);
+    line-height: 1.5;
+    color: var(--typo-primary);
+    font-weight: 400;
+}
+
+.title-3 {
+    font-size: var(--space-m-2);
+    line-height: 1.5;
+    color: var(--typo-secondary);
+    font-weight: 400;
+}
+
+.main {
+    margin-inline: auto;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-tone);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal_is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal__content {
+    background-color: var(--white);
+    border-radius: 4px;
+
+    min-height: 739px;
+    min-width: 1184px;
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid var(--bg-border);
+}
+
+.modal__header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal__close {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__close._hidden {
+    display: none;
+}
+
+.modal__close-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.modal__body {
+    height: 100%;
+    background-color: red;
+}
+
+.modal__timer._hidden {
+    display: none;
+}
+
+.progress-timer {
+    background-color: rgba(0, 66, 105, 0.07);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    overflow: hidden;
+    position: relative;
+    width: 32px;
+}
+
+.progress-timer__progress {
+    --animation-duration: 1s;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    stroke: currentColor;
+    fill: none;
+    color: #00395ccc;
+    transform: rotate(-90deg);
+    height: 28px;
+    width: 28px;
+}
+
+.progress-timer__counter {
+    color: #00395ccc;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 600;
+}

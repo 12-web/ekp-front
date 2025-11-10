@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="./index.css" />
+
+        <title>Всплывающие окна</title>
+    </head>
+    <body class="root">
+        <main class="main">
+            <section class="modals">
+                <!-- Модалка с информацией о благодарности -->
+                <!-- modal_is-open - класс открытия модалки -->
+                <div class="modal modal_is-open">
+                    <div class="modal__content">
+                        <div class="modal__header">
+                            <h2 class="modal__title title-2">
+                                Профессионалы 4.0: поиск дополнительных ресурсов
+                            </h2>
+                            <div class="modal__header-right">
+                                <!-- для скрытия элементов можно использовать класс _hidden -->
+                                <div class="modal__timer progress-timer">
+                                    <svg
+                                        class="progress-timer__progress"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <!-- для изменения прогресса нужно менять атрибут stroke-dashoffset с 0 до значения атрибута stroke-dasharray (максимальное), также в атрибуте style нужно задать значение в секундах длительность таймера-->
+                                        <circle
+                                            class="progress-timer__circle"
+                                            cx="10"
+                                            cy="10"
+                                            r="9"
+                                            stroke-width="2"
+                                            stroke-dasharray="56.548667764616276"
+                                            stroke-dashoffset="0"
+                                            style="transition: stroke-dashoffset 1s"
+                                        ></circle>
+                                    </svg>
+                                    <!-- цыфры в таймере меняются через логику -->
+                                    <span class="progress-timer__counter">1</span>
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="modal__close"
+                                    aria-label="Закрыть модально окно"
+                                    title="Закрыть модально окно"
+                                >
+                                    <svg
+                                        class="modal__close-icon"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            d="M2.16258 9.15573L2.84824 9.84958L5.99832 6.69962L9.14758 9.84898L9.14838 9.84978L9.84819 9.14986L6.69823 5.99973L9.84838 2.84969L9.14128 2.14258L5.99895 5.30042L2.84911 2.15041L2.14844 2.84961L5.30077 6.00205L2.16258 9.15573Z"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal__body">
+                            <!-- Контент в виде html-верстки -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
