@@ -683,7 +683,7 @@
 
                             <!-- Модалка с информацией о благодарности -->
                             <!-- modal_is-open - класс открытия модалки -->
-                            <div class="modal modal_is-open thanks-modal">
+                            <div class="modal thanks-modal">
                                 <div class="modal__content thanks-modal__content">
                                     <div class="thanks-modal__author user-label">
                                         <div
@@ -1333,6 +1333,54 @@
                                 </div>
                             </li>
                         </ul>
+                    </div>
+
+                    <div class="section-info">
+                        <button class="section-info__btn">
+                            <img src="./icons/question.svg" />
+                        </button>
+                        <!-- модалка с информацией по ответственному -->
+                        <!-- класс section-info__popover_is-open открывает модалку -->
+                        <div class="section-info__popover section-info__popover_is-open">
+                            <div class="section-info__popover-header">
+                                <span class="section-info__popover-title"
+                                    >Задайте вопрос о работе сервиса</span
+                                >
+                                <button class="section-info__popover-close">
+                                    <img src="./icons/close.svg" />
+                                </button>
+                            </div>
+                            <div class="section-info__popover-body">
+                                <div class="section-info__popover-contacts">
+                                    <a class="text" href="mailto:Akchurina.InT@gazprom-neft.ru"
+                                        >Akchurina.InT@gazprom-neft.ru</a
+                                    >
+                                    <span class="text">(061) 42835</span>
+                                </div>
+                                <div class="section-info__popover-user user-label">
+                                    <div
+                                        class="user-label__avatar"
+                                        style="background-color: #f9a825"
+                                    >
+                                        <img
+                                            class="cover-image"
+                                            src="./images/avatar-1.jpg"
+                                            alt="Аватар-1"
+                                        />
+                                        <span class="user-label__avatar-name">НР</span>
+                                    </div>
+                                    <div class="user-label__about">
+                                        <p class="user-label__name text">Эдуард Когнитивченко</p>
+                                        <div class="user-label__description">
+                                            <span
+                                                class="user-label__description-item user-label__work"
+                                                >Руководитель направления</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
