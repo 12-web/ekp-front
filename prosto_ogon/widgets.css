@@ -168,15 +168,15 @@ body {
 .widget-1__card-text {
     position: relative;
     z-index: 1;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     line-height: 1.5;
     color: #002033;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     margin-top: 8px;
 }
@@ -249,7 +249,7 @@ body {
 .widget-2__list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
 .widget-2__card {
@@ -258,6 +258,18 @@ body {
     background-color: #fff;
     border-radius: 12px;
     padding: 8px;
+}
+
+.widget-2__card:first-child {
+    border-radius: 16px 16px 4px 4px;
+}
+
+.widget-2__card:nth-child(2) {
+    border-radius: 4px;
+}
+
+.widget-2__card:nth-child(3) {
+    border-radius: 4px 4px 16px 16px;
 }
 
 .widget-2__card-avatar {
@@ -291,17 +303,17 @@ body {
 .widget-2__card-text {
     position: relative;
     z-index: 1;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
-    line-height: 1.5;
+    line-height: 1.4;
     color: #002033;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
-    margin-top: 8px;
+    margin-top: 4px;
 }
 
 .widget-2__card-name {
@@ -325,7 +337,43 @@ body {
     font-size: 16px;
     line-height: 1.5;
     font-weight: 400;
-    margin-top: 12px;
+    margin-top: 8px;
+}
+
+.widget-2__avatars {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.widget-2__avatars-item {
+    position: relative;
+}
+
+.widget-2__avatars-item-name {
+    color: #fff;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+.widget-2__avatars-item-avatar {
+    width: 18px;
+    height: 18px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid #fff;
+    margin-left: -4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.widget-2__avatars-item-avatar img {
+    position: absolute;
+    inset: 0;
 }
 
 /* горизонтальный виджет с 3 багодарностями */
@@ -398,15 +446,15 @@ body {
 .widget-3__card-text {
     position: relative;
     z-index: 1;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     line-height: 1.5;
     color: #002033;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     margin-top: 8px;
 }
