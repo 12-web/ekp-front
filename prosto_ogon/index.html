@@ -21,7 +21,8 @@
                     <!-- Форма создания благодарности -->
                     <!-- create-thanks-form_is-loading - класс, который блокирует форму, пока идет запрос на сервер-->
                     <form action="./index.html" class="create-thanks__form create-thanks-form">
-                        <div class="create-thanks-form__item create-thanks-form__combobox">
+                        <!-- красная обводка - класс _error -->
+                        <div class="create-thanks-form__item create-thanks-form__combobox _error">
                             <label
                                 for="user-search"
                                 class="create-thanks-area create-thanks-form__label text"
@@ -486,8 +487,12 @@
                                     </svg>
                                 </button>
                             </div>
+                            <!-- чтобы показать ощибку - класс _visible -->
+                            <span class="create-thanks-error text _visible"
+                                >Поле обязательно для заполнения</span
+                            >
                         </div>
-                        <div class="create-thanks-form__item create-thanks-form__textarea">
+                        <div class="create-thanks-form__item create-thanks-form__textarea _error">
                             <label
                                 class="create-thanks-area create-thanks-form__label text"
                                 for="thanks-message"
@@ -499,6 +504,9 @@
                                 class="create-thanks-area text"
                                 type="text"
                             ></textarea>
+                            <span class="create-thanks-error text _visible"
+                                >Минимальное количество символов — 100</span
+                            >
                         </div>
                         <button class="create-thanks__submit button text">
                             Отправить благодарность

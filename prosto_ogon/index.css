@@ -23,6 +23,7 @@
     --bg-ghost: #00203314;
     --bg-border: #00416633;
     --color-control-bg-primary-hover: #0091ff;
+    --bg-alert: #eb5757;
 }
 
 * {
@@ -373,12 +374,18 @@ body {
     color: #00395ccc;
     border: 1px solid transparent;
     flex-shrink: 0;
+    transition: opacity 0.2s;
+}
+
+.thanks-filters-radio:hover {
+    opacity: 0.8;
 }
 
 .thanks-filters-radio:has(> .thanks-filters-radio__input:checked) {
     background-color: transparent;
     border-color: var(--control-primary-bg);
     color: var(--control-primary-bg);
+    pointer-events: none;
 }
 
 .thanks-filters-radio__text {
@@ -502,6 +509,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: var(--space-xs);
+    transition: background-color 0.2s;
 }
 
 .pagination__btn svg {
@@ -510,13 +519,10 @@ body {
 
 .pagination__btn:not(.pagination__btn_disabled):hover {
     background-color: var(--control-ghost-bg);
-
-    border-radius: var(--space-xs);
 }
 
 .pagination__btn_checked {
     background-color: var(--control-ghost-bg);
-    border-radius: var(--space-xs);
     pointer-events: none;
 }
 
@@ -576,6 +582,10 @@ body {
     margin-bottom: var(--space-xs);
 }
 
+.create-thanks-form__combobox._error .combobox {
+    border-color: var(--bg-alert);
+}
+
 .create-thanks-form__textarea textarea {
     padding: var(--space-s);
     border: 1px solid var(--control-default-bg-border);
@@ -584,8 +594,23 @@ body {
     resize: none;
 }
 
+.create-thanks-form__textarea._error textarea {
+    border-color: var(--bg-alert);
+}
+
 .create-thanks__submit {
     margin-top: var(--space-l);
+}
+
+.create-thanks-error {
+    font-size: 12px;
+    color: var(--bg-alert);
+    margin-top: var(--space-xs);
+    display: none;
+}
+
+.create-thanks-error._visible {
+    display: inline-block;
 }
 
 .button {
@@ -594,9 +619,9 @@ body {
     padding-inline: 12px;
     background-color: var(--control-primary-bg);
     color: var(--white);
+    transition: background-color 0.2s;
 }
 
-.button:not(.button):hover,
 .button:not(:disabled):hover,
 .button:not(:disabled):not(.button_loading):hover {
     background: var(--color-control-bg-primary-hover);
@@ -608,6 +633,10 @@ body {
     border: 1px solid var(--control-default-bg-border);
     display: flex;
     position: relative;
+}
+
+.combobox._error {
+    color: var(--bg-alert);
 }
 
 .combobox__inner {
