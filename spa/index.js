@@ -13,87 +13,115 @@
 //Новости
 
 (function () {
-    // загрузка страницы новости
-    const onLoadNews = () => {
-        const customparams = [
-            {
-                user_id: "",
-                user_do: "",
-                news_title: "",
-                news_id: "",
-                news_tag: "",
-                content_type: "",
-                type_new: "",
-                publishdate: "",
-            },
-        ];
+    // utils
+    const sendSPA = (params) => {
+        if (window.gpnAnalytics) {
+            window.gpnAnalytics.sendEvent(3, params);
+        }
+    };
 
-        window.gpnAnalytics &&
-            window.gpnAnalytics.sendEvent(3, {
+    // api
+    const getCurrentUser = async () => {
+        const res = await fetch("https://api.escuelajs.co/api/v1/users/1", {
+            headers: {
+                "X-CSRF-Token": "Liferay.authToken", // раскомментить при переносе
+            },
+        });
+        return await res.json();
+    };
+
+    //Страница новости открылась у пользователя
+    const onLoadNews = async () => {
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "",
+                    news_tag: "",
+                    content_type: "",
+                    type_new: "",
+                    publishdate: "",
+                },
+            ];
+
+            sendSPA({
                 componentId: "open_new",
                 constaeventtype: "undefined",
                 component: "OTHER",
                 customparams,
             });
+        } catch {}
     };
 
     window.addEventListener("load", onLoadNews);
 
-    // нажатие на кнопку лайка
+    //Отметка лайк на новости
     const likeBtn = document.querySelector(".news-template-assets_likes");
 
-    const handleArrowClick = () => {
+    const handleLikeClick = async () => {
         if (!likeBtn) return;
 
-        const customparams = [
-            {
-                user_id: "",
-                user_do: "",
-                news_title: "",
-                news_id: "+",
-                news_tag: "+",
-                content_type: "",
-                type_new: "",
-                type_like: "",
-                publishdate: "+",
-            },
-        ];
+        try {
+            const currentUser = await getCurrentUser();
 
-        window.gpnAnalytics &&
-            window.gpnAnalytics.sendEvent(3, {
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "+",
+                    news_tag: "+",
+                    content_type: "",
+                    type_new: "",
+                    type_like: "",
+                    publishdate: "+",
+                },
+            ];
+
+            sendSPA({
                 componentId: "news_like_pressed",
                 constaeventtype: "undefined",
                 component: "OTHER",
                 customparams,
             });
+        } catch {}
     };
 
-    likeBtn?.addEventListener("click", handleArrowClick);
+    likeBtn?.addEventListener("click", handleLikeClick);
 
-    //Нажатие на теги новостей
+    //Выбор тега новостей
     const tagsContainer = document.querySelector(".news-template-tags-items");
 
-    const handleTagsClick = (e) => {
+    const handleTagsClick = async (e) => {
         const tag = e?.target.closest(".news-template-tags-item");
 
         if (!tag) return;
 
-        window.gpnAnalytics &&
-            window.gpnAnalytics.sendEvent(3, {
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    tag: "",
+                    page: "",
+                    location_tag: "",
+                    action_tag: "",
+                },
+            ];
+
+            sendSPA({
                 componentId: "news_tag_pressed",
                 constaeventtype: "undefined",
                 component: "OTHER",
-                customparams: [
-                    {
-                        user_id: "",
-                        user_do: "",
-                        tag: "",
-                        page: "",
-                        location_tag: "",
-                        action_tag: "",
-                    },
-                ],
+                customparams,
             });
+        } catch {}
     };
 
     tagsContainer?.addEventListener("click", handleTagsClick);
@@ -102,7 +130,7 @@
     const depthValue = 0.9;
     let depthGoal = true;
 
-    const handleScrollEnd = () => {
+    const handleScrollEnd = async () => {
         if (!depthGoal) return;
 
         const isCompleteDepth =
@@ -112,27 +140,204 @@
             document.documentElement.scrollHeight * (1 - depthValue);
 
         if (isCompleteDepth) {
-            window.gpnAnalytics &&
-                window.gpnAnalytics.sendEvent(3, {
+            depthGoal = false;
+
+            try {
+                const currentUser = await getCurrentUser();
+
+                const customparams = [
+                    {
+                        user_id: currentUser?.name || "",
+                        user_do: currentUser?.organizationBriefs?.name || "",
+                        news_title: "",
+                        news_id: "",
+                        news_tag: "",
+                        content_type: "",
+                        type_new: "",
+                        publishdate: "",
+                    },
+                ];
+
+                sendSPA({
                     componentId: "finish_new",
                     constaeventtype: "undefined",
                     component: "OTHER",
-                    customparams: [
-                        {
-                            user_id: "",
-                            user_do: "",
-                            news_title: "",
-                            news_id: "",
-                            news_tag: "",
-                            content_type: "",
-                            type_new: "",
-                            publishdate: "",
-                        },
-                    ],
+                    customparams,
                 });
-            depthGoal = false;
+            } catch {}
         }
     };
 
     window.addEventListener("scroll", handleScrollEnd);
+
+    // Галерея в новости
+
+    // Стрелки карусели
+    const nextGalleryBtn = document.querySelector(".img-next-button");
+    const prevGalleryBtn = document.querySelector(".img-prev-button");
+
+    const handleNavGalleryClick = async () => {
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "",
+                    news_tag: "",
+                    content_type: "",
+                    type_new: "",
+                    publishdate: "",
+                    interaction: "стрелка карусели",
+                },
+            ];
+
+            sendSPA({
+                componentId: "interaction_with_the_new",
+                constaeventtype: "undefined",
+                component: "OTHER",
+                customparams,
+            });
+        } catch {}
+    };
+
+    nextGalleryBtn?.addEventListener("click", handleNavGalleryClick);
+    prevGalleryBtn?.addEventListener("click", handleNavGalleryClick);
+
+    //Пользователь увеличил фото или нажал на видел
+    const mediaGallery = document.querySelector(".image-viewer-base-image-list");
+
+    const handleMediaGalleryClick = async (e) => {
+        const isImg = !!e?.target.closest("img");
+        const isVideo = !!e?.target.closest("video");
+
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "",
+                    news_tag: "",
+                    content_type: "",
+                    type_new: "",
+                    publishdate: "",
+                    interaction: isImg ? "увеличение фотографии" : isVideo ? "play видео" : "",
+                },
+            ];
+
+            sendSPA({
+                componentId: "interaction_with_the_new",
+                constaeventtype: "undefined",
+                component: "OTHER",
+                customparams,
+            });
+        } catch {}
+    };
+
+    mediaGallery?.addEventListener("click", handleMediaGalleryClick);
+
+    // Пользователь нажал значок фото или видео в карусели
+    const menuGallery = document.querySelector(".carousel-menu");
+
+    const handleMenuGalleryClick = async (e) => {
+        const media = e?.target.closest(".carousel-menu-index");
+
+        if (!media) return;
+
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "",
+                    news_tag: "",
+                    content_type: "",
+                    type_new: "",
+                    publishdate: "",
+                    interaction: "виджет карусели",
+                },
+            ];
+
+            sendSPA({
+                componentId: "interaction_with_the_new",
+                constaeventtype: "undefined",
+                component: "OTHER",
+                customparams,
+            });
+        } catch {}
+    };
+
+    menuGallery?.addEventListener("click", handleMenuGalleryClick);
+
+    //Пользователь нажал на ссылку внтури страницы новости
+    const articleTextContainer = document.querySelector(".news-template-text");
+
+    const handleLinkClick = async (e) => {
+        const link = !!e?.target.closest("a");
+
+        if (!link) return;
+
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    news_title: "",
+                    news_id: "",
+                    news_tag: "",
+                    content_type: "",
+                    type_new: "",
+                    publishdate: "",
+                    interaction: "ссылка",
+                },
+            ];
+
+            sendSPA({
+                componentId: "interaction_with_the_new",
+                constaeventtype: "undefined",
+                component: "OTHER",
+                customparams,
+            });
+        } catch {}
+    };
+
+    articleTextContainer?.addEventListener("click", handleLinkClick);
+
+    // Кнопка вверх
+    // TODO - перенести в общий скрипт - подключение на всех страницах
+    const toTopBtn = document.querySelector("a#toTop");
+
+    const handleTopClick = async (e) => {
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                {
+                    user_id: currentUser?.name || "",
+                    user_do: currentUser?.organizationBriefs?.name || "",
+                    page: document.title,
+                },
+            ];
+
+            window.gpnAnalytics &&
+                window.gpnAnalytics.sendEvent(3, {
+                    componentId: "back_to_top",
+                    constaeventtype: "undefined",
+                    component: "OTHER",
+                    customparams,
+                });
+        } catch {}
+    };
+
+    toTopBtn?.addEventListener("click", handleTopClick);
 })();

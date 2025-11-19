@@ -218,6 +218,28 @@
 	document.dispatchEvent(initMediagalleryEvent);
 
   (function () {
+    // utils
+    const sendSPA = (params) => {
+        if (window.gpnAnalytics) {
+            window.gpnAnalytics.sendEvent(3, params);
+        }
+    };
+
+    // user api data
+    //const user = {
+      //name: 'name',
+      //organizationBriefs: [
+        //name: 'org'
+      //]
+    //}
+
+    const getCurrentUser = async () => {
+      const res = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      return await res.json();
+    }
+
+    getCurrentUser();
+
     // загрузка страницы новости
     const onLoadNews = () => {
         const customparams = [
@@ -293,7 +315,7 @@
                         user_id: "",
                         user_do: "",
                         tag: tag.textContent,
-                        page: "",
+                        page: document.title,
                         location_tag: "внутри новости",
                         action_tag: "переход",
                     },
@@ -340,5 +362,133 @@
     };
 
     window.addEventListener("scroll", handleScrollEnd);
+
+
+    // Галерея в новости
+
+    // Стрелки карусели
+    const nextGalleryBtn = document.querySelector(".img-next-button");
+    const prevGalleryBtn = document.querySelector(".img-prev-button");
+
+    const handleNavGalleryClick = () => {
+        const customparams = [
+            {
+                user_id: "",
+                user_do: "",
+                news_title: "",
+                news_id: ${journalArticleId},
+                news_tag: ${tags?join(", ")},
+                content_type: "",
+                type_new: "",
+                publishdate: ${publishDate},
+                interaction: "стрелка карусели",
+            },
+        ];
+
+        sendSPA({
+            componentId: "interaction_with_the_new",
+            constaeventtype: "undefined",
+            component: "OTHER",
+            customparams,
+        });
+    };
+
+    nextGalleryBtn?.addEventListener("click", handleNavGalleryClick);
+    prevGalleryBtn?.addEventListener("click", handleNavGalleryClick);
+
+    //Пользователь увеличил фото или нажал на видел
+    const mediaGallery = document.querySelector(".image-viewer-base-image-list");
+
+    const handleMediaGalleryClick = (e) => {
+        const isImg = !!e?.target.closest("img");
+        const isVideo = !!e?.target.closest("video");
+
+        const customparams = [
+            {
+                user_id: "",
+                user_do: "",
+                news_title: "",
+                news_id: ${journalArticleId},
+                news_tag: ${tags?join(", ")},
+                content_type: "",
+                type_new: "",
+                publishdate: ${publishDate},
+                interaction: isImg ? "увеличение фотографии" : isVideo ? "play видео" : "",
+            },
+        ];
+
+        sendSPA({
+            componentId: "interaction_with_the_new",
+            constaeventtype: "undefined",
+            component: "OTHER",
+            customparams,
+        });
+    };
+
+    mediaGallery?.addEventListener("click", handleMediaGalleryClick);
+
+    // Пользователь нажал значок фото или видео в карусели
+    const menuGallery = document.querySelector(".carousel-menu");
+
+    const handleMenuGalleryClick = (e) => {
+        const media = e?.target.closest(".carousel-menu-index");
+
+        if (!media) return;
+
+        const customparams = [
+            {
+                user_id: "",
+                user_do: "",
+                news_title: "",
+                news_id: ${journalArticleId},
+                news_tag: ${tags?join(", ")},
+                content_type: "",
+                type_new: "",
+                publishdate: ${publishDate},
+                interaction: "виджет карусели",
+            },
+        ];
+
+        sendSPA({
+            componentId: "interaction_with_the_new",
+            constaeventtype: "undefined",
+            component: "OTHER",
+            customparams,
+        });
+    };
+
+    menuGallery?.addEventListener("click", handleMenuGalleryClick);
+
+    //Пользователь нажал на ссылку внтури страницы новости
+    const articleTextContainer = document.querySelector(".news-template-text");
+
+    const handleLinkClick = (e) => {
+        const link = !!e?.target.closest("a");
+
+        if (!link) return;
+
+        const customparams = [
+            {
+                user_id: "",
+                user_do: "",
+                news_title: "",
+                news_id: ${journalArticleId},
+                news_tag: ${tags?join(", ")},
+                content_type: "",
+                type_new: "",
+                publishdate: ${publishDate},
+                interaction: "ссылка",
+            },
+        ];
+
+        sendSPA({
+            componentId: "interaction_with_the_new",
+            constaeventtype: "undefined",
+            component: "OTHER",
+            customparams,
+        });
+    };
+
+    articleTextContainer?.addEventListener("click", handleLinkClick);
 })();
 </script>
