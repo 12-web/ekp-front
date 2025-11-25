@@ -30,6 +30,9 @@
         return await res.json();
     };
 
+    const isAnnouncement = window.location.pathname.match(/vse-objhhjavlenija/g);
+    const isСorporateNew = window.location.pathname.match(/novosti-kompanii/g);
+
     //Страница новости открылась у пользователя
     const onLoadNews = async () => {
         try {
@@ -42,8 +45,8 @@
                     news_title: "",
                     news_id: "",
                     news_tag: "",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     publishdate: "",
                 },
             ];
@@ -75,8 +78,8 @@
                     news_title: "",
                     news_id: "+",
                     news_tag: "+",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     type_like: "",
                     publishdate: "+",
                 },
@@ -109,7 +112,7 @@
                     user_id: currentUser?.name || "",
                     user_do: currentUser?.organizationBriefs?.name || "",
                     tag: "",
-                    page: "",
+                    page: document.title,
                     location_tag: "",
                     action_tag: "",
                 },
@@ -152,8 +155,8 @@
                         news_title: "",
                         news_id: "",
                         news_tag: "",
-                        content_type: "",
-                        type_new: "",
+                        content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                        type_new: isAnnouncement ? "объявление" : "новость",
                         publishdate: "",
                     },
                 ];
@@ -187,8 +190,8 @@
                     news_title: "",
                     news_id: "",
                     news_tag: "",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     publishdate: "",
                     interaction: "стрелка карусели",
                 },
@@ -223,8 +226,8 @@
                     news_title: "",
                     news_id: "",
                     news_tag: "",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     publishdate: "",
                     interaction: isImg ? "увеличение фотографии" : isVideo ? "play видео" : "",
                 },
@@ -259,8 +262,8 @@
                     news_title: "",
                     news_id: "",
                     news_tag: "",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     publishdate: "",
                     interaction: "виджет карусели",
                 },
@@ -295,8 +298,8 @@
                     news_title: "",
                     news_id: "",
                     news_tag: "",
-                    content_type: "",
-                    type_new: "",
+                    content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
+                    type_new: isAnnouncement ? "объявление" : "новость",
                     publishdate: "",
                     interaction: "ссылка",
                 },
@@ -313,31 +316,32 @@
 
     articleTextContainer?.addEventListener("click", handleLinkClick);
 
-    // Кнопка вверх
-    // TODO - перенести в общий скрипт - подключение на всех страницах
-    const toTopBtn = document.querySelector("a#toTop");
+    //Нажатие на теги новостей
+    const tagsListContainer = document.querySelector(".tag-list");
 
-    const handleTopClick = async (e) => {
-        try {
-            const currentUser = await getCurrentUser();
+    const handleTagsListClick = async (e) => {
+        const tag = e?.target.closest(".tag");
 
-            const customparams = [
+        if (!tag) return;
+
+        const currentUser = await getCurrentUser();
+
+        sendSPA({
+            componentId: "news_tag_pressed",
+            constaeventtype: "undefined",
+            component: "OTHER",
+            customparams: [
                 {
                     user_id: currentUser?.name || "",
                     user_do: currentUser?.organizationBriefs?.name || "",
+                    tag: tag.textContent,
                     page: document.title,
+                    location_tag: "категория новостей",
+                    action_tag: "выбрал тег",
                 },
-            ];
-
-            window.gpnAnalytics &&
-                window.gpnAnalytics.sendEvent(3, {
-                    componentId: "back_to_top",
-                    constaeventtype: "undefined",
-                    component: "OTHER",
-                    customparams,
-                });
-        } catch {}
+            ],
+        });
     };
 
-    toTopBtn?.addEventListener("click", handleTopClick);
+    tagsListContainer?.addEventListener("click", handleTagsListClick);
 })();

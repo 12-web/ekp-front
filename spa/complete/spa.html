@@ -1,0 +1,75 @@
+<script type="text/javascript">
+    (function () {
+        window.gpnSpaUrl = "https://spa-back.gazprom-neft.local/events";
+        window.gpnCounterId = { SPA_COUNTER_ID };
+        window.apiVersion = "1.0";
+        const headEl = document.getElementsByTagName("head")[0];
+        const counterLoadingScript = document.createElement("script");
+        counterLoadingScript.async = true;
+
+        counterLoadingScript.src = "https://spa-back.gazprom-neft.local/static/counter.js";
+
+        headEl.appendChild(counterLoadingScript);
+
+        const getCurrentUser = async () => {
+            const res = await fetch("/o/headless-admin-user/v1.0/my-user-account", {
+                headers: {
+                    "X-CSRF-Token": Liferay.authToken,
+                },
+            });
+            return await res.json();
+        };
+
+        const onLoadSPA = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+
+                const customparams = [
+                    {
+                        as_user_id: true,
+                        value: currentUser?.name || "",
+                        user_id: currentUser?.name || "",
+                        user_do: currentUser?.organizationBriefs?.name || "",
+                    },
+                ];
+
+                window.gpnAnalytics &&
+                    window.gpnAnalytics.sendEvent(3, {
+                        componentId: "user_login",
+                        constaeventtype: "undefined",
+                        component: "OTHER",
+                        customparams,
+                    });
+            } catch {}
+        };
+
+        counterLoadingScript.addEventListener("load", onLoadSPA);
+
+        // Кнопка вверх
+        const toTopBtn = document.querySelector("a#toTop");
+
+        const handleTopClick = async (e) => {
+            try {
+                const currentUser = await getCurrentUser();
+
+                const customparams = [
+                    {
+                        user_id: currentUser?.name || "",
+                        user_do: currentUser?.organizationBriefs?.name || "",
+                        page: document.title,
+                    },
+                ];
+
+                window.gpnAnalytics &&
+                    window.gpnAnalytics.sendEvent(3, {
+                        componentId: "back_to_top",
+                        constaeventtype: "undefined",
+                        component: "OTHER",
+                        customparams,
+                    });
+            } catch {}
+        };
+
+        toTopBtn?.addEventListener("click", handleTopClick);
+    })();
+</script>

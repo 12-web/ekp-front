@@ -124,5 +124,95 @@
             ><span id="toTopHover"></span><span id="toTopHover"></span
             ><span id="toTopHover"></span>вверх</a
         >
+
+        <ul class="tag-items tag-list">
+            <li class="taglib-asset-tags-summary">
+                <a class="tag" href="#"> теглист1 </a>
+            </li>
+            <li class="taglib-asset-tags-summary">
+                <a class="tag" href="#"> теглист2 </a>
+            </li>
+        </ul>
     </body>
+    <script type="text/javascript">
+        (function () {
+            window.gpnSpaUrl = "https://spa-back.gazprom-neft.local/events";
+            //window.gpnCounterId = { SPA_COUNTER_ID };
+            window.apiVersion = "1.0";
+            const headEl = document.getElementsByTagName("head")[0];
+            const counterLoadingScript = document.createElement("script");
+            counterLoadingScript.async = true;
+
+            //counterLoadingScript.src = "https://spa-back.gazprom-neft.local/static/counter.js";
+            counterLoadingScript.src = "./mock.js";
+
+            headEl.appendChild(counterLoadingScript);
+
+            const getCurrentUser = async () => {
+                const res = await fetch("https://api.escuelajs.co/api/v1/users/1", {
+                    headers: {
+                        "X-CSRF-Token": "Liferay.authToken", // раскомментить при переносе
+                    },
+                });
+                return await res.json();
+            };
+
+            const onLoadSPA = async () => {
+                try {
+                    window.gpnAnalytics = {
+                        sendEvent: (num, params) => {
+                            console.log(params);
+                        },
+                    };
+
+                    const currentUser = await getCurrentUser();
+
+                    const customparams = [
+                        {
+                            as_user_id: true,
+                            user_id: currentUser?.name || "",
+                            user_do: currentUser?.organizationBriefs?.name || "",
+                        },
+                    ];
+
+                    window.gpnAnalytics &&
+                        window.gpnAnalytics.sendEvent(3, {
+                            componentId: "user_login",
+                            constaeventtype: "undefined",
+                            component: "OTHER",
+                            customparams,
+                        });
+                } catch {}
+            };
+
+            counterLoadingScript.addEventListener("load", onLoadSPA);
+
+            // Кнопка вверх
+            const toTopBtn = document.querySelector("a#toTop");
+
+            const handleTopClick = async (e) => {
+                try {
+                    const currentUser = await getCurrentUser();
+
+                    const customparams = [
+                        {
+                            user_id: currentUser?.name || "",
+                            user_do: currentUser?.organizationBriefs?.name || "",
+                            page: document.title,
+                        },
+                    ];
+
+                    window.gpnAnalytics &&
+                        window.gpnAnalytics.sendEvent(3, {
+                            componentId: "back_to_top",
+                            constaeventtype: "undefined",
+                            component: "OTHER",
+                            customparams,
+                        });
+                } catch {}
+            };
+
+            toTopBtn?.addEventListener("click", handleTopClick);
+        })();
+    </script>
 </html>

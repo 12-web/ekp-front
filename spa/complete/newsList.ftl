@@ -177,3 +177,53 @@
         </#if>
     </div>
 </#if>
+
+<script>
+  // === SPA ===
+  (function () {
+    // utils
+    const sendSPA = (params) => {
+        if (window.gpnAnalytics) {
+            window.gpnAnalytics.sendEvent(3, params);
+        }
+    };
+
+    const getCurrentUser = async () => {
+      const res = await fetch('/o/headless-admin-user/v1.0/my-user-account', {
+            headers: {
+                "X-CSRF-Token": "Liferay.authToken", // раскомментить при переносе
+            },
+        });
+      return await res.json();
+    }
+
+    //Нажатие на теги новостей
+    const tagsListContainer = document.querySelector(".tag-list");
+
+   const handleTagsListClick = async (e) => {
+        const tag = e?.target.closest(".tag");
+
+        if (!tag) return;
+
+        const currentUser = await getCurrentUser();
+
+        sendSPA({
+                componentId: "news_tag_pressed",
+                constaeventtype: "undefined",
+                component: "OTHER",
+                customparams: [
+                    {
+                        user_id: currentUser?.name || "",
+                        user_do: currentUser?.organizationBriefs?.name || "",
+                        tag: tag.textContent,
+                        page: document.title,
+                        location_tag: "категория новостей",
+                        action_tag: "выбрал тег",
+                    },
+                ],
+            });
+    };
+
+    tagsListContainer?.addEventListener("click", handleTagsListClick);
+})();
+</script>
