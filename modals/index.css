@@ -147,6 +147,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-block: 40px;
 }
 
 .modal_is-open {
@@ -158,10 +159,9 @@ body {
     background-color: var(--white);
     border-radius: 4px;
 
-    min-height: 739px;
+    min-height: 672px;
     width: 100%;
     max-width: 1184px;
-    max-height: 90vh;
 }
 
 .modal__header {

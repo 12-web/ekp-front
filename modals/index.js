@@ -1,3 +1,4 @@
+//Стандартный класс с поведением модалки
 class Modal {
     constructor(config) {
         this._config = config;
@@ -5,6 +6,7 @@ class Modal {
         this._closeButton = this._modal?.querySelector(this._config.closeBtnSelector);
         this._handleEscClose = this._handleEscClose.bind(this);
         this._handleOverlayClose = this._handleOverlayClose.bind(this);
+        this._close = this._close.bind(this);
     }
 
     _handleEscClose(e) {
@@ -26,7 +28,7 @@ class Modal {
     }
 
     setEventListeners() {
-        this._closeButton?.addEventListener("click", () => this._close());
+        this._closeButton?.addEventListener("click", this._close);
         this._modal?.addEventListener("click", this._handleOverlayClose);
     }
 }
@@ -61,7 +63,7 @@ class CircleTimer {
         let counter = this._time;
         const intervalTime = 1000;
 
-        this._circle.style.transitionDuration = `${this._time}s`;
+        this._circle.style.transition = `stroke-dashoffset ${this._time}s linear`;
 
         this._wait(0).then(() => {
             this._circle.style.strokeDashoffset = `${this._max}`;
@@ -84,6 +86,7 @@ class CircleTimer {
     }
 }
 
+//Класс модалки с регулировкой открытия по времени
 class ModalOnTime extends Modal {
     constructor(config) {
         super(config);
@@ -103,41 +106,24 @@ class ModalOnTime extends Modal {
         }
     }
 
-    async _onLoadPage() {
-        // TODO данные из админки (fetch)
+    init(lifePeriodH, autoCloseS) {
+        this._openOnTime(lifePeriodH, "popupOnTime");
 
-        // === сейчас замокано, далее заменить на fetch из бд ===
-        const res = await new Promise((resolve) =>
-            resolve({
-                json: () => {
-                    return { lifePeriodH: 0.01, autoCloseS: 5 }; // lifePeriodH - часы, период сна модалки, autoCloseS - секунды, время для автозакрытия. Если его не передавать, то таймер показывается
-                },
-            })
-        );
-        const data = await res.json();
-        // ===========
-
-        const popupName = "popupName"; // имя попапа. Возможно, будет из админки. Если модалка одна, то можно захардить имя тут
-
-        this._openOnTime(data.lifePeriodH, popupName);
-
-        if (data.autoCloseS) {
+        if (autoCloseS) {
             this._timerRoot = this._modal.querySelector(this._config.timerSelector);
             if (!this._timerRoot) return;
 
-            const timer = new CircleTimer(this._timerRoot, data.autoCloseS, {
+            this._closeButton.classList.add(this._config.hiddenClass);
+
+            const timer = new CircleTimer(this._timerRoot, autoCloseS, {
                 counterSelector: ".progress-timer__counter",
                 circleSelector: ".progress-timer__circle",
                 hiddenClass: "_hidden",
             });
             timer.on().then(() => this._close());
+        } else {
+            this.setEventListeners();
         }
-    }
-
-    setEventListeners() {
-        super.setEventListeners();
-
-        window.addEventListener("load", () => this._onLoadPage());
     }
 }
 
@@ -146,5 +132,23 @@ const modalOnTime = new ModalOnTime({
     closeBtnSelector: ".modal__close",
     openModalClass: "modal_is-open",
     timerSelector: ".modal__timer",
+    hiddenClass: "_hidden",
 });
-modalOnTime.setEventListeners();
+
+const onLoadPage = async () => {
+    // TODO данные из админки (fetch)
+    // === сейчас замокано, далее заменить на fetch в бд ===
+    const res = await new Promise((resolve) =>
+        resolve({
+            json: () => {
+                return { lifePeriodH: 0.01, autoCloseS: 3 }; // lifePeriodH - часы, период сна модалки, autoCloseS - секунды, время для автозакрытия. Если его не передавать, то таймер показывается
+            },
+        })
+    );
+    const data = await res.json();
+    // ===========
+
+    modalOnTime.init(data.lifePeriodH, data.autoCloseS);
+};
+
+window.addEventListener("load", onLoadPage);
