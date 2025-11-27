@@ -141,7 +141,7 @@ const onLoadPage = async () => {
     const res = await new Promise((resolve) =>
         resolve({
             json: () => {
-                return { lifePeriodH: 0.01, autoCloseS: 3 }; // lifePeriodH - часы, период сна модалки, autoCloseS - секунды, время для автозакрытия. Если его не передавать, то таймер показывается
+                return { lifePeriodH: 0.01, autoCloseS: 3 }; // lifePeriodH - период сна модалки, часы; autoCloseS - время для автозакрытия, секунды (если его не передавать, то таймер показывается)
             },
         })
     );
