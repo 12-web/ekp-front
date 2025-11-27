@@ -25,11 +25,12 @@
                 const currentUser = await getCurrentUser();
 
                 const customparams = [
+                    { as_user_id: true, value: currentUser?.name || "" },
+                    { name: "user_id", type: "STRING", value: currentUser?.name || "" },
                     {
-                        as_user_id: true,
-                        value: currentUser?.name || "",
-                        user_id: currentUser?.name || "",
-                        user_do: currentUser?.organizationBriefs?.name || "",
+                        name: "user_do",
+                        type: "STRING",
+                        value: currentUser?.organizationBriefs?.name || "",
                     },
                 ];
 
@@ -53,11 +54,14 @@
                 const currentUser = await getCurrentUser();
 
                 const customparams = [
+                    { as_user_id: true, value: currentUser?.name || "" },
+                    { name: "user_id", type: "STRING", value: currentUser?.name || "" },
                     {
-                        user_id: currentUser?.name || "",
-                        user_do: currentUser?.organizationBriefs?.name || "",
-                        page: document.title,
+                        name: "user_do",
+                        type: "STRING",
+                        value: currentUser?.organizationBriefs?.name || "",
                     },
+                    { name: "page", type: "STRING", value: document.title },
                 ];
 
                 window.gpnAnalytics &&

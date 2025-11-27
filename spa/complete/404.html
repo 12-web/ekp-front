@@ -90,18 +90,21 @@
             const currentUser = await getCurrentUser();
 
             const customparams = [
+                { as_user_id: true, value: currentUser?.name || "" },
+                { name: "user_id", type: "STRING", value: currentUser?.name || "" },
                 {
-                    user_id: currentUser?.name || "",
-                    user_do: currentUser?.organizationBriefs?.name || "",
-                    error_id: "404",
-                    error_message: "Страница не найдена",
+                    name: "user_do",
+                    type: "STRING",
+                    value: currentUser?.organizationBriefs?.name || "",
                 },
+                { name: "error_id", type: "STRING", value: "404" },
+                { name: "error_message", type: "STRING", value: "Страница не найдена" },
             ];
 
             sendSPA({
                 componentId: "system_error",
-                constaeventtype: "undefined",
-                component: "OTHER",
+                constaeventtype: "change",
+                component: "ALERT",
                 customparams,
             });
         } catch {}

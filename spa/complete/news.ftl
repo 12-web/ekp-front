@@ -40,6 +40,8 @@
 
 <#assign articleTitle = htmlUtil.stripHtml(article.getTitle(locale))>
 
+<#assign classPk = article.getClassPk()>
+
 <style>
 	.asset-full-content > .col-md-12 .taglib-discussion {
 		display: none
@@ -228,20 +230,29 @@
           }
       };
 
-      // является ли новость объявлением
-      const isAnnouncement = window.location.pathname.match(/vse-objhhjavlenija/g);
-      // является ли новость корпоративной новостью
-      const isСorporateNew = window.location.pathname.match(/novosti-kompanii/g);
-
       // api
       const getCurrentUser = async () => {
           const res = await fetch("/o/headless-admin-user/v1.0/my-user-account", {
               headers: {
-                  "X-CSRF-Token": "Liferay.authToken", // раскомментить при переносе
+                  "X-CSRF-Token": Liferay.authToken,
               },
           });
           return await res.json();
       };
+
+
+    //Получение структуры новости
+    const getNewStructure = async () => {
+        const res = await fetch(
+            `/o/headless-delivery/v1.0/structured-contents/${article.getResourcePrimKey()}`,
+            {
+                headers: {
+                    "X-CSRF-Token": Liferay.authToken,
+                },
+            }
+        );
+        return await res.json()
+    };
 
 
 
@@ -249,18 +260,21 @@
       const onLoadNews = async () => {
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      publishdate: ${publishDate},
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                  {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                  {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                  {name: 'content_type', type: 'STRING', value: contentType},
+                  {name: 'type_new', type: 'STRING', value:  typeNew},
+                  {name: 'publishdate', type: 'DATE', value: ${publishDate}},
               ];
 
               sendSPA({
@@ -282,19 +296,22 @@
 
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      type_like: "поставил лайк",
-                      publishdate: ${publishDate},
-                },
+                    { as_user_id: true, value: currentUser?.name || "" },
+                    {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                    {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                    {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                    {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                    {name: 'content_type', type: 'STRING', value: contentType},
+                    {name: 'type_new', type: 'STRING', value:  typeNew},
+                    {name: 'type_like', type: 'STRING', value:  "поставил лайк" },
+                    {name: 'publishdate', type: 'DATE', value: ${publishDate}},
               ];
 
               sendSPA({
@@ -320,14 +337,13 @@
               const currentUser = await getCurrentUser();
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      tag: tag.textContent,
-                      page: document.title,
-                      location_tag: "внутри новости",
-                      action_tag: "переход",
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'tag', type: 'STRING', value: tag.textContent},
+                  {name: 'page', type: 'STRING', value: document.title},
+                  {name: 'location_tag', type: 'STRING', "внутри новости"},
+                  {name: 'action_tag', type: 'STRING', value: "переход"},
               ];
 
               sendSPA({
@@ -359,18 +375,21 @@
 
               try {
                   const currentUser = await getCurrentUser();
+                  const structure = await getNewStructure();
+                  const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+                  const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+                  const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
                   const customparams = [
-                      {
-                          user_id: currentUser?.name || "",
-                          user_do: currentUser?.organizationBriefs?.name || "",
-                          news_title: ${articleTitle},
-                          news_id: ${journalArticleId},
-                          news_tag: ${tags?join(", ")},
-                          content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                          type_new: isAnnouncement ? "объявление" : "новость",
-                          publishdate: ${publishDate},
-                      },
+                      {as_user_id: true, value: currentUser?.name || ""},
+                      {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                      {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                      {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                      {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                      {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                      {name: 'content_type', type: 'STRING', value: contentType},
+                      {name: 'type_new', type: 'STRING', value:  typeNew},
+                      {name: 'publishdate', type: 'DATE', value: ${publishDate}},
                   ];
 
                   sendSPA({
@@ -394,19 +413,22 @@
       const handleNavGalleryClick = async () => {
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      publishdate: ${publishDate},
-                      interaction: "стрелка карусели",
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                  {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                  {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                  {name: 'content_type', type: 'STRING', value: contentType},
+                  {name: 'type_new', type: 'STRING', value:  typeNew},
+                  {name: 'publishdate', type: 'DATE', value: ${publishDate}},
+                  {name: 'interaction', type: 'STRING', value: "стрелка карусели"},
               ];
 
               sendSPA({
@@ -430,19 +452,23 @@
 
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
+              const interactionValue = isImg ? "увеличение фотографии" : isVideo ? "play видео" : "";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      publishdate: ${publishDate},
-                      interaction: isImg ? "увеличение фотографии" : isVideo ? "play видео" : "",
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                  {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                  {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                  {name: 'content_type', type: 'STRING', value: contentType},
+                  {name: 'type_new', type: 'STRING', value: typeNew},
+                  {name: 'publishdate', type: 'DATE', value: ${publishDate}},
+                  {name: 'interaction', type: 'STRING', value: interactionValue},
               ];
 
               sendSPA({
@@ -466,19 +492,22 @@
 
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      publishdate: ${publishDate},
-                      interaction: "виджет карусели",
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                  {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                  {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                  {name: 'content_type', type: 'STRING', value: contentType},
+                  {name: 'type_new', type: 'STRING', value:  typeNew},
+                  {name: 'publishdate', type: 'DATE', value: ${publishDate}},
+                  {name: 'interaction', type: 'STRING', value: "виджет карусели"},
               ];
 
               sendSPA({
@@ -502,19 +531,22 @@
 
           try {
               const currentUser = await getCurrentUser();
+              const structure = await getNewStructure();
+              const structureName = structure?.renderedContents?.[0]?.contentTemplateName;
+              const contentType = structureName === "Новости компании" ? "корпоративная новость" : structureName === "Новости" ? "новость ДО" : "";
+              const typeNew = structureName === "Объявление" ? "объявление" : "новость";
 
               const customparams = [
-                  {
-                      user_id: currentUser?.name || "",
-                      user_do: currentUser?.organizationBriefs?.name || "",
-                      news_title: ${articleTitle},
-                      news_id: ${journalArticleId},
-                      news_tag: ${tags?join(", ")},
-                      content_type: isСorporateNew ? "корпоративная новость" : "новость ДО",
-                      type_new: isAnnouncement ? "объявление" : "новость",
-                      publishdate: ${publishDate},
-                      interaction: "ссылка",
-                  },
+                  {as_user_id: true, value: currentUser?.name || ""},
+                  {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'news_title', type: 'STRING', value: ${articleTitle}},
+                  {name: 'news_id', type: 'INT', value: ${journalArticleId}},
+                  {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
+                  {name: 'content_type', type: 'STRING', value: contentType},
+                  {name: 'type_new', type: 'STRING', value:  typeNew},
+                  {name: 'publishdate', type: 'DATE', value: ${publishDate}},
+                  {name: 'interaction', type: 'STRING', value: "ссылка"},
               ];
 
               sendSPA({

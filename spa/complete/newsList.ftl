@@ -191,7 +191,7 @@
     const getCurrentUser = async () => {
       const res = await fetch('/o/headless-admin-user/v1.0/my-user-account', {
             headers: {
-                "X-CSRF-Token": "Liferay.authToken", // раскомментить при переносе
+                 "X-CSRF-Token": Liferay.authToken,
             },
         });
       return await res.json();
@@ -212,14 +212,13 @@
                 constaeventtype: "undefined",
                 component: "OTHER",
                 customparams: [
-                    {
-                        user_id: currentUser?.name || "",
-                        user_do: currentUser?.organizationBriefs?.name || "",
-                        tag: tag.textContent,
-                        page: document.title,
-                        location_tag: "категория новостей",
-                        action_tag: "выбрал тег",
-                    },
+                    {as_user_id: true, value: currentUser?.name || ""},
+                    {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
+                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                    {name: 'tag', type: 'STRING', value: tag.textContent},
+                    {name: 'page', type: 'STRING', value: document.title},
+                    {name: 'location_tag', type: 'STRING', "категория новостей"},
+                    {name: 'action_tag', type: 'STRING', value: "выбрал тег"},
                 ],
             });
     };

@@ -39,6 +39,7 @@
             const currentUser = await getCurrentUser();
 
             const customparams = [
+                { as_user_id: true, value: currentUser?.name || "" },
                 {
                     user_id: currentUser?.name || "",
                     user_do: currentUser?.organizationBriefs?.name || "",
@@ -344,4 +345,26 @@
     };
 
     tagsListContainer?.addEventListener("click", handleTagsListClick);
+
+    //Получение структуры новости
+    const getNewStructure = async () => {
+        const res = await fetch(
+            `/o/headless-delivery/v1.0/structured-contents/${article.getResourcePrimKey()}`,
+            {
+                headers: {
+                    //"X-CSRF-Token": Liferay.authToken, ==> раскомментить при переносе
+                },
+            }
+        );
+        return await res.json(); // structure?.renderedContents?.[0]?.contentTemplateName];
+    };
+
+    const onLoad = async () => {
+        try {
+            const structure = await getNewStructure();
+            console.log([structure, structure?.renderedContents?.[0]?.contentTemplateName]);
+        } catch {}
+    };
+
+    window.addEventListener("load", onLoad);
 })();

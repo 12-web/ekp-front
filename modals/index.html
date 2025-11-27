@@ -6,6 +6,8 @@
 
         <link rel="stylesheet" href="./index.css" />
 
+        <script src="index.js" defer></script>
+
         <title>Всплывающие окна</title>
     </head>
     <body class="root">
@@ -13,7 +15,7 @@
             <section class="modals">
                 <!-- Модалка с информацией о благодарности -->
                 <!-- modal_is-open - класс открытия модалки -->
-                <div class="modal modal_is-open">
+                <div class="modal">
                     <div class="modal__content">
                         <div class="modal__header">
                             <h2 class="modal__title title-2">
@@ -21,7 +23,7 @@
                             </h2>
                             <div class="modal__header-right">
                                 <!-- для скрытия элементов можно использовать класс _hidden -->
-                                <div class="modal__timer progress-timer">
+                                <div class="modal__timer progress-timer _hidden">
                                     <svg
                                         class="progress-timer__progress"
                                         width="20"
@@ -36,12 +38,10 @@
                                             r="9"
                                             stroke-width="2"
                                             stroke-dasharray="56.548667764616276"
-                                            stroke-dashoffset="0"
-                                            style="transition: stroke-dashoffset 1s"
                                         ></circle>
                                     </svg>
                                     <!-- цыфры в таймере меняются через логику -->
-                                    <span class="progress-timer__counter">1</span>
+                                    <span class="progress-timer__counter"></span>
                                 </div>
 
                                 <button

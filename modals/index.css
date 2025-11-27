@@ -229,6 +229,11 @@ body {
     width: 28px;
 }
 
+.progress-timer__circle {
+    stroke-dasharray: 56.54867;
+    stroke-dashoffset: 0;
+}
+
 .progress-timer__counter {
     color: #00395ccc;
     font-size: 16px;
