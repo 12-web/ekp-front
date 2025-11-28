@@ -40,8 +40,6 @@
 
 <#assign articleTitle = htmlUtil.stripHtml(article.getTitle(locale))>
 
-<#assign classPk = article.getClassPk()>
-
 <style>
 	.asset-full-content > .col-md-12 .taglib-discussion {
 		display: none

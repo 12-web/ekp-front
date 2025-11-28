@@ -1,6 +1,11 @@
 Описание блоков:
 
--   **news.ftl** - компонент новости
+-   **news.ftl** - компонент новости. На 41 строке добавилась переменная articleTitle
+
+    ```
+    <#assign articleTitle = htmlUtil.stripHtml(article.getTitle(locale))>
+    ```
+
 -   **newsList.ftl** - вертикальный листинг новостей
 -   **mainNewsList.ftl** - горизонтальный листинг новостей на главной странице (плитка)
 -   **newBanner.ftl** - большой баннер новости на главной странице
