@@ -346,7 +346,7 @@ body {
 
 .thanks-btn_active {
     color: var(--white);
-    background: linear-gradient(90deg, #f3653d 0%, #ffb149 100%);
+    background: #e65907;
 }
 
 .thanks-filters {

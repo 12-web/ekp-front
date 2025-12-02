@@ -331,7 +331,7 @@ body {
     min-height: 40px;
     width: 100%;
     z-index: 1;
-    background: linear-gradient(0deg, #e68022 0%, #ffb149 100%);
+    background: #e65907;
     color: #fff;
     border-radius: 99px;
     font-size: 16px;
