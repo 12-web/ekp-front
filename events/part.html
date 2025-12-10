@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="./part.css" />
+
+        <script src="part.js" defer></script>
+
+        <title>Запись на мероприятие</title>
+    </head>
+    <body class="root">
+        <main class="main">
+            <button
+                data-modal="registration-event-modal"
+                type="button"
+                class="button button_view_primary"
+            >
+                Открыть
+            </button>
+            <div class="registration-event-modal modal">
+                <div class="modal__content">
+                    <div class="modal__header">
+                        <h2 class="modal__title title-3">Регистрация на мероприятие</h2>
+                    </div>
+                    <div class="modal__body registration-event with-custom-scrollbar">
+                        <div class="registration-event__header text-1"></div>
+
+                        <div class="registration-event__info">
+                            <h3 class="registration-event__title title-3"></h3>
+                            <p class="registration-event__description text-1"></p>
+                            <div class="registration-event__additional">
+                                <div class="registration-event__info-col">
+                                    <img
+                                        src="./assets/icons/time.svg"
+                                        class="registration-event__info-icon"
+                                    />
+                                    <div>
+                                        <p class="title-4 registration-event__date"></p>
+                                        <p class="text-1 registration-event__day"></p>
+                                    </div>
+                                </div>
+                                <div class="registration-event__info-col">
+                                    <img
+                                        src="./assets/icons/user.svg"
+                                        class="registration-event__info-icon"
+                                    />
+                                    <div>
+                                        <p class="title-4 registration-event__contact"></p>
+                                        <p class="text-1 registration-event__contact-caption">
+                                            Контактное лицо
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="registration-form" class="registration-event__form">
+                            <div class="registration-event__parts">
+                                <p class="title-3 registration-event__parts-title">
+                                    Участники мероприятия
+                                </p>
+                                <div
+                                    class="registration-event-form__item registration-event-form__combobox registration-event-form__combobox_type_em"
+                                >
+                                    <label
+                                        for="user-search"
+                                        class="registration-event-form__label text-1"
+                                        >Cотрудники Компании</label
+                                    >
+                                    <div class="combobox">
+                                        <div class="combobox__inner">
+                                            <div class="combobox__content">
+                                                <input
+                                                    name="user-search"
+                                                    id="user-em-search"
+                                                    type="text"
+                                                    class="combobox__input text"
+                                                />
+                                            </div>
+                                            <button
+                                                type="button"
+                                                class="combobox__reset"
+                                                aria-label="Очистить поле ввода"
+                                            >
+                                                <svg
+                                                    width="16"
+                                                    height="16"
+                                                    viewBox="0 0 16 16"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        clip-rule="evenodd"
+                                                        d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15ZM8 6.727L10.4657 4.26022C10.8172 3.90875 11.387 3.90875 11.7385 4.26022C12.09 4.6117 12.09 5.18154 11.7385 5.53302L9.272 8.001L11.7385 10.47C12.09 10.8215 12.09 11.3913 11.7385 11.7428C11.387 12.0943 10.8172 12.0943 10.4657 11.7428L8 9.275L5.5357 11.7428C5.18423 12.0943 4.61438 12.0943 4.26291 11.7428C3.91144 11.3913 3.91144 10.8215 4.26291 10.47L6.728 8.001L4.26291 5.53302C3.91144 5.18154 3.91144 4.6117 4.26291 4.26022C4.61438 3.90875 5.18423 3.90875 5.5357 4.26022L8 6.727Z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="combobox__dropdown-content with-custom-scrollbar"
+                                        >
+                                            <ul class="combobox__dropdown-content__list"></ul>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            class="combobox__dropdown"
+                                            aria-label="Открыть выпадающий список"
+                                        >
+                                            <svg
+                                                width="16"
+                                                height="16"
+                                                viewBox="0 0 16 16"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M3.5 6L8 11L12.5 6H3.5Z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="registration-event-form__item registration-event-form__combobox registration-event-form__combobox_type_not-em"
+                                >
+                                    <label
+                                        for="user-search"
+                                        class="registration-event-form__label text-1"
+                                        >Не сотрудники Компании</label
+                                    >
+                                    <div class="combobox">
+                                        <div class="combobox__inner">
+                                            <div class="combobox__content">
+                                                <input
+                                                    name="user-search"
+                                                    id="user-unem-search"
+                                                    type="text"
+                                                    class="combobox__input text"
+                                                />
+                                            </div>
+                                            <button
+                                                type="button"
+                                                class="combobox__reset"
+                                                aria-label="Очистить поле ввода"
+                                            >
+                                                <svg
+                                                    width="16"
+                                                    height="16"
+                                                    viewBox="0 0 16 16"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                        fill-rule="evenodd"
+                                                        clip-rule="evenodd"
+                                                        d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8C1 11.866 4.13401 15 8 15ZM8 6.727L10.4657 4.26022C10.8172 3.90875 11.387 3.90875 11.7385 4.26022C12.09 4.6117 12.09 5.18154 11.7385 5.53302L9.272 8.001L11.7385 10.47C12.09 10.8215 12.09 11.3913 11.7385 11.7428C11.387 12.0943 10.8172 12.0943 10.4657 11.7428L8 9.275L5.5357 11.7428C5.18423 12.0943 4.61438 12.0943 4.26291 11.7428C3.91144 11.3913 3.91144 10.8215 4.26291 10.47L6.728 8.001L4.26291 5.53302C3.91144 5.18154 3.91144 4.6117 4.26291 4.26022C4.61438 3.90875 5.18423 3.90875 5.5357 4.26022L8 6.727Z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="registration-event-form__item registration-event-form__selector"
+                                >
+                                    <label
+                                        for="user-search"
+                                        class="registration-event-form__label text-1"
+                                        >Выбор времени для записи</label
+                                    >
+                                    <div class="selector">
+                                        <div class="selector__header">
+                                            <div class="selector__header-inner">
+                                                <span class="selector__title text-1"></span>
+                                            </div>
+
+                                            <button
+                                                type="button"
+                                                class="selector__dropdown"
+                                                aria-label="Открыть выпадающий список"
+                                            >
+                                                <svg
+                                                    width="16"
+                                                    height="16"
+                                                    viewBox="0 0 16 16"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path d="M3.5 6L8 11L12.5 6H3.5Z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div
+                                            class="selector__dropdown-content with-custom-scrollbar"
+                                        >
+                                            <ul class="selector__dropdown-content__list"></ul>
+                                        </div>
+                                    </div>
+                                    <!-- чтобы показать ощибку - класс _visible -->
+                                    <!--<span class="text"
+                                            >Поле обязательно для заполнения</span
+                                        >-->
+                                </div>
+
+                                <div
+                                    class="registration-event-form__item registration-event-form__checkbox"
+                                >
+                                    <label class="ui-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            class="ui-checkbox__input visibility-hidden"
+                                            name="send-notification"
+                                            value="on"
+                                        />
+                                        <div class="ui-checkbox__check"></div>
+                                        <div class="ui-checkbox__content">
+                                            <p class="selector-dropdown-checkbox__name text">
+                                                Отправить уведомление
+                                            </p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="registration-event__footer text-1"></div>
+                        <div class="registration-event__informer informer">
+                            <p class="informer__text text-1">sdf</p>
+                        </div>
+                        <div class="registration-event__handles">
+                            <button
+                                form="registration-form"
+                                type="submit"
+                                class="registration-event-form__submit button button_view_primary"
+                            >
+                                Зарегистрировать
+                            </button>
+                            <button type="button" class="button button_view_ghost modal-close">
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <template id="registration-event-form-selector-input">
+                <li>
+                    <label class="selector__dropdown-content-checkbox selector-dropdown-checkbox">
+                        <input
+                            type="radio"
+                            class="selector-dropdown-checkbox__input visibility-hidden"
+                            name="time"
+                            value=""
+                        />
+                        <div class="selector-dropdown-checkbox__check"></div>
+                        <div class="selector-dropdown-checkbox__content">
+                            <p class="selector-dropdown-checkbox__name text"></p>
+                        </div>
+                    </label>
+                </li>
+            </template>
+            <template id="combobox-user-tag">
+                <span class="combobox-tag">
+                    <span class="combobox-tag__avatar">
+                        <img class="cover-image" src="./assets/images/avatar-default.jpg" alt="" />
+                        <span class="combobox-tag__avatar-name"></span>
+                    </span>
+                    <span class="combobox-tag__info">
+                        <span class="combobox-tag__name"></span>
+                        <span class="combobox-tag__mail"></span>
+                    </span>
+
+                    <button type="button" class="combobox-tag__delete">
+                        <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M2.16258 9.15573L2.84824 9.84958L5.99832 6.69962L9.14758 9.84898L9.14838 9.84978L9.84819 9.14986L6.69823 5.99973L9.84838 2.84969L9.14128 2.14258L5.99895 5.30042L2.84911 2.15041L2.14844 2.84961L5.30077 6.00205L2.16258 9.15573Z"
+                            />
+                        </svg>
+                    </button>
+                </span>
+            </template>
+            <template id="combobox-user-default-tag">
+                <span class="combobox-tag">
+                    <span class="combobox-tag__avatar combobox-tag__avatar_type_default">
+                        <img
+                            class="cover-image"
+                            src="./assets/images/avatar-default.jpg"
+                            alt="Аватар"
+                        />
+                        <span class="combobox-tag__avatar-name"></span>
+                    </span>
+                    <span class="combobox-tag__info">
+                        <span class="combobox-tag__name"></span>
+                    </span>
+                    <button type="button" class="combobox-tag__delete">
+                        <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 12 12"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M2.16258 9.15573L2.84824 9.84958L5.99832 6.69962L9.14758 9.84898L9.14838 9.84978L9.84819 9.14986L6.69823 5.99973L9.84838 2.84969L9.14128 2.14258L5.99895 5.30042L2.84911 2.15041L2.14844 2.84961L5.30077 6.00205L2.16258 9.15573Z"
+                            />
+                        </svg>
+                    </button>
+                </span>
+            </template>
+            <template id="combobox-user-input">
+                <li>
+                    <label class="combobox__dropdown-content-checkbox combobox-dropdown-checkbox">
+                        <input
+                            name="employee"
+                            type="checkbox"
+                            class="combobox-dropdown-checkbox__input visibility-hidden"
+                        />
+                        <div class="combobox-dropdown-checkbox__check"></div>
+                        <div class="combobox-dropdown-checkbox__content">
+                            <div class="combobox-dropdown-checkbox__avatar">
+                                <img class="cover-image" src="" alt="" />
+                                <span class="combobox-dropdown-checkbox__avatar-name"></span>
+                            </div>
+                            <div class="combobox-dropdown-checkbox__about">
+                                <p class="combobox-dropdown-checkbox__name text"></p>
+                                <span class="combobox-dropdown-checkbox__email"></span>
+                            </div>
+                        </div>
+                    </label>
+                </li>
+            </template>
+        </main>
+    </body>
+    <script>
+        const defaultApiProps = {
+            companyId: "1",
+            currentUserId: "45145",
+            siteId: "20121",
+        };
+
+        const currentEventId = 1;
+    </script>
+</html>
