@@ -1,121 +1,3 @@
-const mockData = {
-    data: {
-        isClose: false,
-        date: "28.01.2026",
-        eventId: "46939",
-        isWithoutEmailRegister: true,
-        footer: "Возможны изменения в дате и месте проведения события. Следите за новостями.",
-        additional: "Возможны изменения в дате и месте проведения события. Следите за новостями.",
-        isShowSendOption: true,
-        description: "Встреча с лидерами производственных функций.",
-        isDefaultSendNotifications: true,
-        recordingIntervals: [
-            {
-                count: 3,
-                start: "13:00",
-                intervalId: 1,
-                end: "14:00",
-            },
-            {
-                count: 7,
-                start: "14:00",
-                intervalId: 2,
-                end: "15:00",
-            },
-        ],
-        entriesNumber: 2,
-        name: "Ежегодная встреча теней",
-        header: "Ежегодное встреча посвященная итогам деятельности ключевых направлений.",
-        isRepeat: true,
-        day: "Четверг",
-        availableDays: 2,
-        contacts: [
-            [
-                {
-                    JSONObject: {
-                        firstName: "Николай",
-                        lastName: "Николаев",
-                        portraitUrl:
-                            "/image/user_portrait?img_id=38365&img_id_token=Sv1FWbMDvzwyrVxxSP%2B46w0nHu4%3D&t=1765352168061",
-                        fullName: "Николай Николаевич Николаев",
-                        middleName: "Николаевич",
-                        position: "Ответственный за сайт",
-                        userId: "38346",
-                        email: "nick@gmail.com",
-                    },
-                },
-                {
-                    JSONObject: {
-                        firstName: "Питер",
-                        lastName: "Паркер",
-                        portraitUrl:
-                            "/image/user_portrait?img_id=0&img_id_token=2WsoBp8VOTxQd%2BLVv%2BBtpqVQFVk%3D&t=1765352168062",
-                        fullName: "Питер Николаевич Паркер",
-                        middleName: "Николаевич",
-                        position: "",
-                        userId: "38369",
-                        email: "spider_man@gmail.com",
-                    },
-                },
-            ],
-        ],
-    },
-    response: {
-        code: 200,
-        message: "Запись на мероприятие недоступна",
-        status: "success",
-        timestamp: "2025-12-10T07:41:08.683420900Z",
-    },
-    context: {
-        companyId: "20097",
-        currentUserId: "38201",
-        siteId: "20121",
-    },
-};
-
-const mockUserData = {
-    data: {
-        items: [
-            {
-                firstName: "Артем",
-                lastName: "Иванов",
-                portraitUrl: "https://loremflickr.com/2314/3955?lock=6797133781877236",
-                fullName: "Артем Иванович Иванов",
-                middleName: "Иванович",
-                position: "Сотрудник",
-                userId: "45137",
-                email: "artiv@gmail.com",
-            },
-            {
-                firstName: "Иван",
-                lastName: "Иванов",
-                portraitUrl: "https://loremflickr.com/2314/3955?lock=6797133781877236	",
-                fullName: "Иван Петрович Иванов",
-                middleName: "Петрович",
-                position: "Сотрудник",
-                userId: "45128",
-                email: "ivape@gmail.com",
-            },
-        ],
-    },
-    response: {
-        status: "success",
-        timestamp: "2025-12-08T06:59:26.445476800Z",
-    },
-};
-
-const mockRegisterData = {
-    response: {
-        eventId: "0",
-        code: 200,
-        count: 0,
-        message: "User with id 45145 is already registered to event with id 46903",
-        userId: "0",
-        status: "success",
-        timestamp: "2025-12-10T05:10:54.840891600Z",
-    },
-};
-
 //utils
 const emit = (name, data, element = document, options) => {
     const evt = new CustomEvent(name, {
@@ -142,8 +24,8 @@ const debounce = (func, delay) => {
 
 //api
 class Api {
-    constructor({ headers }) {
-        this._baseUrl = "/o/event-registration-api";
+    constructor({ headers, baseUrl }) {
+        this._baseUrl = baseUrl;
         this._headers = headers;
     }
 
@@ -164,13 +46,11 @@ class Api {
                 method: "POST",
                 timestamp: new Date().toISOString(),
             },
-            context: defaultApiProps ? defaultApiProps : {},
+            context: EVENT_CONFIG ? EVENT_CONFIG : {},
         };
     }
 
     getUsers() {
-        return mockUserData;
-
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
@@ -182,9 +62,6 @@ class Api {
     }
 
     getEvent(data) {
-        return mockData;
-
-        //mockRegisterData,
         return this._request("/certain-event", {
             method: "POST",
             headers: this._headers,
@@ -196,9 +73,6 @@ class Api {
     }
 
     eventRegister(data) {
-        console.log(data);
-        return mockRegisterData;
-
         return this._request("/events/_register", {
             method: "POST",
             headers: this._headers,
@@ -800,6 +674,7 @@ class RegistrationEvent {
             headers: {
                 "Content-Type": "application/json",
             },
+            baseUrl: EVENT_CONFIG?.baseURL || "/",
         });
 
         this.init();
@@ -969,7 +844,7 @@ class RegistrationEvent {
                 : data.recordingIntervals[0]?.count || 0;
         this._interval = data.recordingIntervals[0];
 
-        const contact = data?.contacts[0]?.[0]?.JSONObject;
+        const contact = data?.contacts[0]?.JSONObject;
 
         this._addTextContend(this._header, data?.header);
         this._addTextContend(this._title, data?.name);
@@ -1000,9 +875,9 @@ class RegistrationEvent {
     }
 
     async init(withoutInformer = false) {
-        if (!currentEventId) return;
+        if (!EVENT_CONFIG.eventId) return;
 
-        const eventId = currentEventId; //нужно получить
+        const eventId = EVENT_CONFIG.eventId;
 
         const data = await this._api.getEvent(eventId);
 
