@@ -246,13 +246,7 @@ throw new RuntimeException(e); } %>
         display: flex;
         flex-direction: column;
         background-color: var(--white);
-        border-radius: 4px;
-        padding: 32px 20px 20px;
-
-        min-height: 672px;
-        max-width: 738px;
-        width: 738px;
-        margin: 40px auto;
+        border-radius: 8px;
     }
 
     .modal__header {
@@ -932,106 +926,116 @@ throw new RuntimeException(e); } %>
         margin-bottom: var(--space-m);
     }
 
-      /* Стили для формы настройки */
-      .event-widget__config-form {
-      	position: relative;
-      	z-index: 10;
-      	background: rgba(255, 255, 255, 0.95);
-      	border-radius: 12px;
-      	padding: 20px;
-      	backdrop-filter: blur(10px);
-      }
+    .registration-event-modal__content {
+        padding: 32px 20px 20px;
 
-      .event-widget__form-title {
-      	font-size: 20px;
-      	font-weight: 600;
-      	margin: 0 0 20px 0;
-      	color: #333;
-      	text-align: center;
-      }
+        min-height: 672px;
+        max-width: 738px;
+        width: 738px;
+        margin: 40px auto;
+    }
 
-      .event-widget__form-group {
-      	margin-bottom: 16px;
-      }
 
-      .event-widget__form-label {
-      	display: block;
-      	font-size: 14px;
-      	font-weight: 500;
-      	margin-bottom: 6px;
-      	color: #333;
-      }
+          /* Стили для формы настройки */
+          .event-widget__config-form {
+          	position: relative;
+          	z-index: 10;
+          	background: rgba(255, 255, 255, 0.95);
+          	border-radius: 12px;
+          	padding: 20px;
+          	backdrop-filter: blur(10px);
+          }
 
-      .event-widget__form-input {
-      	width: 100%;
-      	padding: 10px 12px;
-      	border: 1px solid #ddd;
-      	border-radius: 8px;
-      	font-size: 14px;
-      	box-sizing: border-box;
-      	transition: border-color 0.3s;
-      }
+          .event-widget__form-title {
+          	font-size: 20px;
+          	font-weight: 600;
+          	margin: 0 0 20px 0;
+          	color: #333;
+          	text-align: center;
+          }
 
-      .event-widget__form-input:focus {
-      	outline: none;
-      	border-color: #667eea;
-      	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      }
+          .event-widget__form-group {
+          	margin-bottom: 16px;
+          }
 
-      .event-widget__form-button {
-      	width: 100%;
-      	padding: 12px;
-      	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      	color: white;
-      	border: none;
-      	border-radius: 8px;
-      	font-size: 16px;
-      	font-weight: 500;
-      	cursor: pointer;
-      	transition: transform 0.3s;
-      }
+          .event-widget__form-label {
+          	display: block;
+          	font-size: 14px;
+          	font-weight: 500;
+          	margin-bottom: 6px;
+          	color: #333;
+          }
 
-      .event-widget__form-button:hover {
-      	transform: translateY(-2px);
-      }
+          .event-widget__form-input {
+          	width: 100%;
+          	padding: 10px 12px;
+          	border: 1px solid #ddd;
+          	border-radius: 8px;
+          	font-size: 14px;
+          	box-sizing: border-box;
+          	transition: border-color 0.3s;
+          }
 
-      .event-widget__form-button:disabled {
-      	background: #ccc;
-      	cursor: not-allowed;
-      	transform: none;
-      }
+          .event-widget__form-input:focus {
+          	outline: none;
+          	border-color: #667eea;
+          	box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          }
 
-      /* Стили для сообщений */
-      .alert {
-      	padding: 12px 16px;
-      	border-radius: 8px;
-      	margin-bottom: 16px;
-      	font-size: 14px;
-      }
+          .event-widget__form-button {
+          	width: 100%;
+          	padding: 12px;
+          	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          	color: white;
+          	border: none;
+          	border-radius: 8px;
+          	font-size: 16px;
+          	font-weight: 500;
+          	cursor: pointer;
+          	transition: transform 0.3s;
+          }
 
-      .alert-error {
-      	background: #ffe6e6;
-      	border: 1px solid #ff6b6b;
-      	color: #d00000;
-      }
+          .event-widget__form-button:hover {
+          	transform: translateY(-2px);
+          }
 
-      .alert-success {
-      	background: #e6ffe6;
-      	border: 1px solid #4caf50;
-      	color: #2e7d32;
-      }
+          .event-widget__form-button:disabled {
+          	background: #ccc;
+          	cursor: not-allowed;
+          	transform: none;
+          }
 
-      /* Скрытие элементов */
-      .widget-main-content {
-      	display: <%= isConfigured ? "flex" : "none" %>;
-      	flex-direction: column;
-      	width: 100%;
-      }
+          /* Стили для сообщений */
+          .alert {
+          	padding: 12px 16px;
+          	border-radius: 8px;
+          	margin-bottom: 16px;
+          	font-size: 14px;
+          }
 
-      .widget-config-content {
-      	display: <%= !isConfigured ? "block" : "none" %>;
-      	width: 100%;
-      }
+          .alert-error {
+          	background: #ffe6e6;
+          	border: 1px solid #ff6b6b;
+          	color: #d00000;
+          }
+
+          .alert-success {
+          	background: #e6ffe6;
+          	border: 1px solid #4caf50;
+          	color: #2e7d32;
+          }
+
+          /* Скрытие элементов */
+          .widget-main-content {
+          	display: <%= isConfigured ? "flex" : "none" %>;
+          	flex-direction: column;
+          	width: 100%;
+          }
+
+          .widget-config-content {
+          	display: <%= !isConfigured ? "block" : "none" %>;
+          	width: 100%;
+          }
 </style>
 
 <div class="event-widget">
@@ -1119,7 +1123,7 @@ throw new RuntimeException(e); } %>
             Открыть
         </button>
         <div class="registration-event-modal modal">
-            <div class="modal__content">
+            <div class="modal__content registration-event-modal__content">
                 <div class="modal__header">
                     <h2 class="modal__title title-3">Регистрация на мероприятие</h2>
                 </div>
