@@ -51,6 +51,8 @@ class Api {
     }
 
     getUsers() {
+        return mockUserData;
+
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
@@ -62,6 +64,9 @@ class Api {
     }
 
     getEvent(data) {
+        return mockData;
+
+        //mockRegisterData,
         return this._request("/certain-event", {
             method: "POST",
             headers: this._headers,
@@ -73,6 +78,8 @@ class Api {
     }
 
     eventRegister(data) {
+        return mockRegisterData;
+
         return this._request("/events/_register", {
             method: "POST",
             headers: this._headers,
