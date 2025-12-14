@@ -333,7 +333,8 @@ const debounce = (func, delay) => {
 };
 
 //api
-class Api {
+//api
+class BaseApi {
     constructor({ headers, baseUrl }) {
         this._baseUrl = baseUrl;
         this._headers = headers;
@@ -358,6 +359,12 @@ class Api {
             },
             context: EVENT_CONFIG ? EVENT_CONFIG : {},
         };
+    }
+}
+
+class EventsApi extends BaseApi {
+    constructor(props) {
+        super(props);
     }
 
     getUsers() {
@@ -413,11 +420,11 @@ class Api {
     cancelEvent(eventId) {
         return mockCancelEvent;
 
-        // return this._request("/users/find_user_events", {
-        //     method: "POST",
-        //     headers: this._headers,
-        //     body: JSON.stringify({ data: { eventId }, ...this._getDefaultParams() }),
-        // });
+        return this._request("/_cancel_event", {
+            method: "POST",
+            headers: this._headers,
+            body: JSON.stringify({ data: { eventId }, ...this._getDefaultParams() }),
+        });
     }
 }
 
@@ -1007,7 +1014,7 @@ class RegistrationEvent {
         this._openBtn.addEventListener("click", this._onModalBtnClick);
         this._submit.addEventListener("click", this._onSubmit);
 
-        this._api = new Api({
+        this._api = new EventsApi({
             headers: {
                 "Content-Type": "application/json",
             },
@@ -1361,7 +1368,7 @@ class UserEventsList {
 
         this._unsubscribingEventId = null;
 
-        this._api = new Api({
+        this._api = new EventsApi({
             headers: {
                 "Content-Type": "application/json",
             },
