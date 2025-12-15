@@ -274,6 +274,7 @@ body {
     opacity: 0;
     visibility: hidden;
     overflow: auto;
+    transition: opacity 0.2s, visibility 0.2s;
 }
 
 .modal_is-open {

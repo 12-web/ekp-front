@@ -374,6 +374,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         opacity: 0;
         visibility: hidden;
         overflow: auto;
+        transition: opacity 0.2s, visibility 0.2s;
     }
 
     .modal_is-open {
@@ -1142,25 +1143,6 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 
     /* Важные стили для управления видимостью */
 
-    .widget-hidden {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    .listing-hidden {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: none !important;
-    }
-
     .config-content {
         width: 100%;
     }
@@ -1227,9 +1209,9 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 </div>
 
 <!-- Widget Content -->
-<% if (isConfigured) { %>
+<% if (isWidgetVisible) { %> <% if (isConfigured) { %>
 <button
-    data-modal="registration-event-modal <%= widgetVisibilityClass %>"
+    data-modal="registration-event-modal"
     type="button"
     class="button button_view_primary"
     id="widget-content-container"
@@ -1505,12 +1487,11 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         </label>
     </li>
 </template>
+<% } %>
 
 <!-- Event Listing - отдельный элемент с независимым управлением видимостью -->
-<ul
-    class="registration-event-list <%= listingVisibilityClass %>"
-    id="listing-section-container"
-></ul>
+<% if (isListingVisible) { %>
+<ul class="registration-event-list" id="listing-section-container"></ul>
 
 <div
     class="registration-event-list__modal registration-event-list-confirm-modal modal confirm-modal"
@@ -1550,6 +1531,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         <button data-id="button-register" class="button button_view_ghost">Отменить запись</button>
     </li>
 </template>
+<% } %>
 
 <script>
     // Pass server-side variables to JavaScript
@@ -1563,37 +1545,6 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
     };
 
     console.log('Event Widget configuration loaded:', EVENT_CONFIG);
-
-    // Инициализация стилей для предотвращения конфликтов
-    document.addEventListener('DOMContentLoaded', function() {
-    	console.log('DOM Content Loaded - initializing widget...');
-
-    	// Принудительно применяем видимость на основе серверных настроек
-    	const widgetContent = document.getElementById('widget-content-container');
-    	const listingSection = document.getElementById('listing-section-container');
-
-    	if (widgetContent) {
-    		console.log('Found widget content container');
-    		if (<%= isWidgetVisible %>) {
-    			widgetContent.classList.remove('widget-hidden');
-    			console.log('Widget set to visible (initial)');
-    		} else {
-    			widgetContent.classList.add('widget-hidden');
-    			console.log('Widget set to hidden (initial)');
-    		}
-    	}
-
-    	if (listingSection) {
-    		console.log('Found listing section container');
-    		if (<%= isListingVisible %>) {
-    			listingSection.classList.remove('listing-hidden');
-    			console.log('Listing set to visible (initial)');
-    		} else {
-    			listingSection.classList.add('listing-hidden');
-    			console.log('Listing set to hidden (initial)');
-    		}
-    	}
-    });
 </script>
 
 <script src="<%= contextPath %>/META-INF/resources/js/widget.js"></script>
