@@ -23,7 +23,7 @@ const debounce = (func, delay) => {
 };
 
 //api
-class Api {
+class BaseApi {
     constructor({ headers, baseUrl }) {
         this._baseUrl = baseUrl;
         this._headers = headers;
@@ -49,10 +49,14 @@ class Api {
             context: EVENT_CONFIG ? EVENT_CONFIG : {},
         };
     }
+}
+
+class EventsApi extends BaseApi {
+    constructor(props) {
+        super(props);
+    }
 
     getUsers() {
-        return mockUserData;
-
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
@@ -64,9 +68,6 @@ class Api {
     }
 
     getEvent(data) {
-        return mockData;
-
-        //mockRegisterData,
         return this._request("/certain-event", {
             method: "POST",
             headers: this._headers,
@@ -78,8 +79,6 @@ class Api {
     }
 
     eventRegister(data) {
-        return mockRegisterData;
-
         return this._request("/events/_register", {
             method: "POST",
             headers: this._headers,
@@ -87,6 +86,22 @@ class Api {
                 data,
                 ...this._getDefaultParams(),
             }),
+        });
+    }
+
+    getUserEvents() {
+        return this._request("/users/find_user_events", {
+            method: "POST",
+            headers: this._headers,
+            body: JSON.stringify(this._getDefaultParams()),
+        });
+    }
+
+    cancelEvent(eventId) {
+        return this._request("/_cancel_event", {
+            method: "POST",
+            headers: this._headers,
+            body: JSON.stringify({ data: { eventId }, ...this._getDefaultParams() }),
         });
     }
 }
@@ -100,21 +115,21 @@ class Modal {
 
     constructor(root) {
         this._modal = root;
-        this._closeButton = this._modal?.querySelector(this._config.closeBtnSelector);
+        this.closeButton = this._modal?.querySelector(this._config.closeBtnSelector);
 
         this._handleEscClose = this._handleEscClose.bind(this);
         this._handleOverlayClose = this._handleOverlayClose.bind(this);
-        this._close = this._close.bind(this);
+        this.close = this.close.bind(this);
 
         this.setEventListeners();
     }
 
     _handleEscClose(e) {
-        if (e.key === "Escape") this._close();
+        if (e.key === "Escape") this.close();
     }
 
     _handleOverlayClose(e) {
-        if (e.target === e.currentTarget) this._close();
+        if (e.target === e.currentTarget) this.close();
     }
 
     open() {
@@ -122,13 +137,13 @@ class Modal {
         document.addEventListener("keydown", this._handleEscClose);
     }
 
-    _close() {
+    close() {
         this._modal.classList.remove(this._config.openModalClass);
         document.removeEventListener("keydown", this._handleEscClose);
     }
 
     setEventListeners() {
-        this._closeButton?.addEventListener("click", this._close);
+        this.closeButton?.addEventListener("click", this.close);
         this._modal?.addEventListener("click", this._handleOverlayClose);
     }
 }
@@ -677,7 +692,7 @@ class RegistrationEvent {
         this._openBtn.addEventListener("click", this._onModalBtnClick);
         this._submit.addEventListener("click", this._onSubmit);
 
-        this._api = new Api({
+        this._api = new EventsApi({
             headers: {
                 "Content-Type": "application/json",
             },
@@ -913,5 +928,202 @@ class RegistrationEvent {
     }
 }
 
+class ConfirmModal extends Modal {
+    constructor(root, onConfirmCb, onCloseCb) {
+        super(root);
+
+        this._confirmBtn = this._modal?.querySelector(".confirm-modal__confirm");
+
+        this._onCloseCb = onCloseCb;
+        this._onConfirmCb = onConfirmCb;
+
+        this._onConfirmClick = this._onConfirmClick.bind(this);
+
+        this.init();
+    }
+
+    close() {
+        super.close();
+        this._onCloseCb?.();
+    }
+
+    onLoading() {
+        this._modal.classList.add("_loading");
+        this._confirmBtn.disabled = true;
+    }
+
+    onFinally() {
+        this._modal.classList.remove("_loading");
+        this._confirmBtn.disabled = false;
+    }
+
+    _onConfirmClick() {
+        this._onConfirmCb?.();
+    }
+
+    init() {
+        this._confirmBtn?.addEventListener("click", this._onConfirmClick);
+    }
+}
+
+class EventListItem {
+    constructor(template, onUnSubscribeCb) {
+        this._template = template;
+
+        this._onUnSubscribeCb = onUnSubscribeCb;
+        this._onUnSubscribeClick = this._onUnSubscribeClick.bind(this);
+    }
+
+    _createContent() {
+        const template = this._template.content.cloneNode(true);
+        const baseClass = "registration-event-list-item";
+
+        const name = template.querySelector(`.${baseClass}__name`);
+        const date = template.querySelector(`.${baseClass}__date`);
+        const day = template.querySelector(`.${baseClass}__day`);
+
+        const subscriber = template.querySelector(`.${baseClass}__subscriber-user`);
+        const subscriberInfo = template.querySelector(`.${baseClass}__subscriber-info`);
+
+        if (this._data.isRegisteredByOtherMan) {
+            const subscriberName = template.querySelector(`.${baseClass}__subscriber-name`);
+            const subscriberLink = template.querySelector(`.${baseClass}__subscriber-link`);
+
+            subscriberInfo.textContent = "Вы записаны: ";
+            subscriberName.textContent = this._data.registrationCreator?.fullName || "";
+            subscriberLink.textContent = this._data.registrationCreator?.email || "";
+            subscriberLink.href = `mailto:${this._data.registrationCreator?.email || ""}`;
+
+            subscriber.classList.remove("_hidden");
+        } else {
+            subscriberInfo.textContent = "";
+
+            subscriber.classList.add("_hidden");
+        }
+
+        this._unSubscribeBtn = template.querySelector('[data-id="button-register"]');
+
+        name.textContent = this._data.event.name;
+        date.textContent = this._data.event.date;
+        day.textContent = this._data.event.day;
+
+        this._unSubscribeBtn?.addEventListener("click", this._onUnSubscribeClick);
+
+        return template;
+    }
+
+    _onUnSubscribeClick() {
+        this._onUnSubscribeCb(this._data.event.eventId);
+    }
+
+    create(data) {
+        this._data = data;
+
+        return this._createContent();
+    }
+
+    destroy() {
+        this._unSubscribeBtn?.removeEventListener("click", this._onUnSubscribeClick);
+    }
+}
+
+class UserEventsList {
+    constructor() {
+        this._root = document.querySelector(".registration-event-list");
+
+        this._onUnSubscribeClick = this._onUnSubscribeClick.bind(this);
+        this._onConfirmClick = this._onConfirmClick.bind(this);
+
+        const confirmModalEl = document.querySelector(".registration-event-list-confirm-modal");
+
+        this._notFoundEl = document.querySelector(".registration-event-list-not-found");
+
+        this._confirmModal = new ConfirmModal(
+            confirmModalEl,
+            this._onConfirmClick,
+            this._onCloseCb
+        );
+
+        this._items = [];
+
+        this._unsubscribingEventId = null;
+
+        this._api = new EventsApi({
+            headers: {
+                "Content-Type": "application/json",
+            },
+            baseUrl: EVENT_CONFIG?.baseURL || "/",
+        });
+
+        this.init();
+    }
+
+    _clear() {
+        this._root.innerHTML = "";
+        this._items?.forEach((item) => item.destroy());
+        this._items = [];
+    }
+
+    _initItems(data) {
+        this._clear();
+
+        const template = document.getElementById("registration-event-list-item");
+
+        if (!data || !data.length) {
+            this._notFoundEl.classList.remove("_hidden");
+        } else {
+            this._notFoundEl.classList.add("_hidden");
+
+            data.forEach((item) => {
+                const listItem = new EventListItem(template, this._onUnSubscribeClick);
+                this._items.push(listItem);
+
+                this._root.appendChild(listItem.create(item));
+            });
+        }
+    }
+
+    async _getListItems() {
+        const data = await this._api.getUserEvents();
+
+        if (data?.data) {
+            this._initItems(data?.data);
+        }
+    }
+
+    async _onConfirmClick() {
+        if (!this._unsubscribingEventId) return;
+
+        this._confirmModal.onLoading();
+
+        try {
+            const data = await this._api.cancelEvent(this._unsubscribingEventId);
+
+            if (data?.response.success) {
+                this.init();
+                this._confirmModal.close();
+            }
+        } catch (err) {
+        } finally {
+            this._confirmModal.onFinally();
+        }
+    }
+
+    _onCloseCb() {
+        this._unsubscribingEventId = null;
+    }
+
+    _onUnSubscribeClick(id) {
+        this._confirmModal.open();
+        this._unsubscribingEventId = id;
+    }
+
+    init() {
+        this._getListItems();
+    }
+}
+
 //init
+const userEventsList = new UserEventsList();
+
 const registrationEvent = new RegistrationEvent();

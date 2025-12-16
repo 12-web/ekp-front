@@ -1358,6 +1358,8 @@ class UserEventsList {
 
         const confirmModalEl = document.querySelector(".registration-event-list-confirm-modal");
 
+        this._notFoundEl = document.querySelector(".registration-event-list-not-found");
+
         this._confirmModal = new ConfirmModal(
             confirmModalEl,
             this._onConfirmClick,
@@ -1385,18 +1387,22 @@ class UserEventsList {
     }
 
     _initItems(data) {
-        if (!data) return;
-
         this._clear();
 
         const template = document.getElementById("registration-event-list-item");
 
-        data.forEach((item) => {
-            const listItem = new EventListItem(template, this._onUnSubscribeClick);
-            this._items.push(listItem);
+        if (!data || !data.length) {
+            this._notFoundEl.classList.remove("_hidden");
+        } else {
+            this._notFoundEl.classList.add("_hidden");
 
-            this._root.appendChild(listItem.create(item));
-        });
+            data.forEach((item) => {
+                const listItem = new EventListItem(template, this._onUnSubscribeClick);
+                this._items.push(listItem);
+
+                this._root.appendChild(listItem.create(item));
+            });
+        }
     }
 
     async _getListItems() {

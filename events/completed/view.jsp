@@ -1157,6 +1157,35 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         flex-grow: 1;
     }
 
+    .registration-event-list-not-found {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .registration-event-list-not-found._hidden {
+        display: none;
+    }
+
+    .registration-event-list-not-found__img {
+        width: 300px;
+        height: 190px;
+        object-fit: contain;
+        object-position: center;
+    }
+
+    .registration-event-list-not-found__title {
+        margin-top: var(--space-l);
+        color: var(--typo-primary);
+        text-align: center;
+    }
+
+    .registration-event-list-not-found__text {
+        margin-top: var(--space-s);
+        color: var(--typo-secondary);
+        text-align: center;
+    }
+
     /* Важные стили для управления видимостью */
 
     .config-content {
@@ -1507,7 +1536,20 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 
 <!-- Event Listing - отдельный элемент с независимым управлением видимостью -->
 <% if (isListingVisible) { %>
-<ul class="registration-event-list" id="listing-section-container"></ul>
+<div class="registration-event-list-container">
+    <ul class="registration-event-list"></ul>
+    <div class="registration-event-list-not-found">
+        <img src="./images/not-found.png" class="registration-event-list-not-found__img" />
+        <p
+            class="registration-event-list-not-found__title _font-size-xl _line-height-normal _font-weight-bold"
+        >
+            У вас нет записей
+        </p>
+        <p class="registration-event-list-not-found__text _font-size-s _line-height-normal">
+            Записывайтесь на мероприятия<br />и отслеживайте их в этом разделе
+        </p>
+    </div>
+</div>
 
 <div
     class="registration-event-list__modal registration-event-list-confirm-modal modal confirm-modal"
