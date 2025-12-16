@@ -141,6 +141,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         --button-color-disable: rgba(0, 32, 51, 0.26);
         --button-bg-color-disable: rgba(0, 66, 105, 0.07);
         --bg-alert: #eb5757;
+        --bg-system: #dee4e8;
         --color-control-bg-ghost-hover: rgba(0, 66, 105, 0.05);
     }
 
@@ -184,7 +185,6 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 
     body {
         font-family: Inter, Arial, sans-serif;
-        background-color: var(--bg-default);
     }
 
     *._hidden {
@@ -324,6 +324,10 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 
     ._font-weight-normal {
         font-weight: 400;
+    }
+
+    ._font-weight-bold {
+        font-weight: 600;
     }
 
     .button {
@@ -1081,28 +1085,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: var(--space-m);
         gap: var(--space-s);
-    }
-    .registration-event-list-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: var(--space-m);
-        width: 100%;
-        padding: var(--space-m);
-        border-radius: var(--space-s);
-        background-color: var(--white);
-        color: var(--typo-primary);
-    }
-
-    .registration-event-list-item__subscriber {
-        margin-left: auto;
-        max-width: 30%;
-    }
-
-    .registration-event-list-item__subscriber a {
-        color: var(--control-primary-bg);
     }
 
     .confirm-modal {
@@ -1129,6 +1112,29 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         gap: var(--space-xs);
     }
 
+    .registration-event-list-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: var(--space-m);
+        width: 100%;
+        padding: 20px;
+        border-radius: var(--space-s);
+        background-color: var(--white);
+        color: var(--typo-primary);
+        border: 1px solid var(--bg-system);
+    }
+
+    .registration-event-list-item__subscriber {
+        display: flex;
+        gap: 4px;
+        color: var(--typo-secondary);
+    }
+
+    .registration-event-list-item__subscriber a {
+        color: var(--control-primary-bg);
+    }
+
     .registration-event-list-item__subscriber-user {
         display: flex;
     }
@@ -1137,8 +1143,18 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         display: none;
     }
 
-    .registration-event-list-item__subscriber-name {
-        margin-right: 4px;
+    .registration-event-list-item__name {
+        max-width: 50%;
+    }
+
+    .registration-event-list-item__time {
+        color: var(--typo-secondary);
+    }
+
+    .registration-event-list-item__info {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
     }
 
     /* Важные стили для управления видимостью */
@@ -1515,17 +1531,19 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 <template id="registration-event-list-item">
     <li class="registration-event-list-item">
         <div class="registration-event-list-item__info">
-            <p class="registration-event-list-item__name title-4"></p>
-            <p class="registration-event-list-item__time text-3">
+            <p class="registration-event-list-item__time _font-size-s _line-height-normal">
+                <span class="registration-event-list-item__day"></span>,
                 <span class="registration-event-list-item__date"></span>
-                <span class="registration-event-list-item__day"></span>
             </p>
-        </div>
-        <div class="registration-event-list-item__subscriber text-2">
-            <p class="registration-event-list-item__subscriber-info"></p>
-            <div class="registration-event-list-item__subscriber-user">
-                <p class="registration-event-list-item__subscriber-name"></p>
-                (<a class="registration-event-list-item__subscriber-link"></a>)
+            <p
+                class="registration-event-list-item__name _font-size-m _font-weight-bold _line-height-normal"
+            ></p>
+            <div class="registration-event-list-item__subscriber _font-size-s _line-height-normal">
+                <p class="registration-event-list-item__subscriber-info"></p>
+                <p class="registration-event-list-item__subscriber-user">
+                    <span class="registration-event-list-item__subscriber-name"></span>,&nbsp;
+                    <a class="registration-event-list-item__subscriber-link"></a>
+                </p>
             </div>
         </div>
         <button data-id="button-register" class="button button_view_ghost">Отменить запись</button>

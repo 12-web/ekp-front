@@ -1311,14 +1311,14 @@ class EventListItem {
             const subscriberName = template.querySelector(`.${baseClass}__subscriber-name`);
             const subscriberLink = template.querySelector(`.${baseClass}__subscriber-link`);
 
-            subscriberInfo.textContent = "Вы записаны на это время пользователем";
+            subscriberInfo.textContent = "Вы записаны: ";
             subscriberName.textContent = this._data.registrationCreator?.fullName || "";
             subscriberLink.textContent = this._data.registrationCreator?.email || "";
             subscriberLink.href = `mailto:${this._data.registrationCreator?.email || ""}`;
 
             subscriber.classList.remove("_hidden");
         } else {
-            subscriberInfo.textContent = "Вы записаны на это время";
+            subscriberInfo.textContent = "";
 
             subscriber.classList.add("_hidden");
         }

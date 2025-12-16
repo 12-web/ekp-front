@@ -9,86 +9,6 @@
         <script src="./js/widget.js" defer></script>
 
         <title>Запись на мероприятие</title>
-
-        <script type="text/javascript">
-            (function () {
-                window.gpnSpaUrl = "https://spa-back.gazprom-neft.local/events";
-                window.gpnCounterId = 1;
-                window.apiVersion = "1.0";
-                const headEl = document.getElementsByTagName("head")[0];
-                const counterLoadingScript = document.createElement("script");
-                counterLoadingScript.async = true;
-
-                counterLoadingScript.src = "https://spa-back.gazprom-neft.local/static/counter.js";
-
-                headEl.appendChild(counterLoadingScript);
-
-                const getCurrentUser = async () => {
-                    const res = await fetch("/o/headless-admin-user/v1.0/my-user-account", {
-                        headers: {
-                            "X-CSRF-Token": Liferay.authToken,
-                        },
-                    });
-                    return await res.json();
-                };
-
-                const onLoadSPA = async () => {
-                    try {
-                        const currentUser = await getCurrentUser();
-
-                        const customparams = [
-                            { as_user_id: true, value: currentUser?.name || "" },
-                            { name: "user_id", type: "STRING", value: currentUser?.name || "" },
-                            {
-                                name: "user_do",
-                                type: "STRING",
-                                value: currentUser?.organizationBriefs?.name || "",
-                            },
-                        ];
-
-                        window.gpnAnalytics &&
-                            window.gpnAnalytics.sendEvent(3, {
-                                componentId: "user_login",
-                                constaeventtype: "undefined",
-                                component: "OTHER",
-                                customparams,
-                            });
-                    } catch {}
-                };
-
-                counterLoadingScript.addEventListener("load", onLoadSPA);
-
-                // Кнопка вверх
-                const toTopBtn = document.querySelector("a#toTop");
-
-                const handleTopClick = async (e) => {
-                    try {
-                        const currentUser = await getCurrentUser();
-
-                        const customparams = [
-                            { as_user_id: true, value: currentUser?.name || "" },
-                            { name: "user_id", type: "STRING", value: currentUser?.name || "" },
-                            {
-                                name: "user_do",
-                                type: "STRING",
-                                value: currentUser?.organizationBriefs?.name || "",
-                            },
-                            { name: "page", type: "STRING", value: document.title },
-                        ];
-
-                        window.gpnAnalytics &&
-                            window.gpnAnalytics.sendEvent(3, {
-                                componentId: "back_to_top",
-                                constaeventtype: "undefined",
-                                component: "OTHER",
-                                customparams,
-                            });
-                    } catch {}
-                };
-
-                toTopBtn?.addEventListener("click", handleTopClick);
-            })();
-        </script>
     </head>
     <body class="root">
         <main class="main">
@@ -433,17 +353,24 @@
             <template id="registration-event-list-item">
                 <li class="registration-event-list-item">
                     <div class="registration-event-list-item__info">
-                        <p class="registration-event-list-item__name title-4"></p>
-                        <p class="registration-event-list-item__time text-3">
+                        <p
+                            class="registration-event-list-item__time _font-size-s _line-height-normal"
+                        >
+                            <span class="registration-event-list-item__day"></span>,
                             <span class="registration-event-list-item__date"></span>
-                            <span class="registration-event-list-item__day"></span>
                         </p>
-                    </div>
-                    <div class="registration-event-list-item__subscriber text-2">
-                        <p class="registration-event-list-item__subscriber-info"></p>
-                        <div class="registration-event-list-item__subscriber-user">
-                            <p class="registration-event-list-item__subscriber-name"></p>
-                            (<a class="registration-event-list-item__subscriber-link"></a>)
+                        <p
+                            class="registration-event-list-item__name _font-size-m _font-weight-bold _line-height-normal"
+                        ></p>
+                        <div
+                            class="registration-event-list-item__subscriber _font-size-s _line-height-normal"
+                        >
+                            <p class="registration-event-list-item__subscriber-info"></p>
+                            <p class="registration-event-list-item__subscriber-user">
+                                <span class="registration-event-list-item__subscriber-name"></span
+                                >,&nbsp;
+                                <a class="registration-event-list-item__subscriber-link"></a>
+                            </p>
                         </div>
                     </div>
                     <button data-id="button-register" class="button button_view_ghost">

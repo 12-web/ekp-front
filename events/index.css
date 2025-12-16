@@ -41,6 +41,7 @@
     --button-color-disable: rgba(0, 32, 51, 0.26);
     --button-bg-color-disable: rgba(0, 66, 105, 0.07);
     --bg-alert: #eb5757;
+    --bg-system: #dee4e8;
     --color-control-bg-ghost-hover: rgba(0, 66, 105, 0.05);
 }
 
@@ -84,7 +85,6 @@ ul {
 
 body {
     font-family: Inter, Arial, sans-serif;
-    background-color: var(--bg-default);
 }
 
 *._hidden {
@@ -224,6 +224,10 @@ body {
 
 ._font-weight-normal {
     font-weight: 400;
+}
+
+._font-weight-bold {
+    font-weight: 600;
 }
 
 .button {
@@ -979,28 +983,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: var(--space-m);
     gap: var(--space-s);
-}
-.registration-event-list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-m);
-    width: 100%;
-    padding: var(--space-m);
-    border-radius: var(--space-s);
-    background-color: var(--white);
-    color: var(--typo-primary);
-}
-
-.registration-event-list-item__subscriber {
-    margin-left: auto;
-    max-width: 30%;
-}
-
-.registration-event-list-item__subscriber a {
-    color: var(--control-primary-bg);
 }
 
 .confirm-modal {
@@ -1027,6 +1010,29 @@ body {
     gap: var(--space-xs);
 }
 
+.registration-event-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--space-m);
+    width: 100%;
+    padding: 20px;
+    border-radius: var(--space-s);
+    background-color: var(--white);
+    color: var(--typo-primary);
+    border: 1px solid var(--bg-system);
+}
+
+.registration-event-list-item__subscriber {
+    display: flex;
+    gap: 4px;
+    color: var(--typo-secondary);
+}
+
+.registration-event-list-item__subscriber a {
+    color: var(--control-primary-bg);
+}
+
 .registration-event-list-item__subscriber-user {
     display: flex;
 }
@@ -1035,6 +1041,16 @@ body {
     display: none;
 }
 
-.registration-event-list-item__subscriber-name {
-    margin-right: 4px;
+.registration-event-list-item__name {
+    max-width: 50%;
+}
+
+.registration-event-list-item__time {
+    color: var(--typo-secondary);
+}
+
+.registration-event-list-item__info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
