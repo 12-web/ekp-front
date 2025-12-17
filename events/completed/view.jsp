@@ -1081,13 +1081,6 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         margin: 40px auto;
     }
 
-    .registration-event-list {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        gap: var(--space-s);
-    }
-
     .confirm-modal {
         display: flex;
         align-items: center;
@@ -1103,6 +1096,12 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         width: 100%;
         max-width: 450px;
         padding: var(--space-xl) 20px 20px;
+    }
+
+    .registration-event-list {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
     }
 
     .registration-event-list-confirm-modal__handles {
@@ -1122,7 +1121,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         border-radius: var(--space-s);
         background-color: var(--white);
         color: var(--typo-primary);
-        border: 1px solid var(--bg-system);
+        border-bottom: 1px solid var(--bg-system);
     }
 
     .registration-event-list-item__subscriber {

@@ -1311,7 +1311,7 @@ class EventListItem {
             const subscriberName = template.querySelector(`.${baseClass}__subscriber-name`);
             const subscriberLink = template.querySelector(`.${baseClass}__subscriber-link`);
 
-            subscriberInfo.textContent = "Вы записаны: ";
+            subscriberInfo.textContent = "Вас записал: ";
             subscriberName.textContent = this._data.registrationCreator?.fullName || "";
             subscriberLink.textContent = this._data.registrationCreator?.email || "";
             subscriberLink.href = `mailto:${this._data.registrationCreator?.email || ""}`;
