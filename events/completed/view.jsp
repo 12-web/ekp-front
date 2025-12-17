@@ -1117,8 +1117,8 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         align-items: flex-end;
         gap: var(--space-m);
         width: 100%;
-        padding: 20px;
-        border-radius: var(--space-s);
+        padding-block: 20px;
+        border-radius: var(--space-xs);
         background-color: var(--white);
         color: var(--typo-primary);
         border-bottom: 1px solid var(--bg-system);
