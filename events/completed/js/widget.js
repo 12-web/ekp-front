@@ -901,7 +901,7 @@ class RegistrationEvent {
 
         const eventId = EVENT_CONFIG.eventId;
 
-        const data = await this._api.getEvent(eventId);
+        const data = await this._api.getEvent({ eventId });
 
         if (!data?.data) return;
 

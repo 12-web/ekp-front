@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="./index.css" />
+
+        <script src="./js/widget.js" defer></script>
+
+        <title>Пятница</title>
+    </head>
+    <body class="root">
+        <main class="main">
+            <aside></aside>
+            <section class="friday">
+                <div class="friday__couple friday-couple">
+                    <p class="_font-size-2xl _line-height-normal">Ваша пара на этой неделе</p>
+                    <div class="friday-couple__user user-label">
+                        <div class="user-label__avatar">
+                            <img class="cover-image" src="" alt="аватар" />
+                            <span class="user-label__avatar-name"></span>
+                        </div>
+                        <div class="user-label__about">
+                            <p class="user-label__name text"></p>
+                            <div class="user-label__description">
+                                <span class="user-label__description-item user-label__work"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="friday-couple__bottom">
+                        <p class="friday-couple__interests _font-size-s"></p>
+                        <a href="/" class="button button_view_primary friday-couple__link"
+                            ><img src="./images/mail.svg" /><span>Написать на почту</span></a
+                        >
+                    </div>
+                </div>
+                <div class="friday__action friday-action">
+                    <img
+                        src="./images/friday.png"
+                        alt="Проект Пятница"
+                        class="friday-action__img"
+                    />
+                    <div class="friday-action__about">
+                        <h2 class="_font-size-3xl _line-height-normal _font-weight-normal">
+                            &laquo;Пятница&raquo;
+                        </h2>
+                        <p class="_font-size-2xl _line-height-normal">
+                            Альтернатива офисным кофе-брейкам
+                        </p>
+                        <ul class="friday-action__list">
+                            <li class="friday-action__item _font-size-m _line-height-norma">
+                                Знакомьтесь с коллегами
+                            </li>
+                            <li class="friday-action__item _font-size-m _line-height-norma">
+                                Прокачайте навыки коммуникации и самопрезентации
+                            </li>
+                            <li class="friday-action__item _font-size-m _line-height-norma">
+                                Узнавайте о специфике работы других коллег
+                            </li>
+                            <li class="friday-action__item _font-size-m _line-height-norma">
+                                Найдите наставника или стань им
+                            </li>
+                        </ul>
+                        <div class="friday-action__handles">
+                            <div class="friday-action__handles-unsub">
+                                <button
+                                    type="button"
+                                    class="button button_view_primary friday-action__subscribe"
+                                >
+                                    Подписаться
+                                </button>
+                            </div>
+                            <div class="friday-action__handles-sub">
+                                <button
+                                    type="button"
+                                    class="button button_view_secondary friday-action__change"
+                                >
+                                    Изменить интересы
+                                </button>
+                                <button
+                                    type="button"
+                                    class="button button_view_ghost friday-action__unsubscribe"
+                                >
+                                    Отписаться
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="friday__stages">
+                    <li class="friday__stage stage-item">
+                        <h3 class="stage-item__title _font-size-l _line-height-normal">
+                            Пары формируются случайным образом
+                        </h3>
+                        <p class="stage-item__text _font-size-m _line-height-normal">
+                            Новая пара будет присылаться на почту каждую пятницу
+                        </p>
+                    </li>
+                    <li class="friday__stage stage-item">
+                        <h3 class="stage-item__title _font-size-l _line-height-normal">
+                            Указывайте<br />ваши интересы
+                        </h3>
+                        <p class="stage-item__text _font-size-m _line-height-normal">
+                            Пара увидит интересы друг друга, чтобы было проще начать общение
+                        </p>
+                    </li>
+                    <li class="friday__stage stage-item">
+                        <h3 class="stage-item__title _font-size-l _line-height-normal">
+                            Общайтесь<br />без ограничений
+                        </h3>
+                        <p class="stage-item__text _font-size-m _line-height-normal">
+                            Свяжитесь по почте, в TrueConf или другим удобным способом
+                        </p>
+                    </li>
+                    <li class="friday__stage stage-item">
+                        <h3 class="stage-item__title _font-size-l _line-height-normal">
+                            Отличной «Пятницы»!
+                        </h3>
+                        <p class="stage-item__text _font-size-m _line-height-normal">
+                            Не откладывайте встречу, начинайте общаться сразу
+                        </p>
+                        <a href="" class="stage-item__link _font-size-m">Как завязать разговор</a>
+                    </li>
+                </ul>
+                <div class="friday__modal friday-interests-modal modal">
+                    <div class="modal__content friday__modal-content">
+                        <div class="modal__header">
+                            <h2 class="modal__title _font-size-xl _line-height-small">
+                                Опишите ваши интересы
+                            </h2>
+                        </div>
+                        <div class="modal__body friday__modal-body">
+                            <form
+                                id="friday-subscribe-form"
+                                class="friday__form friday-form friday-interests-modal__form"
+                                novalidate
+                            >
+                                <div class="friday-form__item friday-form__textarea">
+                                    <textarea
+                                        placeholder="Опишите ваши интересы"
+                                        name="interests"
+                                        class="_font-size-s _line-height-normal"
+                                        type="text"
+                                        required
+                                    ></textarea>
+                                    <span class="friday-form__error"></span>
+                                </div>
+                                <div class="friday-subscribe-form__handles">
+                                    <button
+                                        type="submit"
+                                        class="button button_view_primary friday-form__submit"
+                                    >
+                                        Сохранить
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="modal-close button button_view_ghost"
+                                    >
+                                        Отмена
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="friday__modal friday-unsubscribe-confirm-modal modal">
+                    <div class="modal__content friday__modal-content">
+                        <div class="modal__header">
+                            <h2
+                                class="modal__title _font-size-l _line-height-small _font-weight-normal"
+                            >
+                                Вы подтверждаете отписку от проекта &laquo;Пятница&raquo;
+                            </h2>
+                        </div>
+                        <div class="modal__body friday__modal-body">
+                            <div class="friday-unsubscribe-confirm-modal__handles">
+                                <button
+                                    type="submit"
+                                    class="button button_view_primary confirm-modal__confirm"
+                                >
+                                    Отписаться
+                                </button>
+                                <button type="button" class="modal-close button button_view_ghost">
+                                    Отмена
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+    <script>
+        // Pass server-side variables to JavaScript
+        var EVENT_CONFIG = {
+            siteId: "1",
+            companyId: "1",
+            currentUserId: "1",
+        };
+
+        console.log("Event Widget configuration loaded:", EVENT_CONFIG);
+    </script>
+</html>

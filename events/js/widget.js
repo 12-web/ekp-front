@@ -368,6 +368,7 @@ class EventsApi extends BaseApi {
     }
 
     getUsers() {
+        console.log("users");
         return mockUserData;
 
         return this._request("/users/_search", {
@@ -1223,7 +1224,7 @@ class RegistrationEvent {
 
         const eventId = EVENT_CONFIG.eventId;
 
-        const data = await this._api.getEvent(eventId);
+        const data = await this._api.getEvent({ eventId });
 
         if (!data?.data) return;
 
