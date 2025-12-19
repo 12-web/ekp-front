@@ -333,7 +333,6 @@ const debounce = (func, delay) => {
 };
 
 //api
-//api
 class BaseApi {
     constructor({ headers, baseUrl }) {
         this._baseUrl = baseUrl;
@@ -435,8 +434,8 @@ class EventsApi extends BaseApi {
 //classes
 class Modal {
     _config = {
-        closeBtnSelector: ".modal-close",
-        openModalClass: "modal_is-open",
+        closeBtnSelector: ".c-modal-close",
+        openModalClass: "c-modal_is-open",
     };
 
     constructor(root) {

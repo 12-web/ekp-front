@@ -109,8 +109,8 @@ class EventsApi extends BaseApi {
 //classes
 class Modal {
     _config = {
-        closeBtnSelector: ".modal-close",
-        openModalClass: "modal_is-open",
+        closeBtnSelector: ".c-modal-close",
+        openModalClass: "c-modal_is-open",
     };
 
     constructor(root) {

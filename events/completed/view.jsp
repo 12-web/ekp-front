@@ -100,6 +100,8 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         border: 1px solid #f5c6cb;
     }
 
+    @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
     :root {
         --size-text-2xs: 10px;
         --size-text-xs: 12px;
@@ -368,7 +370,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         margin-inline: auto;
     }
 
-    .modal {
+    .c-modal {
         position: fixed;
         inset: 0;
         height: 100%;
@@ -381,32 +383,32 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         transition: opacity 0.2s, visibility 0.2s;
     }
 
-    .modal_is-open {
+    .c-modal_is-open {
         opacity: 1;
         visibility: visible;
     }
 
-    .modal__content {
+    .c-modal__content {
         display: flex;
         flex-direction: column;
         background-color: var(--white);
         border-radius: 8px;
     }
 
-    .modal__header {
+    .c-modal__header {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         padding-bottom: 24px;
     }
 
-    .modal__header-right {
+    .c-modal__header-right {
         display: flex;
         align-items: center;
         gap: 10px;
     }
 
-    .modal__close {
+    .c-modal__close {
         flex-shrink: 0;
         width: 32px;
         height: 32px;
@@ -415,11 +417,11 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         justify-content: center;
     }
 
-    .modal__close._hidden {
+    .c-modal__close._hidden {
         display: none;
     }
 
-    .modal__close-icon {
+    .c-modal__close-icon {
         width: 16px;
         height: 16px;
     }
@@ -1263,12 +1265,12 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
     Открыть
 </button>
 <% } %>
-<div class="registration-event-modal modal">
-    <div class="modal__content registration-event-modal__content">
-        <div class="modal__header">
-            <h2 class="modal__title title-3">Регистрация на мероприятие</h2>
+<div class="registration-event-modal c-modal">
+    <div class="c-modal__content registration-event-modal__content">
+        <div class="c-modal__header">
+            <h2 class="c-modal__title title-3">Регистрация на мероприятие</h2>
         </div>
-        <div class="modal__body registration-event with-custom-scrollbar">
+        <div class="c-modal__body registration-event with-custom-scrollbar">
             <div class="registration-event__header text-1"></div>
 
             <div class="registration-event__info">
@@ -1450,7 +1452,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
                 >
                     Зарегистрировать
                 </button>
-                <button type="button" class="button button_view_ghost modal-close">Отмена</button>
+                <button type="button" class="button button_view_ghost c-modal-close">Отмена</button>
             </div>
         </div>
     </div>
@@ -1551,20 +1553,20 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
 </div>
 
 <div
-    class="registration-event-list__modal registration-event-list-confirm-modal modal confirm-modal"
+    class="registration-event-list__modal registration-event-list-confirm-modal c-modal confirm-modal"
 >
-    <div class="modal__content confirm-modal__modal-content">
-        <div class="modal__header">
-            <h2 class="modal__title _font-size-l _line-height-small _font-weight-normal">
+    <div class="c-modal__content confirm-modal__modal-content">
+        <div class="c-modal__header">
+            <h2 class="c-modal__title _font-size-l _line-height-small _font-weight-normal">
                 Вы подтверждаете отмену записи?
             </h2>
         </div>
-        <div class="modal__body friday__modal-body">
+        <div class="c-modal__body friday__modal-body">
             <div class="registration-event-list-confirm-modal__handles">
                 <button type="submit" class="button button_view_primary confirm-modal__confirm">
                     Подтвердить
                 </button>
-                <button type="button" class="modal-close button button_view_ghost">Отмена</button>
+                <button type="button" class="c-modal-close button button_view_ghost">Отмена</button>
             </div>
         </div>
     </div>
