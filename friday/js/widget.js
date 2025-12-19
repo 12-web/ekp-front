@@ -373,9 +373,9 @@ class Friday {
 
         try {
             if (isUpdate) {
-                data = this._api.updateFridayUser(requestData);
+                data = await this._api.updateFridayUser(requestData);
             } else {
-                data = this._api.registerOnFriday(requestData);
+                data = await this._api.registerOnFriday(requestData);
             }
 
             if (data.response.status === "success") {
@@ -416,7 +416,7 @@ class Friday {
         this._unSubscribeConfirmModal.onLoading();
 
         try {
-            const data = this._api.unregisterFriday();
+            const data = await this._api.unregisterFriday();
 
             if (data.response.status === "success") {
                 this.init();

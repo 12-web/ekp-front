@@ -1109,7 +1109,7 @@ class UserEventsList {
         try {
             const data = await this._api.cancelEvent(this._unsubscribingEventId);
 
-            if (data?.response.success) {
+            if (data?.response === "success") {
                 this.init();
                 this._confirmModal.close();
             }
