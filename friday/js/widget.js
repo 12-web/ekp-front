@@ -91,7 +91,7 @@ class FridayApi extends BaseApi {
         });
     }
 
-    unregisterFriday(data) {
+    unregisterFriday() {
         return mockFridayUserData;
 
         return this._request("/o/friday/_unregister", {

@@ -367,15 +367,18 @@ class EventsApi extends BaseApi {
         super(props);
     }
 
-    getUsers() {
-        console.log("users");
+    getUsers(data) {
+        console.log({
+            ...data,
+            ...this._getDefaultParams(),
+        });
         return mockUserData;
 
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify({
-                data,
+                ...data,
                 ...this._getDefaultParams(),
             }),
         });

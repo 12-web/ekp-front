@@ -56,12 +56,12 @@ class EventsApi extends BaseApi {
         super(props);
     }
 
-    getUsers() {
+    getUsers(data) {
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify({
-                data,
+                ...data,
                 ...this._getDefaultParams(),
             }),
         });
