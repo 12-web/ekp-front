@@ -107,11 +107,11 @@ class EventsApi extends BaseApi {
         });
     }
 
-    cancelEvent(eventId) {
+    cancelEvent(data) {
         return this._request("/_cancel_event", {
             method: "POST",
             headers: this._headers,
-            body: JSON.stringify({ data: { eventId }, ...this._getDefaultParams() }),
+            body: JSON.stringify({ data, ...this._getDefaultParams() }),
         });
     }
 }
@@ -1107,7 +1107,9 @@ class UserEventsList {
         this._confirmModal.onLoading();
 
         try {
-            const data = await this._api.cancelEvent(this._unsubscribingEventId);
+            const data = await this._api.cancelEvent({
+                eventId: Number(this._unsubscribingEventId),
+            });
 
             if (data?.response === "success") {
                 this.init();
