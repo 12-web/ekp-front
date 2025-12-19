@@ -516,6 +516,8 @@ class EventsApi extends BaseApi {
     }
 
     getEvent(data) {
+        return mockData;
+
         return this._request("/certain-event", {
             method: "POST",
             headers: this._headers,
@@ -527,6 +529,7 @@ class EventsApi extends BaseApi {
     }
 
     eventRegister(data) {
+        return mockData;
         return this._request("/events/_register", {
             method: "POST",
             headers: this._headers,
