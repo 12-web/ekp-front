@@ -123,14 +123,14 @@
                         <a href="" class="stage-item__link _font-size-m">Как завязать разговор</a>
                     </li>
                 </ul>
-                <div class="friday__modal friday-interests-modal modal">
-                    <div class="modal__content friday__modal-content">
-                        <div class="modal__header">
-                            <h2 class="modal__title _font-size-xl _line-height-small">
+                <div class="friday__modal friday-interests-modal c-modal">
+                    <div class="c-modal__content friday__modal-content">
+                        <div class="c-modal__header">
+                            <h2 class="c-modal__title _font-size-xl _line-height-small">
                                 Опишите ваши интересы
                             </h2>
                         </div>
-                        <div class="modal__body friday__modal-body">
+                        <div class="c-modal__body friday__modal-body">
                             <form
                                 id="friday-subscribe-form"
                                 class="friday__form friday-form friday-interests-modal__form"
@@ -155,7 +155,7 @@
                                     </button>
                                     <button
                                         type="button"
-                                        class="modal-close button button_view_ghost"
+                                        class="c-modal-close button button_view_ghost"
                                     >
                                         Отмена
                                     </button>
@@ -164,16 +164,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="friday__modal friday-unsubscribe-confirm-modal modal">
-                    <div class="modal__content friday__modal-content">
-                        <div class="modal__header">
+                <div class="friday__modal friday-unsubscribe-confirm-modal c-modal">
+                    <div class="c-modal__content friday__modal-content">
+                        <div class="c-modal__header">
                             <h2
-                                class="modal__title _font-size-l _line-height-small _font-weight-normal"
+                                class="c-modal__title _font-size-l _line-height-small _font-weight-normal"
                             >
                                 Вы подтверждаете отписку от проекта &laquo;Пятница&raquo;
                             </h2>
                         </div>
-                        <div class="modal__body friday__modal-body">
+                        <div class="c-modal__body friday__modal-body">
                             <div class="friday-unsubscribe-confirm-modal__handles">
                                 <button
                                     type="submit"
@@ -181,7 +181,10 @@
                                 >
                                     Отписаться
                                 </button>
-                                <button type="button" class="modal-close button button_view_ghost">
+                                <button
+                                    type="button"
+                                    class="c-modal-close button button_view_ghost"
+                                >
                                     Отмена
                                 </button>
                             </div>
@@ -197,6 +200,7 @@
             siteId: "1",
             companyId: "1",
             currentUserId: "1",
+            another: "1",
         };
 
         console.log("Event Widget configuration loaded:", EVENT_CONFIG);

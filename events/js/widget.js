@@ -298,6 +298,134 @@ const mockUserEventsData = {
     },
 };
 
+const mockUserEventsData2 = {
+    data: [
+        {
+            isRegisteredByOtherMan: false,
+            registrationCreator: {
+                firstName: "John",
+                lastName: "Lenon",
+                portraitUrl:
+                    "/image/user_portrait?img_id=0&img_id_token=bLb7CcvnCHFe2UjSAjwgA%2BxiUOE%3D&t=1765430585288",
+                fullName: "John Lenon",
+                middleName: "",
+                position: "Сотрудник",
+                userId: "45145",
+                email: "jlenon@gmail.com",
+            },
+            registeredForEventUser: {
+                firstName: "John",
+                lastName: "Lenon",
+                portraitUrl:
+                    "/image/user_portrait?img_id=0&img_id_token=bLb7CcvnCHFe2UjSAjwgA%2BxiUOE%3D&t=1765430585288",
+                fullName: "John Lenon",
+                middleName: "",
+                position: "Сотрудник",
+                userId: "45145",
+                email: "jlenon@gmail.com",
+            },
+            event: {
+                date: "28.01.2026",
+                eventId: "47421",
+                isWithoutEmailRegister: true,
+                footer: "Возможны изменения в дате и месте проведения события. Следите за новостями.",
+                additional: "",
+                isShowSendOption: true,
+                description: "Встреча с лидерами производственных функций.",
+                isDefaultSendNotifications: true,
+                recordingIntervals: [
+                    {
+                        start: "13:00",
+                        count: 3,
+                        intervalId: 11,
+                        end: "14:00",
+                    },
+                    {
+                        start: "14:00",
+                        count: 7,
+                        intervalId: 22,
+                        end: "15:00",
+                    },
+                ],
+                entriesNumber: 2,
+                name: "Ежегодная встреча vачей",
+                header: "Ежегодное встреча посвященная итогам деятельности ключевых направлений.",
+                isRepeat: true,
+                day: "Четверг",
+                availableDays: 2,
+                contacts: ["38346", "38369", "11234"],
+            },
+        },
+        {
+            isRegisteredByOtherMan: true,
+            registrationCreator: {
+                firstName: "Артем",
+                lastName: "Иванов",
+                portraitUrl:
+                    "/image/user_portrait?img_id=0&img_id_token=mJAewnLtkSueEU3%2B6k55kaoMN4U%3D&t=1765430585288",
+                fullName: "Артем Иванович Иванов",
+                middleName: "Иванович",
+                position: "Сотрудник",
+                userId: "45137",
+                email: "artiv@gmail.com",
+            },
+            registeredForEventUser: {
+                firstName: "John",
+                lastName: "Lenon",
+                portraitUrl:
+                    "/image/user_portrait?img_id=0&img_id_token=bLb7CcvnCHFe2UjSAjwgA%2BxiUOE%3D&t=1765430585288",
+                fullName: "John Lenon",
+                middleName: "",
+                position: "Сотрудник",
+                userId: "45145",
+                email: "jlenon@gmail.com",
+            },
+            event: {
+                date: "28.01.2026",
+                eventId: "47500",
+                isWithoutEmailRegister: true,
+                footer: "Возможны изменения в дате и месте проведения события. Следите за новостями.",
+                additional: "",
+                isShowSendOption: true,
+                description: "Встреча с лидерами производственных функций.",
+                isDefaultSendNotifications: true,
+                recordingIntervals: [
+                    {
+                        start: "13:00",
+                        count: 3,
+                        intervalId: 11,
+                        end: "14:00",
+                    },
+                    {
+                        start: "14:00",
+                        count: 17,
+                        intervalId: 22,
+                        end: "15:00",
+                    },
+                ],
+                entriesNumber: 2,
+                name: "Ежегодная встреча Sачей",
+                header: "Ежегодное встреча посвященная итогам деятельности ключевых направлений.",
+                isRepeat: true,
+                day: "Четверг",
+                availableDays: 2,
+                contacts: ["38346", "38369", "11234"],
+            },
+        },
+    ],
+    response: {
+        code: "success",
+        message: "SUCCESS",
+        status: "success",
+        timestamp: "2025-12-11T05:43:40.116745800Z",
+    },
+    context: {
+        companyId: "20097",
+        currentUserId: "45145",
+        siteId: "20121",
+    },
+};
+
 const mockCancelEvent = {
     response: {
         success: true,
@@ -350,13 +478,23 @@ class BaseApi {
         return fetch(`${this._baseUrl}${url}`, options).then(this._getResponseData);
     }
 
+    _getDefaultContext() {
+        if (!EVENT_CONFIG) return {};
+
+        return {
+            siteId: EVENT_CONFIG?.siteId || "",
+            companyId: EVENT_CONFIG?.companyId || "",
+            currentUserId: EVENT_CONFIG?.currentUserId || "",
+        };
+    }
+
     _getDefaultParams() {
         return {
             request: {
                 method: "POST",
                 timestamp: new Date().toISOString(),
             },
-            context: EVENT_CONFIG ? EVENT_CONFIG : {},
+            context: this._getDefaultContext(),
         };
     }
 }
@@ -367,12 +505,6 @@ class EventsApi extends BaseApi {
     }
 
     getUsers(data) {
-        console.log({
-            ...data,
-            ...this._getDefaultParams(),
-        });
-        return mockUserData;
-
         return this._request("/users/_search", {
             method: "POST",
             headers: this._headers,
@@ -384,9 +516,6 @@ class EventsApi extends BaseApi {
     }
 
     getEvent(data) {
-        return mockData;
-
-        //mockRegisterData,
         return this._request("/certain-event", {
             method: "POST",
             headers: this._headers,
@@ -398,8 +527,6 @@ class EventsApi extends BaseApi {
     }
 
     eventRegister(data) {
-        return mockRegisterData;
-
         return this._request("/events/_register", {
             method: "POST",
             headers: this._headers,
@@ -411,8 +538,6 @@ class EventsApi extends BaseApi {
     }
 
     getUserEvents() {
-        return mockUserEventsData;
-
         return this._request("/users/find_user_events", {
             method: "POST",
             headers: this._headers,
@@ -421,8 +546,6 @@ class EventsApi extends BaseApi {
     }
 
     cancelEvent(eventId) {
-        return mockCancelEvent;
-
         return this._request("/_cancel_event", {
             method: "POST",
             headers: this._headers,
@@ -1226,7 +1349,7 @@ class RegistrationEvent {
 
         const eventId = EVENT_CONFIG.eventId;
 
-        const data = await this._api.getEvent({ eventId });
+        const data = await this._api.getEvent({ eventId: Number(eventId) });
 
         if (!data?.data) return;
 

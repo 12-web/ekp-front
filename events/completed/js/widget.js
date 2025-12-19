@@ -40,13 +40,23 @@ class BaseApi {
         return fetch(`${this._baseUrl}${url}`, options).then(this._getResponseData);
     }
 
+    _getDefaultContext() {
+        if (!EVENT_CONFIG) return {};
+
+        return {
+            siteId: EVENT_CONFIG?.siteId || "",
+            companyId: EVENT_CONFIG?.companyId || "",
+            currentUserId: EVENT_CONFIG?.currentUserId || "",
+        };
+    }
+
     _getDefaultParams() {
         return {
             request: {
                 method: "POST",
                 timestamp: new Date().toISOString(),
             },
-            context: EVENT_CONFIG ? EVENT_CONFIG : {},
+            context: this._getDefaultContext(),
         };
     }
 }
@@ -901,7 +911,7 @@ class RegistrationEvent {
 
         const eventId = EVENT_CONFIG.eventId;
 
-        const data = await this._api.getEvent({ eventId });
+        const data = await this._api.getEvent({ eventId: Number(eventId) });
 
         if (!data?.data) return;
 

@@ -39,13 +39,23 @@ class BaseApi {
         return fetch(`${this._baseUrl}${url}`, options).then(this._getResponseData);
     }
 
+    _getDefaultContext() {
+        if (!EVENT_CONFIG) return {};
+
+        return {
+            siteId: EVENT_CONFIG?.siteId || "",
+            companyId: EVENT_CONFIG?.companyId || "",
+            currentUserId: EVENT_CONFIG?.currentUserId || "",
+        };
+    }
+
     _getDefaultParams() {
         return {
             request: {
                 method: "POST",
                 timestamp: new Date().toISOString(),
             },
-            context: EVENT_CONFIG ? EVENT_CONFIG : {},
+            context: this._getDefaultContext(),
         };
     }
 }
@@ -105,8 +115,8 @@ class FridayApi extends BaseApi {
 //classes
 class Modal {
     _config = {
-        closeBtnSelector: ".modal-close",
-        openModalClass: "modal_is-open",
+        closeBtnSelector: ".c-modal-close",
+        openModalClass: "c-modal_is-open",
     };
 
     constructor(root) {
