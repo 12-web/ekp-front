@@ -966,10 +966,10 @@ class RegistrationEvent {
     NOT_EMPLOYEES_COMBOBOX = "not-employees";
     EMPLOYEES_COMBOBOX = "employees";
 
-    constructor() {
-        this._openBtn = document.querySelector('[data-modal="registration-event-modal"]');
+    constructor(root, openBtn) {
+        this._openBtn = openBtn;
 
-        const modal = document.querySelector(".registration-event-modal");
+        const modal = root;
         this._modal = new Modal(modal);
 
         const empCombobox = modal.querySelector(".registration-event-form__combobox_type_em");
@@ -1353,8 +1353,8 @@ class EventListItem {
 }
 
 class UserEventsList {
-    constructor() {
-        this._root = document.querySelector(".registration-event-list");
+    constructor(root) {
+        this._root = root;
 
         this._onUnSubscribeClick = this._onUnSubscribeClick.bind(this);
         this._onConfirmClick = this._onConfirmClick.bind(this);
@@ -1451,6 +1451,14 @@ class UserEventsList {
 }
 
 //init
-const userEventsList = new UserEventsList();
+const userEventsListEl = document.querySelector(".registration-event-list");
+if (userEventsListEl) {
+    new UserEventsList(userEventsListEl);
+}
 
-const registrationEvent = new RegistrationEvent();
+const registrationEventModalEl = document.querySelector(".registration-event-modal");
+const registrationEventBtnEl = document.querySelector('[data-modal="registration-event-modal"]');
+
+if (registrationEventModalEl && registrationEventBtnEl) {
+    new RegistrationEvent(registrationEventModalEl, registrationEventBtnEl);
+}
