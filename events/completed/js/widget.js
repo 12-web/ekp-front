@@ -730,6 +730,7 @@ class RegistrationEvent {
 
         try {
             const request = {
+                eventId: Number(this._eventId),
                 companyEmployees: this._employees.map((input) => input.value),
                 notCompanyEmployees: this._notEmployees.map((input) => input.value),
                 intervalId: this._interval.intervalId,
@@ -909,9 +910,9 @@ class RegistrationEvent {
     async init(withoutInformer = false) {
         if (!EVENT_CONFIG.eventId) return;
 
-        const eventId = EVENT_CONFIG.eventId;
+        this._eventId = EVENT_CONFIG.eventId;
 
-        const data = await this._api.getEvent({ eventId: Number(eventId) });
+        const data = await this._api.getEvent({ eventId: Number(this._eventId) });
 
         if (!data?.data) return;
 
@@ -1062,7 +1063,7 @@ class UserEventsList {
             headers: {
                 "Content-Type": "application/json",
             },
-            baseUrl: EVENT_CONFIG?.baseURL || "/",
+            baseUrl: EVENT_CONFIG?.baseURL || "/o/event-registration-api",
         });
 
         this.init();
