@@ -329,7 +329,7 @@ class Friday {
         try {
             const data = await this._api.getFridayUserInfo();
 
-            if (data.response.status === "success") {
+            if (data.response?.status === "success") {
                 return data.data;
             }
         } catch (err) {}
@@ -349,7 +349,7 @@ class Friday {
                 data = await this._api.registerOnFriday(requestData);
             }
 
-            if (data.response.status === "success") {
+            if (data.response?.status === "success") {
                 this._interestsModal.close();
                 this.init();
             }
@@ -389,7 +389,7 @@ class Friday {
         try {
             const data = await this._api.unregisterFriday();
 
-            if (data.response.status === "success") {
+            if (data.response?.status === "success") {
                 this.init();
                 this._unSubscribeConfirmModal.close();
             }
