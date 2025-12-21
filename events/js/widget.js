@@ -1138,7 +1138,7 @@ class RegistrationEvent {
                 usersLimit: 20,
             },
         };
-        const data = this._api.getUsers(request);
+        const data = await this._api.getUsers(request);
 
         if (data?.data?.items) {
             this._empCombobox.setValues(data.data.items);
