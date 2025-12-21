@@ -1377,7 +1377,7 @@ class UserEventsList {
             headers: {
                 "Content-Type": "application/json",
             },
-            baseUrl: EVENT_CONFIG?.baseURL || "/",
+            baseUrl: EVENT_CONFIG?.baseURL || "/o/event-registration-api",
         });
 
         this.init();
