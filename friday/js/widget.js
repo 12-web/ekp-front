@@ -66,9 +66,10 @@ class FridayApi extends BaseApi {
     }
 
     getFridayUserInfo() {
+        console.log(this._getDefaultParams());
         return mockFridayUserData;
 
-        return this._request("/o/friday/certain_user", {
+        return this._request("/certain_user", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify(this._getDefaultParams()),
@@ -76,9 +77,13 @@ class FridayApi extends BaseApi {
     }
 
     registerOnFriday(data) {
+        console.log({
+            data,
+            ...this._getDefaultParams(),
+        });
         return mockFridayUserData;
 
-        return this._request("/o/friday/_register", {
+        return this._request("/_register", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify({
@@ -89,9 +94,13 @@ class FridayApi extends BaseApi {
     }
 
     updateFridayUser(data) {
+        console.log({
+            data,
+            ...this._getDefaultParams(),
+        });
         return mockFridayUserData;
 
-        return this._request("/o/friday/user/update", {
+        return this._request("/user/update", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify({
@@ -102,9 +111,10 @@ class FridayApi extends BaseApi {
     }
 
     unregisterFriday() {
+        console.log(this._getDefaultParams());
         return mockFridayUserData;
 
-        return this._request("/o/friday/_unregister", {
+        return this._request("/_unregister", {
             method: "POST",
             headers: this._headers,
             body: JSON.stringify(this._getDefaultParams()),
@@ -313,8 +323,8 @@ class InterestsModal extends Modal {
 }
 
 class Friday {
-    constructor() {
-        this._root = document.querySelector(".friday");
+    constructor(root) {
+        this._root = root;
         this._unSubHandles = this._root.querySelector(".friday-action__handles-unsub");
         this._subHandles = this._root.querySelector(".friday-action__handles-sub");
 
@@ -329,13 +339,15 @@ class Friday {
         this._onSubmitCb = this._onSubmitCb.bind(this);
 
         const confirmModalEl = this._root.querySelector(".friday-unsubscribe-confirm-modal");
-        this._unSubscribeConfirmModal = new ConfirmModal(
-            confirmModalEl,
-            this._onUnSubscribeConfirmClick
-        );
+        confirmModalEl &&
+            (this._unSubscribeConfirmModal = new ConfirmModal(
+                confirmModalEl,
+                this._onUnSubscribeConfirmClick
+            ));
 
         const interestsModalEl = this._root.querySelector(".friday-interests-modal");
-        this._interestsModal = new InterestsModal(interestsModalEl, this._onSubmitCb);
+        interestsModalEl &&
+            (this._interestsModal = new InterestsModal(interestsModalEl, this._onSubmitCb));
 
         const coupleEl = this._root.querySelector(".friday-couple");
         coupleEl && (this._couple = new CoupleInfo(coupleEl));
@@ -344,7 +356,7 @@ class Friday {
             headers: {
                 "Content-Type": "application/json",
             },
-            baseUrl: EVENT_CONFIG?.baseURL || "/",
+            baseUrl: EVENT_CONFIG?.baseURL || "/o/friday",
         });
 
         this.init();
@@ -439,4 +451,7 @@ class Friday {
 }
 
 //init
-const friday = new Friday();
+const fridayEl = document.querySelector(".friday");
+if (fridayEl) {
+    new Friday(fridayEl);
+}
