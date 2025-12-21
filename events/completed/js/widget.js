@@ -1111,7 +1111,7 @@ class UserEventsList {
                 eventId: Number(this._unsubscribingEventId),
             });
 
-            if (data?.response.success) {
+            if (data?.response?.status === "success") {
                 this.init();
                 this._confirmModal.close();
             }
