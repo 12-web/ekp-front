@@ -66,7 +66,6 @@ class FridayApi extends BaseApi {
     }
 
     getFridayUserInfo() {
-        console.log(this._getDefaultParams());
         return mockFridayUserData;
 
         return this._request("/certain_user", {
@@ -77,10 +76,6 @@ class FridayApi extends BaseApi {
     }
 
     registerOnFriday(data) {
-        console.log({
-            data,
-            ...this._getDefaultParams(),
-        });
         return mockFridayUserData;
 
         return this._request("/_register", {
@@ -94,10 +89,6 @@ class FridayApi extends BaseApi {
     }
 
     updateFridayUser(data) {
-        console.log({
-            data,
-            ...this._getDefaultParams(),
-        });
         return mockFridayUserData;
 
         return this._request("/user/update", {

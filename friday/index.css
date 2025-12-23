@@ -1,5 +1,3 @@
-/* страница Просто Огонь */
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
@@ -598,19 +596,4 @@ body {
 
 .friday-couple__user {
     margin-top: var(--space-l);
-}
-
-/* убрать после интеграции */
-
-main {
-    display: flex;
-    padding: 50px;
-}
-
-aside {
-    width: 361px;
-    height: 400px;
-    background-color: grey;
-    margin-right: 46px;
-    flex-shrink: 0;
 }
