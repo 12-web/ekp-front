@@ -837,9 +837,9 @@ class BenefitForm {
             const request = await this._prepareRequestFromHTML();
 
             const res = await this._api.applyBenefit(request);
-            const fileLink = res?.data.downloadUrl;
+            const fileLink = res?.data?.downloadUrl;
 
-            if (res?.response?.status === "success") {
+            if (res?.response?.status === "success" && fileLink) {
                 this._downloadFile(fileLink, "Документы");
             }
         } catch (err) {}
