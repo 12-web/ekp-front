@@ -706,6 +706,7 @@ uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
             <p class="stage-item__text _font-size-m _line-height-normal">
                 Не откладывайте встречу, начинайте общаться сразу
             </p>
+            <a class="stage-item__link" href="./files/file.pdf">Как завязать разговор</a>
         </li>
     </ul>
     <div class="friday__modal friday-interests-modal c-modal">

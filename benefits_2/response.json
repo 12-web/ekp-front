@@ -1,0 +1,275 @@
+{
+    "actions": {},
+    "facets": [],
+    "items": [
+        {
+            "creator": {
+                "additionalName": "",
+                "contentType": "UserAccount",
+                "familyName": "Терентьев",
+                "givenName": "Павел",
+                "id": 10733932,
+                "name": "Терентьев Павел",
+                "profileURL": "/web/terentev.pe"
+            },
+            "dateCreated": "2025-12-24T08:10:39Z",
+            "dateModified": "2025-12-24T08:28:35Z",
+            "draft": true,
+            "formFieldValues": [
+                {
+                    "name": "Поле21985454",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле70642588",
+                    "value": "Параметр31064982"
+                },
+                {
+                    "name": "Поле27256182",
+                    "value": ""
+                },
+                {
+                    "name": "Поле30398955",
+                    "value": ""
+                },
+                {
+                    "name": "Поле56099893",
+                    "value": ""
+                },
+                {
+                    "name": "Поле04690024",
+                    "value": ""
+                },
+                {
+                    "name": "Поле52832129",
+                    "value": "[]"
+                },
+                {
+                    "name": "Поле79534411",
+                    "value": ""
+                },
+                {
+                    "name": "Поле57044035",
+                    "value": ""
+                }
+            ],
+            "id": 10847368
+        },
+        {
+            "creator": {
+                "additionalName": "",
+                "contentType": "UserAccount",
+                "familyName": "Шемяков",
+                "givenName": "Данила",
+                "id": 5057601,
+                "name": "Шемяков Данила",
+                "profileURL": "/web/shemyakov.de"
+            },
+            "dateCreated": "2025-12-19T07:22:20Z",
+            "dateModified": "2025-12-19T08:01:52Z",
+            "draft": true,
+            "formFieldValues": [
+                {
+                    "name": "Поле21985454",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле70642588",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле27256182",
+                    "value": "Шемяков Данила"
+                },
+                {
+                    "name": "Поле30398955",
+                    "value": "12345678910"
+                },
+                {
+                    "name": "Поле56099893",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле04690024",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле52832129",
+                    "value": "[]"
+                },
+                {
+                    "name": "Поле79534411",
+                    "value": "Консультант"
+                },
+                {
+                    "name": "Поле57044035",
+                    "value": ""
+                }
+            ],
+            "id": 10772976
+        },
+        {
+            "creator": {
+                "additionalName": "",
+                "contentType": "UserAccount",
+                "familyName": "Шемяков",
+                "givenName": "Данила",
+                "id": 5057601,
+                "name": "Шемяков Данила",
+                "profileURL": "/web/shemyakov.de"
+            },
+            "dateCreated": "2025-12-19T07:21:20Z",
+            "dateModified": "2025-12-19T07:21:20Z",
+            "draft": true,
+            "formFieldValues": [
+                {
+                    "name": "Поле21985454",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле70642588",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле27256182",
+                    "value": "Шемяков Данила"
+                },
+                {
+                    "name": "Поле30398955",
+                    "value": "12345678910"
+                },
+                {
+                    "name": "Поле56099893",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле04690024",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле52832129",
+                    "value": "[]"
+                },
+                {
+                    "name": "Поле79534411",
+                    "value": "Консультант"
+                },
+                {
+                    "name": "Поле57044035",
+                    "value": ""
+                }
+            ],
+            "id": 10772956
+        },
+        {
+            "creator": {
+                "additionalName": "",
+                "contentType": "UserAccount",
+                "familyName": "Шемяков",
+                "givenName": "Данила",
+                "id": 5057601,
+                "name": "Шемяков Данила",
+                "profileURL": "/web/shemyakov.de"
+            },
+            "dateCreated": "2025-12-19T07:19:19Z",
+            "dateModified": "2025-12-19T07:20:20Z",
+            "draft": true,
+            "formFieldValues": [
+                {
+                    "name": "Поле21985454",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле70642588",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле27256182",
+                    "value": "Шемяков Данила"
+                },
+                {
+                    "name": "Поле30398955",
+                    "value": "12345678910"
+                },
+                {
+                    "name": "Поле56099893",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле04690024",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле52832129",
+                    "value": "[]"
+                },
+                {
+                    "name": "Поле79534411",
+                    "value": "Консультант"
+                },
+                {
+                    "name": "Поле57044035",
+                    "value": ""
+                }
+            ],
+            "id": 10772928
+        },
+        {
+            "creator": {
+                "additionalName": "",
+                "contentType": "UserAccount",
+                "familyName": "Шемяков",
+                "givenName": "Данила",
+                "id": 5057601,
+                "name": "Шемяков Данила",
+                "profileURL": "/web/shemyakov.de"
+            },
+            "dateCreated": "2025-12-19T07:17:28Z",
+            "dateModified": "2025-12-19T07:17:28Z",
+            "draft": true,
+            "formFieldValues": [
+                {
+                    "name": "Поле21985454",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле70642588",
+                    "value": "Параметр62088148"
+                },
+                {
+                    "name": "Поле27256182",
+                    "value": "Шемяков Данила"
+                },
+                {
+                    "name": "Поле30398955",
+                    "value": "123456789101"
+                },
+                {
+                    "name": "Поле56099893",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле04690024",
+                    "value": "ПАО \"Газпром нефть\""
+                },
+                {
+                    "name": "Поле52832129",
+                    "value": "[]"
+                },
+                {
+                    "name": "Поле79534411",
+                    "value": "Консультант"
+                },
+                {
+                    "name": "Поле57044035",
+                    "value": ""
+                }
+            ],
+            "id": 10772891
+        }
+    ],
+    "lastPage": 1,
+    "page": 1,
+    "pageSize": 100,
+    "totalCount": 5
+}

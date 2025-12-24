@@ -1,0 +1,293 @@
+{
+    "availableLanguages": ["ru-RU"],
+    "creator": {
+        "additionalName": "",
+        "contentType": "UserAccount",
+        "familyName": "Шемяков",
+        "givenName": "Данила",
+        "id": 5057601,
+        "name": "Шемяков Данила",
+        "profileURL": "/web/shemyakov.de"
+    },
+    "dateCreated": "2025-10-29T10:39:19Z",
+    "dateModified": "2025-12-19T07:21:36Z",
+    "defaultLanguage": "ru_RU",
+    "description": "\n",
+    "id": 10666930,
+    "name": "Форма согласия",
+    "structure": {
+        "availableLanguages": ["ru-RU"],
+        "creator": {
+            "additionalName": "",
+            "contentType": "UserAccount",
+            "familyName": "Шемяков",
+            "givenName": "Данила",
+            "id": 5057601,
+            "name": "Шемяков Данила",
+            "profileURL": "/web/shemyakov.de"
+        },
+        "dateCreated": "2025-10-29T10:39:19Z",
+        "dateModified": "2025-12-19T07:21:36Z",
+        "description": "\n",
+        "formPages": [
+            {
+                "formFields": [
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": true,
+                        "inputControl": "paragraph",
+                        "label": "Стартовый текст",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле37943214",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true,
+                        "text": "<div class=\"clearfix component-paragraph text-break\" data-lfr-editable-id=\"element-text\" data-lfr-editable-type=\"rich-text\"><span style=\"color:#000000; font-size:16px;\">При&nbsp;участии&nbsp;в&nbsp;проекте&nbsp;Вы&nbsp;можете&nbsp;выбрать&nbsp;те&nbsp;льготы,&nbsp;которые необходимы&nbsp;именно&nbsp;Вам.<br />\n<br />\nИнформация&nbsp;о&nbsp;проекте&nbsp;«Гибкие&nbsp;льготы»&nbsp;отражена&nbsp;в&nbsp;презентации.&nbsp;Если&nbsp;у&nbsp;Вас&nbsp;остались&nbsp;вопросы,&nbsp;Вы&nbsp;можете&nbsp;отправить&nbsp;их&nbsp;по&nbsp;электронной&nbsp;почте&nbsp;</span><a href=\"mailto:benefits.zap@gazprom-neft.ru\"><span style=\"color:#000000; font-size: 16px;\">benefits.zap@gazprom-neft.ru</span></a><span style=\"color:#000000;font-size: 16px;\">.<br />\n<br />\nПросим Вас выразить свое решение по участию в 3 этапе проекта.<br />\n<br />\nЕсли Вы готовы &nbsp;воспользоваться предложением – нажмите «Согласиться на участие в проекте «Гибкие льготы».<br />\n<br />\nВ случае, если Вы не готовы участвовать в проекте «Гибкие льготы», пожалуйста, нажмите «Отказаться от участия в проекте «Гибкие льготы».</span></div>\n"
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [
+                            {
+                                "label": "Оставить как есть, ничего не изменять",
+                                "value": "Параметр62088148"
+                            },
+                            {
+                                "label": "Перевести в гибкие льготы",
+                                "value": "Параметр31064982"
+                            }
+                        ],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "radio",
+                        "label": "Выберите опцию для льготы “Оплата питания” *",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле21985454",
+                        "predefinedValue": "[\"Параметр62088148\"]",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [
+                            {
+                                "label": "Оставить как есть, ничего не изменять",
+                                "value": "Параметр62088148"
+                            },
+                            {
+                                "label": "Перевести в гибкие льготы",
+                                "value": "Параметр31064982"
+                            }
+                        ],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "radio",
+                        "label": "Выберите опцию для льготы “Выплата на оздоровление к отпуску (20 000руб.)”",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле70642588",
+                        "predefinedValue": "[\"Параметр62088148\"]",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": true,
+                        "inputControl": "paragraph",
+                        "label": "",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле93083727",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true,
+                        "text": "<h4 class=\"text-dark\"><b style=\"color:#000000;\">2 ШАГ. Персональные данные</b></h4>\n"
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "ФИО",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле27256182",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "Номер телефона",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле30398955",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true,
+                        "validation": {
+                            "errorMessage": "Не более 11 символов"
+                        }
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "Компания",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле56099893",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "Подразделения",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле04690024",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [
+                            {
+                                "label": "Филиал 1",
+                                "value": "Параметр24255555"
+                            },
+                            {
+                                "label": "Филиал 2",
+                                "value": "Параметр19803899"
+                            },
+                            {
+                                "label": "Филиал 3",
+                                "value": "Параметр24565455"
+                            },
+                            {
+                                "label": "Филиал 4",
+                                "value": "Параметр55203748"
+                            },
+                            {
+                                "label": "Филиал 5",
+                                "value": "Параметр58287229"
+                            },
+                            {
+                                "label": "Филиал 6",
+                                "value": "Параметр26080256"
+                            },
+                            {
+                                "label": "Филиал 7",
+                                "value": "Параметр08757823"
+                            }
+                        ],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "select",
+                        "label": "Отделения банка",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле52832129",
+                        "predefinedValue": "[]",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "Должность",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле79534411",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": true,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "singleline",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": false,
+                        "inputControl": "text",
+                        "label": "Дата",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле57044035",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true
+                    },
+                    {
+                        "dataType": "string",
+                        "displayStyle": "",
+                        "formFieldOptions": [],
+                        "hasFormRules": false,
+                        "immutable": true,
+                        "inputControl": "paragraph",
+                        "label": "Подтвердите отправку",
+                        "localizable": true,
+                        "multiple": false,
+                        "name": "Поле19603894",
+                        "predefinedValue": "",
+                        "repeatable": false,
+                        "required": false,
+                        "showLabel": true,
+                        "text": "<p>Подтвердите отправку указанной информации для участия в проекте \"Гибкие льготы\" kdfjnbkdfjngbkdngbkdыловмлвамлоымолавn</p>\n"
+                    }
+                ],
+                "headline": "",
+                "text": "Просим осуществить выбор льгот ниже."
+            }
+        ],
+        "formSuccessPage": {
+            "description": "<p>Пожалуйста, распечатайте и подпишите загруженные шаблоны, а затем, предоставьте их Брикман Елене Викторовне &lt;Brikman.EV@gazprom-neft.ru&gt; (ДД «Столыпин», Кабинет 1704).</p>\n\n<p>Пересылка персональных данных по почте запрещена</p>\n",
+            "headline": "Спасибо за то, что воспользовались формой!"
+        },
+        "id": 10666926,
+        "name": "Форма согласия",
+        "siteId": 10666787
+    }
+}
