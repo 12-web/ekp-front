@@ -741,7 +741,7 @@ class BenefitForm {
 
             return res?.structure?.formPages[0]?.formFields?.filter((field) => {
                 return Object.values(this._fieldsName).some((fieldName) =>
-                    field.label.includes(fieldName.label)
+                    field?.label?.includes(fieldName.label)
                 );
             });
         } catch (err) {}
@@ -750,14 +750,14 @@ class BenefitForm {
     _getSelectResponse(dataFileds, fieldName, fieldResponse) {
         const response = dataFileds
             .find((field) => field.label === fieldName)
-            ?.formFieldOptions.find((opt) => opt.value === fieldResponse);
+            ?.formFieldOptions?.find((opt) => opt.value === fieldResponse);
         return response?.label;
     }
 
     _getRadioResponse(dataFileds, fieldName, fieldResponse) {
         const response = dataFileds
             ?.find((field) => this._checkIncludesString(field.label, fieldName))
-            ?.formFieldOptions.find((opt) => opt.value === fieldResponse);
+            ?.formFieldOptions?.find((opt) => opt.value === fieldResponse);
         return response?.label === "Перевести в гибкие льготы";
     }
 
@@ -842,7 +842,7 @@ class BenefitForm {
             const fileLink = res?.data?.downloadUrl;
 
             if (res?.response?.status === "success" && fileLink) {
-                //this._downloadFile(fileLink, "Документы");
+                this._downloadFile(fileLink, "Документы");
             }
         } catch (err) {}
     }
