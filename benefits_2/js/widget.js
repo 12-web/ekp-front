@@ -626,6 +626,7 @@ class BenefitApi extends BaseApi {
 
     applyBenefit(data) {
         return mockApplyResponse;
+
         return this._request("/selection/export", {
             method: "POST",
             headers: this._headers,
@@ -655,14 +656,6 @@ class FormApi extends BaseApi {
         return mockFormData;
 
         return this._request(`/${formId}/form-records?page=1&pageSize=100`, {
-            headers: this._headers,
-        });
-    }
-
-    getFormResponse(formId) {
-        return mockFormResponse;
-
-        return this._request(`/${formId}/`, {
             headers: this._headers,
         });
     }
@@ -746,14 +739,6 @@ class BenefitForm {
         } catch (err) {}
     }
 
-    async _getFormResponse() {
-        try {
-            const res = await this._formApi.getFormResponse(this._formId);
-
-            return res?.items[0]?.formFieldValues;
-        } catch (err) {}
-    }
-
     _getSelectResponse(dataFileds, fieldName, fieldResponse) {
         const response = dataFileds
             .find((field) => field.label === fieldName)
@@ -786,42 +771,6 @@ class BenefitForm {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-    }
-
-    async _prepareRequestFromServer() {
-        const dataFileds = await this._getFormData();
-        const responseFields = await this._getFormResponse();
-
-        if (!dataFileds || !responseFields) return;
-
-        const request = {};
-
-        for (const key in this._fieldsName) {
-            const fieldResponse = this._getFieldResponse(
-                dataFileds,
-                responseFields,
-                this._fieldsName[key].label
-            );
-            request[this._fieldsName[key].field] = fieldResponse;
-
-            if (key === "food") {
-                request.paymentFood = this._getRadioResponse(
-                    dataFileds,
-                    this._fieldsName.food.label,
-                    fieldResponse
-                );
-            }
-
-            if (key === "vacation") {
-                request.payout = this._getRadioResponse(
-                    dataFileds,
-                    this._fieldsName.vacation.label,
-                    fieldResponse
-                );
-            }
-        }
-
-        return request;
     }
 
     async _prepareRequestFromHTML() {
