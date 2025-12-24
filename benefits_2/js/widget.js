@@ -851,9 +851,9 @@ class BenefitForm {
 
         try {
             const res = await this._api.refuseBenefit();
-            const fileLink = res?.data.arch;
+            const fileLink = res?.data?.downloadUrl;
 
-            if (res?.response?.status === "success") {
+            if (res?.response?.status === "success" && fileLink) {
                 this._downloadFile(fileLink, "Документы");
             }
         } catch (err) {}
