@@ -715,7 +715,7 @@ class BenefitForm {
 
         this._formApi = new FormApi({
             headers: {
-                "X-CSRF-Token": "Liferay.authToken", // снять кавычки при переносе
+                "X-CSRF-Token": "Liferay.authToken", // "Liferay.authToken" - снять кавычки при переносе
             },
             baseUrl: `/o/headless-form/v1.0/forms`,
         });
