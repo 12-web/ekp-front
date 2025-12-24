@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовая форма для перехвата</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="tel"], select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Тестовая форма для перехвата данных</h1>
+    
+    <div id="welcomeSection">
+        <p>Вы стали участником программы Льготы.</p>
+        <button id="participateBtn">Участвовать</button>
+        <button id="refuseBtn" style="background-color: #dc3545; margin-left: 10px;">Отказаться</button>
+    </div>    
+    
+    <div id="refuseConfirmationModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+        <div class="modal-content" style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 400px; border-radius: 8px; text-align: center;">
+            <p>Вы отказываетесь от участия</p>
+            <button id="confirmRefuseBtn" style="margin-right: 10px;">Подтвердить</button>
+            <button id="cancelRefuseBtn" style="background-color: #6c757d;">Отмена</button>
+        </div>
+    </div>
+    
+    <form id="testForm" style="display: none;">
+        <h2>Форма участия в программе</h2>
+        <div class="form-group">
+            <label for="field_fullName">ФИО:</label>
+            <input type="text" id="field_fullName" name="fullName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="field_phoneNumber">Телефон:</label>
+            <input type="tel" id="field_phoneNumber" name="phoneNumber" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="field_company">Компания:</label>
+            <input type="text" id="field_company" name="_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_hfwi_ddm$$Поле21985456$i9Y70iHJ$2$$ru_RU" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="field_position">Должность:</label>
+            <input type="text" id="field_position" name="_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_hfwi_ddm$$Поле21985457$i9Y70iHJ$3$$ru_RU" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="field_department">Подразделение:</label>
+            <input type="text" id="field_department" name="_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_hfwi_ddm$$Поле21985458$i9Y70iHJ$4$$ru_RU" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="field_bankBranch">Отделения банка:</label>
+            <select id="field_bankBranch" name="_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_hfwi_ddm$$Поле21985459$i9Y70iHJ$5$$ru_RU" required>
+                <option value="">Выберите отделение</option>
+                <option value="Центральное">Центральное</option>
+                <option value="Северное">Северное</option>
+                <option value="Южное">Южное</option>
+                <option value="Восточное">Восточное</option>
+                <option value="Западное">Западное</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="field_date">Дата оформления:</label>
+            <input type="text" id="field_date" name="_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_hfwi_ddm$$Поле21985460$i9Y70iHJ$6$$ru_RU" required>
+        </div>
+        
+        
+        <button type="button" id="generateBtn">Сформировать</button>
+        <button type="button" id="cancelFormBtn" style="background-color: #6c757d; margin-left: 10px;">Отмена</button>
+        
+        <div id="confirmationModal" class="modal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5);">
+            <div class="modal-content" style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 400px; border-radius: 8px; text-align: center;">
+                <p>Вы уверены?</p>
+                <button id="confirmSubmitBtn" style="margin-right: 10px;">Отправить</button>
+                <button id="cancelModalBtn" style="background-color: #6c757d;">Отмена</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="form-interceptor.js"></script>
+    
+    <script>       
+        window.EVENT_CONFIG = {
+            "companyId": "20097",
+            "currentUserId": "45145",
+            "siteId": "20121"
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const participateBtn = document.getElementById('participateBtn'); // Кнопка Участвовать
+            const refuseBtn = document.getElementById('refuseBtn'); // Кнопка Отказаться
+            const form = document.getElementById('testForm'); // Форма
+            const welcomeSection = document.getElementById('welcomeSection');       
+           
+            participateBtn.addEventListener('click', function() {
+                welcomeSection.style.display = 'none';
+                form.style.display = 'block';
+            });
+            
+            // Если отказывается
+            const refuseConfirmationModal = document.getElementById('refuseConfirmationModal');
+            const confirmRefuseBtn = document.getElementById('confirmRefuseBtn');
+            const cancelRefuseBtn = document.getElementById('cancelRefuseBtn');
+            
+            refuseBtn.addEventListener('click', function() {
+                refuseConfirmationModal.style.display = 'block';
+            });
+                        
+            confirmRefuseBtn.addEventListener('click', function() {
+                refuseConfirmationModal.style.display = 'none';
+                // Пока просто пустая data, если Нажата кнопка Отказаться
+                const emptyFormData = {};
+                submitEmptyForm(emptyFormData);
+            });
+                        
+            cancelRefuseBtn.addEventListener('click', function() {
+                refuseConfirmationModal.style.display = 'none';
+            });            
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === refuseConfirmationModal) {
+                    refuseConfirmationModal.style.display = 'none';
+                }
+            });
+
+            // Если участвует            
+            const generateBtn = document.getElementById('generateBtn'); // Кнопка Сформировать
+            const cancelFormBtn = document.getElementById('cancelFormBtn');
+            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn'); // Кнопка Отправить в модалке
+            const cancelModalBtn = document.getElementById('cancelModalBtn');
+            const confirmationModal = document.getElementById('confirmationModal');
+            
+            generateBtn.addEventListener('click', function() {
+                confirmationModal.style.display = 'block';
+            });            
+           
+            cancelFormBtn.addEventListener('click', function() {
+                form.reset();
+                form.style.display = 'none';
+                document.getElementById('welcomeSection').style.display = 'block';
+            });            
+           
+            cancelModalBtn.addEventListener('click', function() {
+                confirmationModal.style.display = 'none';
+            });
+            
+            
+            confirmSubmitBtn.addEventListener('click', function() {
+                confirmationModal.style.display = 'none';
+                // Отправляем форму на льготы
+                form.dispatchEvent(new Event('submit', { cancelable: true }));
+            });            
+           
+            window.addEventListener('click', function(event) {
+                if (event.target === confirmationModal) {
+                    confirmationModal.style.display = 'none';
+                }
+            });
+            
+            
+            form.addEventListener('submit', function(event) {               
+                event.preventDefault();
+            });            
+            
+            async function submitEmptyForm(data) {
+                const api = new BaseApi({
+                    baseUrl: '/o',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const jsonData = {
+                    "data": data,
+                    ...api._getDefaultParams()
+                };
+                
+                try {
+                    const result = await api._request('/export', {
+                        method: 'POST',
+                        headers: api._headers,
+                        body: JSON.stringify(jsonData)
+                    });
+                    
+                    if (result && result.data && result.data.downloadUrl) {                       
+                        const link = document.createElement('a');
+                        link.href = result.data.downloadUrl;
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
+                } catch (error) {
+                    alert('Произошла ошибка при отправке данных');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
