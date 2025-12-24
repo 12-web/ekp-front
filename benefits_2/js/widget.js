@@ -637,7 +637,7 @@ class BenefitApi extends BaseApi {
     }
 
     refuseBenefit() {
-        console.log(this._getDefaultParams());
+        return mockApplyResponse;
         return this._request("/selection/export", {
             method: "POST",
             headers: this._headers,
