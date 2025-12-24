@@ -579,7 +579,7 @@ const mockFormResponse = {
 
 const mockApplyResponse = {
     data: {
-        arch: "../files/arch.zip",
+        downloadUrl: "../files/arch.zip",
     },
     response: {
         code: 200,
