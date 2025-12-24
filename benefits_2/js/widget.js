@@ -677,11 +677,11 @@ class BenefitForm {
 
         this._fieldsName = {
             food: {
-                label: "Выберите опцию для льготы “Оплата питания” *",
+                label: "Оплата питания",
                 field: "paymentFood",
             },
             vacation: {
-                label: "Выберите опцию для льготы “Выплата на оздоровление к отпуску (20 000руб.)”",
+                label: "Выплата на оздоровление к отпуску",
                 field: "payout",
             },
             name: {
@@ -740,8 +740,8 @@ class BenefitForm {
             const res = await this._formApi.getFormData(this._formId);
 
             return res?.structure?.formPages[0]?.formFields?.filter((field) => {
-                return Object.values(this._fieldsName).some(
-                    (fieldName) => fieldName.label === field.label
+                return Object.values(this._fieldsName).some((fieldName) =>
+                    field.label.includes(fieldName.label)
                 );
             });
         } catch (err) {}
@@ -756,18 +756,15 @@ class BenefitForm {
 
     _getRadioResponse(dataFileds, fieldName, fieldResponse) {
         const response = dataFileds
-            .find((field) => field.label === fieldName)
+            ?.find((field) => this._checkIncludesString(field.label, fieldName))
             ?.formFieldOptions.find((opt) => opt.value === fieldResponse);
         return response?.label === "Перевести в гибкие льготы";
     }
 
-    _getFieldResponse(dataFileds, responseFields, name) {
-        const fieldName = dataFileds.find((field) => field.label === name)?.name;
-        return responseFields.find((field) => field.name === fieldName)?.value;
-    }
-
     _getInputName(label) {
-        return Object.values(this._fieldsName).find((fieldName) => fieldName.label === label);
+        return Object.values(this._fieldsName).find((fieldName) =>
+            this._checkIncludesString(label, fieldName.label)
+        );
     }
 
     _downloadFile(url, fileName) {
@@ -781,6 +778,10 @@ class BenefitForm {
         document.body.removeChild(link);
     }
 
+    _checkIncludesString(first, second) {
+        return first.toLowerCase().includes(second.toLowerCase());
+    }
+
     async _prepareRequestFromHTML() {
         const request = {};
         const dataFields = await this._getFormData();
@@ -791,10 +792,11 @@ class BenefitForm {
             const textInput = el?.querySelector("input");
             if (textInput) {
                 const inputFieldData = this._getInputName(field.label);
+
                 request[inputFieldData.field] = textInput.value;
             }
 
-            if (field.label === this._fieldsName.food.label) {
+            if (this._checkIncludesString(field.label, this._fieldsName.food.label)) {
                 const radio = el.querySelector("input:checked");
                 const value = radio.value;
 
@@ -805,7 +807,7 @@ class BenefitForm {
                 );
             }
 
-            if (field.label === this._fieldsName.vacation.label) {
+            if (this._checkIncludesString(field.label, this._fieldsName.vacation.label)) {
                 const radio = el.querySelector("input:checked");
                 const value = radio.value;
 
@@ -816,7 +818,7 @@ class BenefitForm {
                 );
             }
 
-            if (field.label === this._fieldsName.bank.label) {
+            if (this._checkIncludesString(field.label, this._fieldsName.bank.label)) {
                 const selector = el.querySelector("select");
                 request.bankBranch = this._getSelectResponse(
                     dataFields,
@@ -835,12 +837,12 @@ class BenefitForm {
 
         try {
             const request = await this._prepareRequestFromHTML();
-
+            console.log(request);
             const res = await this._api.applyBenefit(request);
             const fileLink = res?.data?.downloadUrl;
 
             if (res?.response?.status === "success" && fileLink) {
-                this._downloadFile(fileLink, "Документы");
+                //this._downloadFile(fileLink, "Документы");
             }
         } catch (err) {}
     }
