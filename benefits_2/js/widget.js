@@ -636,14 +636,12 @@ class BenefitApi extends BaseApi {
         });
     }
 
-    refuseBenefit(data) {
+    refuseBenefit() {
+        console.log(this._getDefaultParams());
         return this._request("/selection/export", {
             method: "POST",
             headers: this._headers,
-            body: JSON.stringify({
-                data,
-                ...this._getDefaultParams(),
-            }),
+            body: JSON.stringify(this._getDefaultParams()),
         });
     }
 }
@@ -740,7 +738,11 @@ class BenefitForm {
         try {
             const res = await this._formApi.getFormData(this._formId);
 
-            return res?.structure?.formPages[0]?.formFields;
+            return res?.structure?.formPages[0]?.formFields?.filter((field) => {
+                return Object.values(this._fieldsName).some(
+                    (fieldName) => fieldName.label === field.label
+                );
+            });
         } catch (err) {}
     }
 
@@ -750,6 +752,13 @@ class BenefitForm {
 
             return res?.items[0]?.formFieldValues;
         } catch (err) {}
+    }
+
+    _getSelectResponse(dataFileds, fieldName, fieldResponse) {
+        const response = dataFileds
+            .find((field) => field.label === fieldName)
+            ?.formFieldOptions.find((opt) => opt.value === fieldResponse);
+        return response?.label;
     }
 
     _getRadioResponse(dataFileds, fieldName, fieldResponse) {
@@ -764,6 +773,10 @@ class BenefitForm {
         return responseFields.find((field) => field.name === fieldName)?.value;
     }
 
+    _getInputName(label) {
+        return Object.values(this._fieldsName).find((fieldName) => fieldName.label === label);
+    }
+
     _downloadFile(url, fileName) {
         const link = document.createElement("a");
         link.href = url;
@@ -775,7 +788,7 @@ class BenefitForm {
         document.body.removeChild(link);
     }
 
-    async _prepareRequest() {
+    async _prepareRequestFromServer() {
         const dataFileds = await this._getFormData();
         const responseFields = await this._getFormResponse();
 
@@ -811,19 +824,25 @@ class BenefitForm {
         return request;
     }
 
-    async _prepareRequest2() {
+    async _prepareRequestFromHTML() {
         const request = {};
-        const dataFileds = await this._getFormData();
+        const dataFields = await this._getFormData();
 
-        dataFileds.forEach((field) => {
+        dataFields.forEach((field) => {
             const el = document.querySelector(`[data-field-name=${field.name}]`);
+
+            const textInput = el?.querySelector("input");
+            if (textInput) {
+                const inputFieldData = this._getInputName(field.label);
+                request[inputFieldData.field] = textInput.value;
+            }
 
             if (field.label === this._fieldsName.food.label) {
                 const radio = el.querySelector("input:checked");
                 const value = radio.value;
 
                 request.paymentFood = this._getRadioResponse(
-                    dataFileds,
+                    dataFields,
                     this._fieldsName.food.label,
                     value
                 );
@@ -834,9 +853,18 @@ class BenefitForm {
                 const value = radio.value;
 
                 request.payout = this._getRadioResponse(
-                    dataFileds,
+                    dataFields,
                     this._fieldsName.vacation.label,
                     value
+                );
+            }
+
+            if (field.label === this._fieldsName.bank.label) {
+                const selector = el.querySelector("select");
+                request.bankBranch = this._getSelectResponse(
+                    dataFields,
+                    this._fieldsName.bank.label,
+                    selector.value
                 );
             }
         });
@@ -849,21 +877,29 @@ class BenefitForm {
         e?.stopPropagation();
 
         try {
-            const request = await this._prepareRequest2();
-            console.log(request);
-            // const res = await this._api.applyBenefit(request);
-            // const fileLink = res?.data.arch;
+            const request = await this._prepareRequestFromHTML();
+
+            const res = await this._api.applyBenefit(request);
+            const fileLink = res?.data.arch;
 
             if (res?.response?.status === "success") {
-                //this._downloadFile(fileLink, "Архив");
+                this._downloadFile(fileLink, "Документы");
             }
         } catch (err) {}
     }
 
-    _onRefuseClick(e) {
+    async _onRefuseClick(e) {
         e?.preventDefault();
         e?.stopPropagation();
-        console.log(e);
+
+        try {
+            const res = await this._api.refuseBenefit();
+            const fileLink = res?.data.arch;
+
+            if (res?.response?.status === "success") {
+                this._downloadFile(fileLink, "Документы");
+            }
+        } catch (err) {}
     }
 }
 
