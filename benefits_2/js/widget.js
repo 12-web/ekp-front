@@ -473,7 +473,7 @@ class BenefitForm {
 
     _getSelectResponse(dataFileds, fieldName, fieldResponse) {
         const response = dataFileds
-            .find((field) => field.label === fieldName)
+            ?.find((field) => field.label === fieldName)
             ?.formFieldOptions?.find((opt) => opt.value === fieldResponse);
         return response?.label;
     }
@@ -486,7 +486,7 @@ class BenefitForm {
     }
 
     _getInputName(label) {
-        return Object.values(this._fieldsName).find((fieldName) =>
+        return Object.values(this._fieldsName)?.find((fieldName) =>
             this._checkIncludesString(label, fieldName.label)
         );
     }
