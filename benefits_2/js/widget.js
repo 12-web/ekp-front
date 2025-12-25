@@ -515,7 +515,7 @@ class BenefitForm {
             if (textInput) {
                 const inputFieldData = this._getInputName(field.label);
 
-                request[inputFieldData.field] = textInput.value;
+                inputFieldData && (request[inputFieldData.field] = textInput.value);
             }
 
             if (this._checkIncludesString(field.label, this._fieldsName.food.label)) {
