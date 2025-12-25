@@ -1023,9 +1023,9 @@
 
             this._unSubscribeBtn = template.querySelector('[data-id="button-register"]');
 
-            name.textContent = this._data.event.name;
-            date.textContent = this._data.event.date;
-            day.textContent = this._data.event.day;
+            name.textContent = this._data.event?.name;
+            date.textContent = this._data.event?.date;
+            day.textContent = this._data.event?.recordingIntervals[0]?.start;
 
             this._unSubscribeBtn?.addEventListener("click", this._onUnSubscribeClick);
 
