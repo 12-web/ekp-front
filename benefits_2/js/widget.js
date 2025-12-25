@@ -491,7 +491,7 @@ class BenefitForm {
         );
     }
 
-    _downloadFile(url, fileName) {
+    _downloadFile(url) {
         const link = document.createElement("a");
         link.href = url;
         link.style.display = "none";
@@ -564,7 +564,7 @@ class BenefitForm {
             const fileLink = res?.data?.downloadUrl;
 
             if (res?.response?.status === "success" && fileLink) {
-                this._downloadFile(fileLink, "Документы");
+                this._downloadFile(fileLink);
             }
         } catch (err) {}
     }
@@ -578,7 +578,7 @@ class BenefitForm {
             const fileLink = res?.data?.downloadUrl;
 
             if (res?.response?.status === "success" && fileLink) {
-                this._downloadFile(fileLink, "Документы");
+                this._downloadFile(fileLink);
             }
         } catch (err) {}
     }
