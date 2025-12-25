@@ -387,7 +387,7 @@ class FormApi extends BaseApi {
     getFormData(formId) {
         return mockFormData;
 
-        return this._request(`/${formId}/form-records?page=1&pageSize=100`, {
+        return this._request(`/${formId}`, {
             headers: this._headers,
         });
     }
@@ -442,7 +442,7 @@ class BenefitForm {
             headers: {
                 "X-CSRF-Token": "Liferay.authToken", // "Liferay.authToken" - снять кавычки при переносе
             },
-            baseUrl: `/o/headless-form/v1.0/forms`,
+            baseUrl: "/o/headless-form/v1.0/forms",
         });
 
         this._api = new BenefitApi({
