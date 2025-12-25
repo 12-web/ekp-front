@@ -253,7 +253,6 @@ class BenefitForm {
     }
 
     async _onRefuseClick(e) {
-        console.log(e);
         e?.preventDefault();
         e?.stopPropagation();
 
