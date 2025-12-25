@@ -81,7 +81,8 @@
         constructor(applyBtn, refuseBtn) {
             this._applyBtn = applyBtn;
             this._refuseBtn = refuseBtn;
-            this._formId = FORM_IDS;
+            this._formId = Number(document.querySelector("[data-benefits-id]")?.dataset.benefitsId);
+            console.log(this._formId);
 
             this._fieldsName = {
                 food: {
