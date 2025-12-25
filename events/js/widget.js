@@ -1,3 +1,12 @@
+// const mockData = {
+//     response: {
+//         code: 500,
+//         message: "ERROR! Impossible to find event by Id 60380",
+//         status: "error",
+//         timestamp: "2025-12-25T08:41:43.239377300Z",
+//     },
+// };
+
 const mockData = {
     data: {
         isClose: false,
@@ -1087,6 +1096,8 @@ class RegistrationEvent {
     }
 
     _onModalBtnClick() {
+        if (!this._data) return;
+
         this._modal.open();
         this._reset();
         this._form.reset();

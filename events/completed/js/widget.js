@@ -767,6 +767,8 @@ class RegistrationEvent {
     }
 
     _onModalBtnClick() {
+        if (!this._data) return;
+
         this._modal.open();
         this._reset();
         this._form.reset();
