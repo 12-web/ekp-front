@@ -1089,7 +1089,7 @@
 
             const template = document.getElementById("registration-event-list-item");
 
-            if (!data || !data.length) {
+            if (!data?.length) {
                 this._notFoundEl.classList.remove("_hidden");
             } else {
                 this._notFoundEl.classList.add("_hidden");
