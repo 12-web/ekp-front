@@ -1101,6 +1101,8 @@ class UserEventsList {
 
         if (data?.data) {
             this._initItems(data?.data);
+        } else {
+            this._clear();
         }
     }
 
