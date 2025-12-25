@@ -494,9 +494,7 @@ class BenefitForm {
     _downloadFile(url, fileName) {
         const link = document.createElement("a");
         link.href = url;
-
-        link.setAttribute("download", fileName || url.split("/").pop());
-
+        link.style.display = "none";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
