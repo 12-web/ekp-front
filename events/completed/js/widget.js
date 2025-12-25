@@ -1103,6 +1103,7 @@ class UserEventsList {
             this._initItems(data?.data);
         } else {
             this._clear();
+            this._notFoundEl.classList.remove("_hidden");
         }
     }
 
