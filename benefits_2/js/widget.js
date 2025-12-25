@@ -561,7 +561,7 @@ class BenefitForm {
 
         try {
             const request = await this._prepareRequestFromHTML();
-            console.log(request);
+
             const res = await this._api.applyBenefit(request);
             const fileLink = res?.data?.downloadUrl;
 
