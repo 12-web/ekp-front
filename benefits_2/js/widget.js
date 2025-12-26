@@ -43,6 +43,7 @@
         }
 
         applyBenefit(data) {
+            return true;
             return this._request("/selection/export", {
                 method: "POST",
                 headers: this._headers,
@@ -82,6 +83,8 @@
             this._applyBtn = applyBtn;
             this._refuseBtn = refuseBtn;
             this._formId = Number(document.querySelector("[data-benefits-id]")?.dataset.benefitsId);
+
+            this._form = document.querySelector("form[data-ddmforminstanceid='10884988']");
 
             this._fieldsName = {
                 food: {
@@ -249,6 +252,9 @@
 
                 if (res?.response?.status === "success" && fileLink) {
                     this._downloadFile(fileLink);
+
+                    this._form.dispatchEvent(new Event("submit", { bubbles: true }));
+                    window.location.reload();
                 }
             } catch (err) {}
         }
@@ -265,6 +271,9 @@
 
                 if (res?.response?.status === "success" && fileLink) {
                     this._downloadFile(fileLink);
+
+                    this._form.dispatchEvent(new Event("submit", { bubbles: true }));
+                    window.location.reload();
                 }
             } catch (err) {}
         }
@@ -277,3 +286,10 @@
         new BenefitForm(applyBenefitBtn, refuseBenefitBtn);
     }
 })();
+
+// const submit = document.querySelector(".botton");
+// const form = document.querySelector(".form");
+
+// submit.addEventListener("click", () => {
+//     form.dispatchEvent(new Event("submit", { bubbles: true }));
+// });
