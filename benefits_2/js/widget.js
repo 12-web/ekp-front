@@ -159,6 +159,8 @@
         }
 
         _getSelectResponse(dataFields, fieldName, fieldResponse) {
+            if (!dataFields || !fieldName || !fieldResponse) return;
+
             const response = dataFields
                 ?.find((field) => field.label === fieldName)
                 ?.formFieldOptions?.find((opt) => opt.value === fieldResponse);
@@ -166,6 +168,8 @@
         }
 
         _getRadioResponse(dataFields, fieldName, fieldResponse) {
+            if (!dataFields || !fieldName || !fieldResponse) return;
+
             const response = dataFields
                 ?.find((field) => this._checkIncludesString(field.label, fieldName))
                 ?.formFieldOptions?.find((opt) => opt.value === fieldResponse);
@@ -173,6 +177,8 @@
         }
 
         _getInputName(label) {
+            if (!label) return;
+
             return Object.values(this._fieldsName)?.find((fieldName) =>
                 this._checkIncludesString(label, fieldName.label)
             );
@@ -187,6 +193,8 @@
         }
 
         _checkIncludesString(first, second) {
+            if (!first || !second) return;
+
             return first.toLowerCase().includes(second.toLowerCase());
         }
 
@@ -205,7 +213,7 @@
                 }
 
                 if (this._checkIncludesString(field.label, this._fieldsName.food.label)) {
-                    const radio = el.querySelector("input:checked");
+                    const radio = el?.querySelector("input:checked");
                     const value = radio.value;
 
                     request.paymentFood = this._getRadioResponse(
@@ -216,7 +224,7 @@
                 }
 
                 if (this._checkIncludesString(field.label, this._fieldsName.vacation.label)) {
-                    const radio = el.querySelector("input:checked");
+                    const radio = el?.querySelector("input:checked");
                     const value = radio.value;
 
                     request.payout = this._getRadioResponse(
@@ -227,7 +235,7 @@
                 }
 
                 if (this._checkIncludesString(field.label, this._fieldsName.bank.label)) {
-                    const selector = el.querySelector("select");
+                    const selector = el?.querySelector("select");
                     request.bankBranch = this._getSelectResponse(
                         dataFields,
                         this._fieldsName.bank.label,
