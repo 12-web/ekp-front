@@ -214,6 +214,8 @@
 
                 if (this._checkIncludesString(field.label, this._fieldsName.food.label)) {
                     const radio = el?.querySelector("input:checked");
+                    if (!radio) return;
+
                     const value = radio.value;
 
                     request.paymentFood = this._getRadioResponse(
@@ -225,6 +227,8 @@
 
                 if (this._checkIncludesString(field.label, this._fieldsName.vacation.label)) {
                     const radio = el?.querySelector("input:checked");
+                    if (!radio) return;
+
                     const value = radio.value;
 
                     request.payout = this._getRadioResponse(
