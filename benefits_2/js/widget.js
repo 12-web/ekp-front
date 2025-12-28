@@ -141,8 +141,8 @@
             this._onApplyClick = this._onApplyClick.bind(this);
             this._onRefuseClick = this._onRefuseClick.bind(this);
 
-            this._applyBtn.addEventListener("click", this._onApplyClick);
-            this._refuseBtn.addEventListener("click", this._onRefuseClick);
+            this._applyBtn?.addEventListener("click", this._onApplyClick);
+            this._refuseBtn?.addEventListener("click", this._onRefuseClick);
         }
 
         async _getFormData() {
@@ -291,7 +291,7 @@
     const applyBenefitBtn = document.querySelector("[data-confirm-benefit]");
     const refuseBenefitBtn = document.querySelector("[data-refuse-benefit]");
 
-    if (applyBenefitBtn && refuseBenefitBtn) {
+    if (applyBenefitBtn || refuseBenefitBtn) {
         new BenefitForm(applyBenefitBtn, refuseBenefitBtn);
     }
 })();
