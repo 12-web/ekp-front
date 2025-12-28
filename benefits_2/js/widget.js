@@ -264,7 +264,7 @@
                 if (res?.response?.status === "success" && fileLink) {
                     this._downloadFile(fileLink);
 
-                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
+                    this._form?.submit();
                 }
             } catch (err) {}
         }
@@ -282,7 +282,7 @@
                 if (res?.response?.status === "success" && fileLink) {
                     this._downloadFile(fileLink);
 
-                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
+                    this._form?.submit();
                 }
             } catch (err) {}
         }
