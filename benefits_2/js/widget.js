@@ -181,7 +181,7 @@
         _downloadFile(url) {
             const link = document.createElement("a");
             link.href = url;
-            link.style.display = "none";
+            link.setAttribute("download", "download");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -254,7 +254,7 @@
                     this._downloadFile(fileLink);
 
                     this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
-                    window.location.reload();
+                    //window.location.reload();
                 }
             } catch (err) {}
         }
@@ -273,7 +273,7 @@
                     this._downloadFile(fileLink);
 
                     this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
-                    window.location.reload();
+                    //window.location.reload();
                 }
             } catch (err) {}
         }
