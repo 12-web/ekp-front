@@ -262,9 +262,9 @@
                 const fileLink = res?.data?.downloadUrl;
 
                 if (res?.response?.status === "success" && fileLink) {
-                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
-
                     this._downloadFile(fileLink);
+
+                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
                 }
             } catch (err) {}
         }
@@ -280,9 +280,9 @@
                 const fileLink = res?.data?.downloadUrl;
 
                 if (res?.response?.status === "success" && fileLink) {
-                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
-
                     this._downloadFile(fileLink);
+
+                    this._form?.dispatchEvent(new Event("submit", { bubbles: true }));
                 }
             } catch (err) {}
         }
