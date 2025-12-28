@@ -195,7 +195,7 @@
             const request = {};
             const dataFields = await this._getFormData();
 
-            dataFields.forEach((field) => {
+            dataFields?.forEach((field) => {
                 const el = document.querySelector(`[data-field-name=${field.name}]`);
 
                 const textInput = el?.querySelector("input");
