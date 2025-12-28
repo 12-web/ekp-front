@@ -43,7 +43,6 @@
         }
 
         applyBenefit(data) {
-            return true;
             return this._request("/selection/export", {
                 method: "POST",
                 headers: this._headers,
@@ -187,6 +186,7 @@
         _downloadFile(url) {
             const link = document.createElement("a");
             link.href = url;
+            link.setAttribute("target", "_blank");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

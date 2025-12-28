@@ -250,7 +250,8 @@
         function closeModal(){ modalEl.setAttribute("aria-hidden","true"); document.body.style.overflow=""; }
         if(closeButton) closeButton.addEventListener('click',()=>{ if(allowClose) closeModal(); });
 
-        if(m.closingInterval && m.closingInterval>0) setTimeout(()=>{ enableClose(); closeModal(); }, m.closingInterval*1000);
+        if(m.closingInterval && m.closingInterval>0) setTimeout(()=>{ enableClose(); closeModal(); }, m.closingInterval*1000)
+        else { if(timerCircle) timerCircle.classList.add; }
 
         if(m.showClose && m.showClose>0 && progressCircle && timerText){
           const radius=16, circ=2*Math.PI*radius, start=Date.now(), total=m.showClose*1000;
