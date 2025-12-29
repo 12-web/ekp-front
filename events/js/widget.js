@@ -22,13 +22,13 @@
             isDefaultSendNotifications: true,
             recordingIntervals: [
                 {
-                    count: 3,
+                    count: 0,
                     start: "13:00",
                     intervalId: 1,
                     end: "14:00",
                 },
                 {
-                    count: 7,
+                    count: 13,
                     start: "14:00",
                     intervalId: 2,
                     end: "15:00",
@@ -163,13 +163,13 @@
                     recordingIntervals: [
                         {
                             start: "13:00",
-                            count: 3,
+                            count: 1,
                             intervalId: 11,
                             end: "14:00",
                         },
                         {
                             start: "14:00",
-                            count: 7,
+                            count: 13,
                             intervalId: 22,
                             end: "15:00",
                         },
@@ -1209,7 +1209,7 @@
                     ? this._data.entriesNumber
                     : activeSelector.count;
 
-            this._checkLimit();
+            this._setValid(this._checkLimit());
         }
 
         _addTextContend(element, content) {

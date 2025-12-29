@@ -861,7 +861,7 @@
                     ? this._data.entriesNumber
                     : activeSelector.count;
 
-            this._checkLimit();
+            this._setValid(this._checkLimit());
         }
 
         _addTextContend(element, content) {
