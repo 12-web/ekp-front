@@ -255,9 +255,9 @@
 
             this._title.textContent = `${activeInput.start} - ${activeInput.end}`;
 
-            this._inputs.find(
-                (input) => Number(input.value) === Number(activeInput.intervalId)
-            ).checked = true;
+            this._inputs
+                .find((input) => Number(input.value) === Number(activeInput.intervalId))
+                ?.setAttribute("checked", true);
         }
 
         _toggle = (isOpen = true) => {

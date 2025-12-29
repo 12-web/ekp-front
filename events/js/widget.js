@@ -22,7 +22,7 @@
             isDefaultSendNotifications: true,
             recordingIntervals: [
                 {
-                    count: 0,
+                    count: 1,
                     start: "13:00",
                     intervalId: 1,
                     end: "14:00",
@@ -603,9 +603,9 @@
 
             this._title.textContent = `${activeInput.start} - ${activeInput.end}`;
 
-            this._inputs.find(
-                (input) => Number(input.value) === Number(activeInput.intervalId)
-            ).checked = true;
+            this._inputs
+                .find((input) => Number(input.value) === Number(activeInput.intervalId))
+                ?.setAttribute("checked", true);
         }
 
         _toggle = (isOpen = true) => {
