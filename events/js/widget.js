@@ -15,8 +15,6 @@
             eventId: "46939",
             isWithoutEmailRegister: true,
             footer: "Возможны изменения в дате и месте проведения события. Следите за новостями.",
-            additional:
-                "Возможны изменения в дате и месте проведения события. Следите за новостями.",
             isShowSendOption: true,
             description: "Встреча с лидерами производственных функций.",
             isDefaultSendNotifications: true,
@@ -40,8 +38,7 @@
             isRepeat: true,
             day: "Четверг",
             availableDays: 2,
-            additional:
-                "[Название поля 1];[Вариант выбора 2.1];[Вариант выбора 2.2]$[Название поля 2];[Вариант выбора 2.1];[Вариант выбора 2.2]",
+            additional: "[Название поля 2];[Вариант выбора 2.1];[Вариант выбора 2.2]",
             contacts: [
                 {
                     JSONObject: {
@@ -682,8 +679,6 @@
     class DefaultSelector extends BaseSelector {
         constructor(root, data, templateSelector) {
             super(root, data, templateSelector);
-
-            console.log(this._toggle);
         }
 
         _init() {
