@@ -115,13 +115,15 @@
 
     const mockRegisterData = {
         response: {
-            eventId: "0",
+            eventId: "66013",
             code: 200,
             count: 0,
-            message: "User with id 45145 is already registered to event with id 46903",
-            userId: "0",
+            alreadyRegisteredUsers: [],
+            message:
+                "Successfully registered. Company employees list: [38201] Not company employees list: [] List of users registered before: []",
+            userId: "38201",
             status: "success",
-            timestamp: "2025-12-10T05:10:54.840891600Z",
+            timestamp: "2025-12-29T12:37:14.800780600Z",
         },
     };
 
@@ -1090,11 +1092,12 @@
                     notCompanyEmployees: this._notEmployees.map((input) => input.value),
                     intervalId: this._interval.intervalId,
                     ...(this._sendNotificationCheckbox
-                        ? { isSendEmail: this._sendNotificationCheckbox.checked }
+                        ? { isSendEmail: this._sendNotificationCheckbox?.checked }
                         : null),
                 };
 
                 const data = await this._api.eventRegister(request);
+                console.log([data, `is success - ${data?.response?.status === "success"}`]);
 
                 if (data?.response?.status === "success") {
                     this._reset();
@@ -1106,6 +1109,8 @@
                     this._informer.error(data?.response?.message);
                 }
             } catch (err) {
+                console.log("err- ", err);
+
                 this._informer.error();
             } finally {
                 this._onFinally();
@@ -1280,10 +1285,7 @@
             if (withoutInformer) return;
 
             if (data?.response?.status === "error") {
-                this._informer.error(
-                    data?.response?.message ||
-                        "Произошла ошибка при загрузке данных. Попробуйте повторить попытку позже"
-                );
+                this._informer.error(data?.response?.message);
                 this._modal._modal.classList.add("_blocked");
             } else {
                 this._informer.hide();

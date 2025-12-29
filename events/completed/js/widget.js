@@ -659,6 +659,10 @@
         EMPLOYEES_COMBOBOX = "employees";
 
         constructor(root, openBtn) {
+            if (!EVENT_CONFIG?.eventId) return;
+
+            this._eventId = EVENT_CONFIG.eventId || null;
+
             this._openBtn = openBtn;
 
             const modal = root;
@@ -682,6 +686,8 @@
             this._notEmpComboboxEl = this._modal._modal.querySelector(
                 ".registration-event-form__combobox_type_not-em"
             );
+            this._notEmpCombobox = null;
+
             this._sendNotificationCheckboxEl = this._modal._modal.querySelector(
                 ".registration-event-form__checkbox"
             );
@@ -742,11 +748,12 @@
                     notCompanyEmployees: this._notEmployees.map((input) => input.value),
                     intervalId: this._interval.intervalId,
                     ...(this._sendNotificationCheckbox
-                        ? { isSendEmail: this._sendNotificationCheckbox.checked }
+                        ? { isSendEmail: this._sendNotificationCheckbox?.checked }
                         : null),
                 };
 
                 const data = await this._api.eventRegister(request);
+                console.log([data, `is success - ${data?.response?.status === "success"}`]);
 
                 if (data?.response?.status === "success") {
                     this._reset();
@@ -758,6 +765,8 @@
                     this._informer.error(data?.response?.message);
                 }
             } catch (err) {
+                console.log("err- ", err);
+
                 this._informer.error();
             } finally {
                 this._onFinally();
@@ -765,11 +774,11 @@
         }
 
         _reset() {
-            this._empCombobox.reset();
-            this._notEmpCombobox.reset();
+            this._empCombobox?.reset();
+            this._notEmpCombobox?.reset();
             this._employees = [];
             this._notEmployees = [];
-            this._form.reset();
+            this._form?.reset();
             this._setValid(false);
         }
 
@@ -893,7 +902,7 @@
             this._addTextContend(this._text, data?.description);
             this._addTextContend(this._date, data?.date);
             this._addTextContend(this._day, data?.day);
-            this._addTextContend(this._contact, contact.fullName);
+            this._addTextContend(this._contact, contact?.fullName || "");
             this._addTextContend(this._footer, data?.footer);
 
             const isCreateInputCombo =
@@ -917,10 +926,6 @@
         }
 
         async init(withoutInformer = false) {
-            if (!EVENT_CONFIG.eventId) return;
-
-            this._eventId = EVENT_CONFIG.eventId;
-
             const data = await this._api.getEvent({ eventId: Number(this._eventId) });
 
             if (!data?.data) return;
@@ -932,10 +937,7 @@
             if (withoutInformer) return;
 
             if (data?.response?.status === "error") {
-                this._informer.error(
-                    data?.response?.message ||
-                        "Произошла ошибка при загрузке данных. Попробуйте повторить попытку позже"
-                );
+                this._informer.error(data?.response?.message);
                 this._modal._modal.classList.add("_blocked");
             } else {
                 this._informer.hide();
