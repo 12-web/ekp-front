@@ -83,7 +83,7 @@
             this._refuseBtn = refuseBtn;
             this._formId = Number(document.querySelector("[data-benefits-id]")?.dataset.benefitsId);
 
-            this._form = document.querySelector("form[data-ddmforminstanceid='10884988']");
+            this._form = document.querySelector(`form[data-ddmforminstanceid='${this._formId}']`);
 
             this._fieldsName = {
                 food: {
