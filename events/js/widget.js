@@ -38,7 +38,7 @@
             isRepeat: true,
             day: "Четверг",
             availableDays: 2,
-            additional: "[Название поля 2];[Вариант выбора 2.1];[Вариант выбора 2.2]",
+            additional: "[Название поля 1]$[Название поля 2]",
             contacts: [
                 {
                     JSONObject: {
@@ -603,6 +603,11 @@
             this._toggle(!this._isOpen);
         }
 
+        reset() {
+            this._title.textContent = "";
+            this._checkedInputs = [];
+        }
+
         _handleInputChange(e) {}
 
         setEventListeners() {
@@ -1112,6 +1117,8 @@
             this._employees = [];
             this._notEmployees = [];
 
+            this._selects = [];
+
             this._onModalBtnClick = this._onModalBtnClick.bind(this);
             this._onSelectorChange = this._onSelectorChange.bind(this);
             this._onComboboxChange = this._onComboboxChange.bind(this);
@@ -1181,14 +1188,17 @@
                         ? { isSendEmail: this._sendNotificationCheckbox?.checked }
                         : null),
                 };
+                console.log(request);
 
                 const data = await this._api.eventRegister(request);
                 console.log([data, `is success - ${data?.response?.status === "success"}`]);
 
+                console.log(request);
+
                 if (data?.response?.status === "success") {
                     this._reset();
                     this._informer.success("Вы успешно записались на мероприятие");
-                    this.init(true);
+                    this.refresh();
                 }
 
                 if (data?.response?.status === "error") {
@@ -1203,12 +1213,13 @@
         }
 
         _reset() {
-            this._empCombobox.reset();
-            this._notEmpCombobox.reset();
+            this._empCombobox?.reset();
+            this._notEmpCombobox?.reset();
             this._employees = [];
             this._notEmployees = [];
-            this._form.reset();
+            this._form?.reset();
             this._setValid(false);
+            this._selects?.forEach((select) => select.reset());
         }
 
         _onModalBtnClick() {
@@ -1336,8 +1347,13 @@
 
             name.textContent = fieldName;
 
-            new DefaultSelector(selectorEl, data, "registration-event-default-selector-input");
+            const select = new DefaultSelector(
+                selectorEl,
+                data,
+                "registration-event-default-selector-input"
+            );
 
+            this._selects.push(select);
             return selectorTemplate;
         }
 
@@ -1348,7 +1364,7 @@
             );
             const inputTemplateEl = document.getElementById("registration-event-input");
 
-            const fieldsStringList = fieldsString.split("$");
+            const fieldsStringList = fieldsString.split("$").reverse();
 
             fieldsStringList.forEach((fieldString) => {
                 const fieldsElementsList = fieldString.split(";");
@@ -1404,10 +1420,6 @@
             this._addTextContend(this._contact, contact.fullName);
             this._addTextContend(this._footer, data?.footer);
 
-            if (data?.additional) {
-                this._createFields(data?.additional);
-            }
-
             const isCreateInputCombo =
                 !this._notEmpCombobox && this._notEmpComboboxEl && data.isWithoutEmailRegister;
 
@@ -1428,7 +1440,21 @@
             this._toggleVisible(this._sendNotificationCheckboxEl, !data.isShowSendOption);
         }
 
-        async init(withoutInformer = false) {
+        async refresh() {
+            if (!EVENT_CONFIG.eventId) return;
+
+            this._eventId = EVENT_CONFIG.eventId;
+
+            const data = await this._api.getEvent({ eventId: Number(this._eventId) });
+
+            if (!data?.data) return;
+
+            this._data = data.data;
+
+            this._setContent(this._data);
+        }
+
+        async init() {
             if (!EVENT_CONFIG.eventId) return;
 
             this._eventId = EVENT_CONFIG.eventId;
@@ -1441,7 +1467,9 @@
 
             this._setContent(this._data);
 
-            if (withoutInformer) return;
+            if (this._data?.additional) {
+                this._createFields(this._data?.additional);
+            }
 
             if (data?.response?.status === "error") {
                 this._informer.error(data?.response?.message);
