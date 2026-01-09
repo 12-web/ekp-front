@@ -193,7 +193,7 @@
         }
     }
 
-    class Selector {
+    class BaseSelector {
         _isOpen = false;
         _config = {
             headerSelector: ".selector__header",
@@ -206,7 +206,7 @@
             change: "selector-change",
         };
 
-        constructor(root, data) {
+        constructor(root, data, templateId) {
             this._selector = root;
             this._header = this._selector.querySelector(this._config.headerSelector);
             this._body = this._selector.querySelector(this._config.bodySelector);
@@ -215,7 +215,8 @@
             this._inputs = [];
             this._checkedInputs = [];
             this._data = data;
-            this._template = document.getElementById("registration-event-form-selector-input");
+
+            this._template = document.getElementById(templateId);
 
             this._handleHeaderClick = this._handleHeaderClick.bind(this);
             this._handleInputChange = this._handleInputChange.bind(this);
@@ -224,8 +225,56 @@
         }
 
         _init() {
-            this._createItems();
             this.setEventListeners();
+        }
+
+        _toggle(isOpen = true) {
+            this._selector.classList.toggle("_opened", isOpen);
+
+            if (isOpen) {
+                document.addEventListener("click", this._onOutsideClick);
+            } else {
+                document.removeEventListener("click", this._onOutsideClick);
+            }
+
+            this._isOpen = isOpen;
+        }
+
+        _onOutsideClick = (e) => {
+            const dropDownContent = e?.target?.closest(".selector__dropdown-content");
+
+            if (!dropDownContent) {
+                this._toggle(false);
+            }
+        };
+
+        _handleHeaderClick(e) {
+            e?.stopPropagation();
+
+            this._toggle(!this._isOpen);
+        }
+
+        reset() {
+            this._title.textContent = "";
+            this._checkedInputs = [];
+        }
+
+        _handleInputChange(e) {}
+
+        setEventListeners() {
+            this._header.addEventListener("click", this._handleHeaderClick);
+        }
+    }
+
+    class TimeSelector extends BaseSelector {
+        constructor(root, data, templateSelector) {
+            super(root, data, templateSelector);
+        }
+
+        _init() {
+            super._init();
+
+            this._createItems();
         }
 
         _createItems() {
@@ -260,44 +309,18 @@
                 ?.setAttribute("checked", true);
         }
 
-        _toggle = (isOpen = true) => {
-            this._selector.classList.toggle("_opened", isOpen);
-
-            if (isOpen) {
-                document.addEventListener("click", this._onOutsideClick);
-            } else {
-                document.removeEventListener("click", this._onOutsideClick);
-            }
-
-            this._isOpen = isOpen;
-        };
-
-        _onOutsideClick = (e) => {
-            const dropDownContent = e?.target?.closest(".selector__dropdown-content");
-
-            if (!dropDownContent) {
-                this._toggle(false);
-            }
-        };
-
-        _handleHeaderClick(e) {
-            e?.stopPropagation();
-
-            this._toggle(!this._isOpen);
-        }
-
         _handleInputChange(e) {
             const id = e?.target.value;
 
             if (!id) return;
             const checkedItem = this._checkedInputs.find(
-                (select) => Number(select.intervalId) === Number(id)
+                (select) => String(select.intervalId) === String(id)
             );
 
             if (checkedItem) return;
 
             const newCheckedItem = this._data?.find(
-                (select) => Number(select.intervalId) === Number(id)
+                (select) => String(select.intervalId) === String(id)
             );
             this._checkedInputs = [newCheckedItem];
 
@@ -307,9 +330,59 @@
 
             emit(this.events.change, this._checkedInputs);
         }
+    }
 
-        setEventListeners() {
-            this._header.addEventListener("click", this._handleHeaderClick);
+    class DefaultSelector extends BaseSelector {
+        constructor(root, data, templateSelector) {
+            super(root, data, templateSelector);
+        }
+
+        _init() {
+            super._init();
+
+            this._createItems();
+        }
+
+        _createItems() {
+            this._content.innerHTML = "";
+
+            this._data?.forEach((select) => {
+                const template = this._template.content.cloneNode(true);
+                const input = template.querySelector("input");
+                const title = template.querySelector(".selector-dropdown-checkbox__name");
+
+                input.value = select.value;
+                input.name = select.name;
+
+                title.textContent = select.value;
+
+                this._content.appendChild(template);
+            });
+
+            this._inputs = Array.from(this._selector.querySelectorAll("input"));
+            this._inputs.forEach((input) =>
+                input.addEventListener("change", this._handleInputChange)
+            );
+        }
+
+        _handleInputChange(e) {
+            const value = e?.target.value;
+
+            if (!value) return;
+            const checkedItem = this._checkedInputs.find(
+                (select) => String(select.value) === String(value)
+            );
+
+            if (checkedItem) return;
+
+            const newCheckedItem = this._data?.find(
+                (select) => String(select.value) === String(value)
+            );
+            this._checkedInputs = [newCheckedItem];
+
+            this._title.textContent = newCheckedItem.value;
+
+            this._toggle(false);
         }
     }
 
@@ -659,7 +732,7 @@
         EMPLOYEES_COMBOBOX = "employees";
 
         constructor(root, openBtn) {
-            if (!EVENT_CONFIG?.eventId) return;
+            if (!window.EVENT_CONFIG?.eventId) return;
 
             this._eventId = EVENT_CONFIG.eventId || null;
 
@@ -691,10 +764,17 @@
             this._sendNotificationCheckboxEl = this._modal._modal.querySelector(
                 ".registration-event-form__checkbox"
             );
+
+            this._timeSelectorEl = this._form.querySelector(
+                ".registration-event-form__interval-selector"
+            );
+
             this._submit = modal.querySelector(".registration-event-form__submit");
 
             this._employees = [];
             this._notEmployees = [];
+
+            this._selects = [];
 
             this._onModalBtnClick = this._onModalBtnClick.bind(this);
             this._onSelectorChange = this._onSelectorChange.bind(this);
@@ -705,6 +785,8 @@
             this._isLoading = false;
 
             this._limit = 0;
+
+            this._additionalFields = {};
 
             this._setValid(this._checkLimit());
 
@@ -736,6 +818,17 @@
             this._form.classList.remove("_loading");
         }
 
+        _collectAdditionalFields() {
+            const data = {};
+            const formData = new FormData(this._form);
+            const dataObject = Object.fromEntries(formData.entries());
+
+            for (const key in this._additionalFields) {
+                data[key] = dataObject[key] || "";
+            }
+
+            return data;
+        }
         async _onSubmit(e) {
             e?.preventDefault();
 
@@ -746,6 +839,7 @@
                     eventId: Number(this._eventId),
                     companyEmployees: this._employees.map((input) => input.value),
                     notCompanyEmployees: this._notEmployees.map((input) => input.value),
+                    additional: this._collectAdditionalFields(),
                     intervalId: this._interval.intervalId,
                     ...(this._sendNotificationCheckbox
                         ? { isSendEmail: this._sendNotificationCheckbox?.checked }
@@ -753,20 +847,17 @@
                 };
 
                 const data = await this._api.eventRegister(request);
-                console.log([data, `is success - ${data?.response?.status === "success"}`]);
 
                 if (data?.response?.status === "success") {
                     this._reset();
                     this._informer.success("Вы успешно записались на мероприятие");
-                    this.init(true);
+                    this.refresh();
                 }
 
                 if (data?.response?.status === "error") {
                     this._informer.error(data?.response?.message);
                 }
             } catch (err) {
-                console.log("err- ", err);
-
                 this._informer.error();
             } finally {
                 this._onFinally();
@@ -780,6 +871,7 @@
             this._notEmployees = [];
             this._form?.reset();
             this._setValid(false);
+            this._selects?.forEach((select) => select.reset());
         }
 
         _onModalBtnClick() {
@@ -885,9 +977,87 @@
             element?.classList.toggle("_hidden", isHide);
         }
 
+        _createAdditionalInput(templateEl, fieldName) {
+            const inputTemplate = templateEl.content.cloneNode(true);
+
+            const name = inputTemplate.querySelector(".registration-event-input__name");
+            const input = inputTemplate.querySelector("input");
+
+            name.textContent = fieldName;
+            input.name = fieldName;
+
+            return inputTemplate;
+        }
+
+        _createAdditionalSelector(templateEl, fieldName, data) {
+            const selectorTemplate = templateEl.content.cloneNode(true);
+
+            const name = selectorTemplate.querySelector(
+                ".registration-event-default-selector__name"
+            );
+            const selectorEl = selectorTemplate.querySelector(".selector");
+
+            name.textContent = fieldName;
+
+            const select = new DefaultSelector(
+                selectorEl,
+                data,
+                "registration-event-default-selector-input"
+            );
+
+            this._selects.push(select);
+            return selectorTemplate;
+        }
+
+        _createFields(fieldsString) {
+            if (!fieldsString) return;
+
+            const selectorTemplateEl = document.getElementById(
+                "registration-event-default-selector"
+            );
+            const inputTemplateEl = document.getElementById("registration-event-input");
+
+            const fieldsStringList = fieldsString.split("$").reverse();
+
+            fieldsStringList.forEach((fieldString) => {
+                const fieldsElementsList = fieldString.split(";");
+
+                const fieldName = fieldsElementsList[0];
+
+                this._additionalFields[fieldName] = "";
+
+                if (fieldsElementsList.length > 1) {
+                    const data = [];
+
+                    for (let i = 1; i < fieldsElementsList.length; i++) {
+                        if (!fieldsElementsList[i]) continue;
+
+                        data.push({ name: fieldName, value: fieldsElementsList[i] });
+                    }
+
+                    const selectorTemplate = this._createAdditionalSelector(
+                        selectorTemplateEl,
+                        fieldName,
+                        data
+                    );
+
+                    this._timeSelectorEl.after(selectorTemplate);
+                } else {
+                    const inputTemplate = this._createAdditionalInput(inputTemplateEl, fieldName);
+
+                    this._timeSelectorEl.after(inputTemplate);
+                }
+            });
+        }
+
         _setContent(data) {
-            const selector = this._form.querySelector(".selector");
-            this._selector = new Selector(selector, data.recordingIntervals);
+            const selector = this._timeSelectorEl.querySelector(".selector");
+
+            this._selector = new TimeSelector(
+                selector,
+                data.recordingIntervals,
+                "registration-event-form-selector-input"
+            );
 
             this._limit =
                 data.recordingIntervals[0]?.count > data.entriesNumber
@@ -902,7 +1072,7 @@
             this._addTextContend(this._text, data?.description);
             this._addTextContend(this._date, data?.date);
             this._addTextContend(this._day, data?.day);
-            this._addTextContend(this._contact, contact?.fullName || "");
+            this._addTextContend(this._contact, contact?.fullName);
             this._addTextContend(this._footer, data?.footer);
 
             const isCreateInputCombo =
@@ -925,7 +1095,17 @@
             this._toggleVisible(this._sendNotificationCheckboxEl, !data.isShowSendOption);
         }
 
-        async init(withoutInformer = false) {
+        async refresh() {
+            const data = await this._api.getEvent({ eventId: Number(this._eventId) });
+
+            if (!data?.data) return;
+
+            this._data = data.data;
+
+            this._setContent(this._data);
+        }
+
+        async init() {
             const data = await this._api.getEvent({ eventId: Number(this._eventId) });
 
             if (!data?.data) return;
@@ -934,7 +1114,9 @@
 
             this._setContent(this._data);
 
-            if (withoutInformer) return;
+            if (this._data?.additional) {
+                this._createFields(this._data?.additional);
+            }
 
             if (data?.response?.status === "error") {
                 this._informer.error(data?.response?.message);

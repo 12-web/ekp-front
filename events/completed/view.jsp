@@ -100,8 +100,6 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         border: 1px solid #f5c6cb;
     }
 
-    @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-
     :root {
         --size-text-2xs: 10px;
         --size-text-xs: 12px;
@@ -699,6 +697,15 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         width: 100%;
     }
 
+    .selector__placeholder {
+        color: var(--control-default-bg-border);
+        font-family: Inter, Arial, sans-serif;
+    }
+
+    .selector__placeholder:has(+ .selector__title:not(:empty)) {
+        display: none;
+    }
+
     .selector__content {
         display: flex;
         align-items: center;
@@ -785,6 +792,10 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         display: flex;
         align-items: center;
         cursor: pointer;
+    }
+
+    .selector-dropdown-checkbox__name {
+        margin: 0;
     }
 
     .selector-dropdown-checkbox:has(.selector-dropdown-checkbox__input[type="checkbox"]:checked)
@@ -982,7 +993,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
     }
 
     .registration-event__footer {
-        margin-bottom: 24px;
+        margin-bottom: 10px;
     }
 
     .registration-event__handles {
@@ -1185,6 +1196,41 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
         margin-top: var(--space-s);
         color: var(--typo-secondary);
         text-align: center;
+    }
+
+    .registration-event-input input {
+        padding: var(--space-s);
+        border: 1px solid var(--control-default-bg-border);
+        border-radius: var(--space-xs);
+        resize: none;
+        color: var(--typo-primary);
+    }
+
+    .registration-event-input input::placeholder {
+        color: var(--control-default-bg-border);
+        font-family: Inter, Arial, sans-serif;
+    }
+
+    .registration-event-input._error input {
+        border-color: var(--bg-alert);
+    }
+
+    .registration-event-input__label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .registration-event-default-selector,
+    .registration-event-input {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    .registration-event-input__name,
+    .registration-event-default-selector__name {
+        color: var(--typo-secondary);
+        margin-bottom: var(--space-s);
     }
 
     /* Важные стили для управления видимостью */
@@ -1390,14 +1436,22 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
                             </div>
                         </div>
                     </div>
-                    <div class="registration-event-form__item registration-event-form__selector">
+                    <div
+                        class="registration-event-form__item registration-event-form__interval-selector registration-event-form__selector"
+                    >
                         <label for="user-search" class="registration-event-form__label text-1"
                             >Выбор времени для записи</label
                         >
                         <div class="selector">
                             <div class="selector__header">
                                 <div class="selector__header-inner">
-                                    <span class="selector__title text-1"></span>
+                                    <span
+                                        class="selector__placeholder _font-size-s _line-height-small"
+                                        >Выберите</span
+                                    >
+                                    <span
+                                        class="selector__title _font-size-s _line-height-small"
+                                    ></span>
                                 </div>
 
                                 <button
@@ -1420,7 +1474,7 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
                             </div>
                         </div>
                     </div>
-
+                    <div class="registration-event__footer text-1"></div>
                     <div class="registration-event-form__item registration-event-form__checkbox">
                         <label class="ui-checkbox">
                             <input
@@ -1432,15 +1486,13 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
                             <div class="ui-checkbox__check"></div>
                             <div class="ui-checkbox__content">
                                 <p class="selector-dropdown-checkbox__name text">
-                                    Отправить уведомление
+                                    Уведомить о регистрации по почте
                                 </p>
                             </div>
                         </label>
                     </div>
                 </div>
             </form>
-
-            <div class="registration-event__footer text-1"></div>
             <div class="registration-event__informer informer">
                 <p class="informer__text text-1">sdf</p>
             </div>
@@ -1529,6 +1581,74 @@ isWidgetVisible ? "" : "widget-hidden"; String listingVisibilityClass = isListin
                     <p class="combobox-dropdown-checkbox__name text"></p>
                     <span class="combobox-dropdown-checkbox__email"></span>
                 </div>
+            </div>
+        </label>
+    </li>
+</template>
+
+<template id="registration-event-input">
+    <div class="registration-event-input">
+        <label class="registration-event-input__label">
+            <span class="_font-size-m _line-height-small registration-event-input__name"></span>
+            <input
+                placeholder="Введите текст"
+                name=""
+                class="_font-size-s _line-height-normal"
+                type="text"
+                class="registration-event-input__input"
+            />
+        </label>
+
+        <span class="registration-event-input__error"></span>
+    </div>
+</template>
+<template id="registration-event-default-selector">
+    <div class="registration-event-default-selector">
+        <label
+            class="_font-size-m _line-height-small registration-event-default-selector__name"
+        ></label>
+        <div class="selector">
+            <div class="selector__header">
+                <div class="selector__header-inner">
+                    <span class="selector__placeholder _font-size-s _line-height-small"
+                        >Выберите</span
+                    >
+                    <span class="selector__title _font-size-s _line-height-small"></span>
+                </div>
+
+                <button
+                    type="button"
+                    class="selector__dropdown"
+                    aria-label="Открыть выпадающий список"
+                >
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M3.5 6L8 11L12.5 6H3.5Z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="selector__dropdown-content with-custom-scrollbar">
+                <ul class="selector__dropdown-content__list"></ul>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="registration-event-default-selector-input">
+    <li>
+        <label class="selector__dropdown-content-checkbox selector-dropdown-checkbox">
+            <input
+                type="radio"
+                class="selector-dropdown-checkbox__input visibility-hidden"
+                name=""
+                value=""
+            />
+            <div class="selector-dropdown-checkbox__check"></div>
+            <div class="selector-dropdown-checkbox__content">
+                <p class="selector-dropdown-checkbox__name text"></p>
             </div>
         </label>
     </li>

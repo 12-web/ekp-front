@@ -66,7 +66,8 @@
                     </div>
                 </div>
             </div>
-            <div class="registration-event-modal c-modal c-modal_is-open">
+
+            <div class="registration-event-modal c-modal">
                 <div class="c-modal__content registration-event-modal__content">
                     <div class="c-modal__header">
                         <h2 class="c-modal__title title-3">Регистрация на мероприятие</h2>
@@ -216,7 +217,13 @@
                                     <div class="selector">
                                         <div class="selector__header">
                                             <div class="selector__header-inner">
-                                                <span class="selector__title text-1"></span>
+                                                <span
+                                                    class="selector__placeholder _font-size-s _line-height-small"
+                                                    >Выберите</span
+                                                >
+                                                <span
+                                                    class="selector__title _font-size-s _line-height-small"
+                                                ></span>
                                             </div>
 
                                             <button
@@ -242,6 +249,8 @@
                                     </div>
                                 </div>
 
+                                <div class="registration-event__footer text-1"></div>
+
                                 <div
                                     class="registration-event-form__item registration-event-form__checkbox"
                                 >
@@ -255,15 +264,13 @@
                                         <div class="ui-checkbox__check"></div>
                                         <div class="ui-checkbox__content">
                                             <p class="selector-dropdown-checkbox__name text">
-                                                Отправить уведомление
+                                                Уведомить о регистрации по почте
                                             </p>
                                         </div>
                                     </label>
                                 </div>
                             </div>
                         </form>
-
-                        <div class="registration-event__footer text-1"></div>
                         <div class="registration-event__informer informer">
                             <p class="informer__text text-1">sdf</p>
                         </div>
@@ -282,6 +289,7 @@
                     </div>
                 </div>
             </div>
+
             <template id="registration-event-form-selector-input">
                 <li>
                     <label class="selector__dropdown-content-checkbox selector-dropdown-checkbox">
@@ -368,34 +376,7 @@
                     </label>
                 </li>
             </template>
-            <template id="registration-event-list-item">
-                <li class="registration-event-list-item">
-                    <div class="registration-event-list-item__info">
-                        <p
-                            class="registration-event-list-item__time _font-size-s _line-height-normal"
-                        >
-                            <span class="registration-event-list-item__day"></span>,
-                            <span class="registration-event-list-item__date"></span>
-                        </p>
-                        <p
-                            class="registration-event-list-item__name _font-size-m _font-weight-bold _line-height-normal"
-                        ></p>
-                        <div
-                            class="registration-event-list-item__subscriber _font-size-s _line-height-normal"
-                        >
-                            <p class="registration-event-list-item__subscriber-info"></p>
-                            <p class="registration-event-list-item__subscriber-user">
-                                <span class="registration-event-list-item__subscriber-name"></span
-                                >,&nbsp;
-                                <a class="registration-event-list-item__subscriber-link"></a>
-                            </p>
-                        </div>
-                    </div>
-                    <button data-id="button-register" class="button button_view_ghost">
-                        Отменить запись
-                    </button>
-                </li>
-            </template>
+
             <template id="registration-event-input">
                 <div class="registration-event-input">
                     <label class="registration-event-input__label">
@@ -403,7 +384,7 @@
                             class="_font-size-m _line-height-small registration-event-input__name"
                         ></span>
                         <input
-                            placeholder=""
+                            placeholder="Введите текст"
                             name=""
                             class="_font-size-s _line-height-normal"
                             type="text"
@@ -422,7 +403,12 @@
                     <div class="selector">
                         <div class="selector__header">
                             <div class="selector__header-inner">
-                                <span class="selector__title text-1"></span>
+                                <span class="selector__placeholder _font-size-s _line-height-small"
+                                    >Выберите</span
+                                >
+                                <span
+                                    class="selector__title _font-size-s _line-height-small"
+                                ></span>
                             </div>
 
                             <button
@@ -460,6 +446,35 @@
                             <p class="selector-dropdown-checkbox__name text"></p>
                         </div>
                     </label>
+                </li>
+            </template>
+
+            <template id="registration-event-list-item">
+                <li class="registration-event-list-item">
+                    <div class="registration-event-list-item__info">
+                        <p
+                            class="registration-event-list-item__time _font-size-s _line-height-normal"
+                        >
+                            <span class="registration-event-list-item__day"></span>,
+                            <span class="registration-event-list-item__date"></span>
+                        </p>
+                        <p
+                            class="registration-event-list-item__name _font-size-m _font-weight-bold _line-height-normal"
+                        ></p>
+                        <div
+                            class="registration-event-list-item__subscriber _font-size-s _line-height-normal"
+                        >
+                            <p class="registration-event-list-item__subscriber-info"></p>
+                            <p class="registration-event-list-item__subscriber-user">
+                                <span class="registration-event-list-item__subscriber-name"></span
+                                >,&nbsp;
+                                <a class="registration-event-list-item__subscriber-link"></a>
+                            </p>
+                        </div>
+                    </div>
+                    <button data-id="button-register" class="button button_view_ghost">
+                        Отменить запись
+                    </button>
                 </li>
             </template>
         </main>

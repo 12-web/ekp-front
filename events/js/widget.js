@@ -38,7 +38,7 @@
             isRepeat: true,
             day: "Четверг",
             availableDays: 2,
-            additional: "[Название поля 1]$[Название поля 2]",
+            additional: "Название;;Название поля 1;Название поля 2$Название поля 2",
             contacts: [
                 {
                     JSONObject: {
@@ -429,6 +429,10 @@
         }
 
         eventRegister(data) {
+            console.log({
+                data,
+                ...this._getDefaultParams(),
+            });
             return mockRegisterData;
 
             return this._request("/events/_register", {
@@ -1081,6 +1085,10 @@
         EMPLOYEES_COMBOBOX = "employees";
 
         constructor(root, openBtn) {
+            if (!window.EVENT_CONFIG?.eventId) return;
+
+            this._eventId = EVENT_CONFIG.eventId || null;
+
             this._openBtn = openBtn;
 
             const modal = root;
@@ -1104,6 +1112,8 @@
             this._notEmpComboboxEl = this._modal._modal.querySelector(
                 ".registration-event-form__combobox_type_not-em"
             );
+            this._notEmpCombobox = null;
+
             this._sendNotificationCheckboxEl = this._modal._modal.querySelector(
                 ".registration-event-form__checkbox"
             );
@@ -1359,6 +1369,7 @@
 
         _createFields(fieldsString) {
             if (!fieldsString) return;
+
             const selectorTemplateEl = document.getElementById(
                 "registration-event-default-selector"
             );
@@ -1377,6 +1388,8 @@
                     const data = [];
 
                     for (let i = 1; i < fieldsElementsList.length; i++) {
+                        if (!fieldsElementsList[i]) continue;
+
                         data.push({ name: fieldName, value: fieldsElementsList[i] });
                     }
 
@@ -1417,7 +1430,7 @@
             this._addTextContend(this._text, data?.description);
             this._addTextContend(this._date, data?.date);
             this._addTextContend(this._day, data?.day);
-            this._addTextContend(this._contact, contact.fullName);
+            this._addTextContend(this._contact, contact?.fullName);
             this._addTextContend(this._footer, data?.footer);
 
             const isCreateInputCombo =
@@ -1441,10 +1454,6 @@
         }
 
         async refresh() {
-            if (!EVENT_CONFIG.eventId) return;
-
-            this._eventId = EVENT_CONFIG.eventId;
-
             const data = await this._api.getEvent({ eventId: Number(this._eventId) });
 
             if (!data?.data) return;
@@ -1455,10 +1464,6 @@
         }
 
         async init() {
-            if (!EVENT_CONFIG.eventId) return;
-
-            this._eventId = EVENT_CONFIG.eventId;
-
             const data = await this._api.getEvent({ eventId: Number(this._eventId) });
 
             if (!data?.data) return;

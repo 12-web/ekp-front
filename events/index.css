@@ -596,6 +596,15 @@ body {
     width: 100%;
 }
 
+.selector__placeholder {
+    color: var(--control-default-bg-border);
+    font-family: Inter, Arial, sans-serif;
+}
+
+.selector__placeholder:has(+ .selector__title:not(:empty)) {
+    display: none;
+}
+
 .selector__content {
     display: flex;
     align-items: center;
@@ -882,7 +891,7 @@ body {
 }
 
 .registration-event__footer {
-    margin-bottom: 24px;
+    margin-bottom: 10px;
 }
 
 .registration-event__handles {
