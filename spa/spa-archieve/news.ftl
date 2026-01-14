@@ -266,7 +266,7 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                   {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                   {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -302,7 +302,7 @@
               const customparams = [
                     { as_user_id: true, value: currentUser?.name || "" },
                     {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                     {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                     {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                     {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -337,10 +337,10 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'tag', type: 'STRING', value: tag.textContent},
                   {name: 'page', type: 'STRING', value: document.title},
-                  {name: 'location_tag', type: 'STRING', "внутри новости"},
+                  {name: 'location_tag', type: 'STRING', value: "внутри новости"},
                   {name: 'action_tag', type: 'STRING', value: "переход"},
               ];
 
@@ -381,7 +381,7 @@
                   const customparams = [
                       {as_user_id: true, value: currentUser?.name || ""},
                       {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                      {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                      {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                       {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                       {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                       {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -419,7 +419,7 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                   {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                   {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -459,7 +459,7 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                   {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                   {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -498,7 +498,7 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                   {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                   {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},
@@ -537,7 +537,7 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'news_title', type: 'STRING', value: ${articleTitle}},
                   {name: 'news_id', type: 'INT', value: ${journalArticleId}},
                   {name: 'news_tag', type: 'STRING', value: ${tags?join(", ")}},

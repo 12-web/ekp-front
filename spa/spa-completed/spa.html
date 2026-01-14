@@ -1,13 +1,13 @@
 <script type="text/javascript">
     (function () {
-        window.gpnSpaUrl = "https://spa-back.gazprom-neft.local/events";
+        window.gpnSpaUrl = "https://spa-backend.apps.test.paas.gazprom-neft.local/events";
         window.gpnCounterId = { SPA_COUNTER_ID };
         window.apiVersion = "1.0";
         const headEl = document.getElementsByTagName("head")[0];
         const counterLoadingScript = document.createElement("script");
         counterLoadingScript.async = true;
 
-        counterLoadingScript.src = "https://spa-back.gazprom-neft.local/static/counter.js";
+        counterLoadingScript.src = "https://spa-backend.apps.test.paas.gazprom-neft.local/static/counter.js";
 
         headEl.appendChild(counterLoadingScript);
 
@@ -30,13 +30,13 @@
                     {
                         name: "user_do",
                         type: "STRING",
-                        value: currentUser?.organizationBriefs?.name || "",
+                        value: currentUser?.organizationBriefs[0]?.name || "",
                     },
                 ];
 
                 window.gpnAnalytics &&
                     window.gpnAnalytics.sendEvent(3, {
-                        componentId: "user_login",
+                        componentid: "user_login",
                         constaeventtype: "undefined",
                         component: "OTHER",
                         customparams,
@@ -59,14 +59,14 @@
                     {
                         name: "user_do",
                         type: "STRING",
-                        value: currentUser?.organizationBriefs?.name || "",
+                        value: currentUser?.organizationBriefs[0]?.name || "",
                     },
                     { name: "page", type: "STRING", value: document.title },
                 ];
 
                 window.gpnAnalytics &&
                     window.gpnAnalytics.sendEvent(3, {
-                        componentId: "back_to_top",
+                        componentid: "back_to_top",
                         constaeventtype: "undefined",
                         component: "OTHER",
                         customparams,
