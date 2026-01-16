@@ -1,0 +1,113 @@
+<style>
+    .error-container {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .error-actions {
+        margin-top: 15px;
+        margin-bottom: 5px;
+    }
+
+    .error-actions .btn {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="error-container">
+        <h1 class="display-1">404</h1>
+        <h2 class="display-4">Страница не найдена</h2>
+        <div class="mb-4">
+            Некорректная ссылка - возможно данная страница была удалена,
+            <br />
+            перемещена или к ней ограничен просмотр
+        </div>
+        <div class="error-actions d-flex flex-wrap gap-2 justify-content-center">
+            <a href="javascript:history.back()" class="btn btn-primary btn-lg"> Вернуться назад </a>
+
+            <a href="#" onclick="sendEmail()" class="btn btn-outline-secondary btn-lg">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-envelope me-2"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"
+                    />
+                </svg>
+                Написать в тех. поддержку
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function sendEmail() {
+        var curUrl = window.location.href;
+        var oldUrl = "";
+        if (document.referrer.length > 0) oldUrl = "со страницы ".concat(document.referrer);
+        else oldUrl = "напрямую ";
+        var arrBody = [
+            "Добрый день! Мной был осуществлен переход ",
+            encodeURIComponent(oldUrl),
+            " на страницу ",
+            encodeURIComponent(curUrl),
+            " Прошу проверить данную страницу и оказать консультацию",
+        ];
+        var body = "";
+        body = body.concat(arrBody).replaceAll(",", "");
+        var ahref = "mailto:helpdesk@gazprom-neft.ru?subject=Ошибка 404 на Портале ЕКП 2.0&body=";
+        ahref = ahref.concat(body);
+        window.location.href = ahref;
+    }
+
+    // === SPA ===
+    // utils
+     const sendSPA = (params) => {
+        if (window.gpnAnalytics) {
+            window.gpnAnalytics.sendEvent(3, params);
+        }
+    };
+
+    // api
+    const getCurrentUser = async () => {
+        const res = await fetch("/o/headless-admin-user/v1.0/my-user-account", {
+            headers: {
+                "X-CSRF-Token": Liferay.authToken,
+            },
+        });
+        return await res.json();
+    };
+
+    //Появилась системная ошибка
+    const onLoad = async () => {
+        try {
+            const currentUser = await getCurrentUser();
+
+            const customparams = [
+                { as_user_id: true, value: currentUser?.name || "" },
+                { name: "user_id", type: "STRING", value: currentUser?.name || "" },
+                {
+                    name: "user_do",
+                    type: "STRING",
+                    value: currentUser?.organizationBriefs[0]?.name || "",
+                },
+                { name: "error_id", type: "STRING", value: "404" },
+                { name: "error_message", type: "STRING", value: "Страница не найдена" },
+            ];
+
+            sendSPA({
+                componentid: "system_error",
+                constaeventtype: "change",
+                component: "ALERT",
+                customparams,
+            });
+        } catch {}
+    };
+
+    window.addEventListener("load", onLoad);
+</script>

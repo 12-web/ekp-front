@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пагинация</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="pagination" role="navigation" aria-label="Пагинация">
+        <button 
+            class="pagination__button pagination__button--prev" 
+            type="button"
+            aria-label="Предыдущая страница"
+            disabled
+        >
+            <svg class="pagination__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+        
+        <ul class="pagination__list">
+            <li class="pagination__item pagination__item--active">
+                <button 
+                    type="button" 
+                    class="pagination__link" 
+                    data-page="1"
+                    aria-label="Страница 1"
+                    aria-current="page"
+                >
+                    1
+                </button>
+            </li>
+            <li class="pagination__item">
+                <button 
+                    type="button" 
+                    class="pagination__link" 
+                    data-page="2"
+                    aria-label="Страница 2"
+                >
+                    2
+                </button>
+            </li>
+            <li class="pagination__item">
+                <button 
+                    type="button" 
+                    class="pagination__link" 
+                    data-page="3"
+                    aria-label="Страница 3"
+                >
+                    3
+                </button>
+            </li>
+            <li class="pagination__item pagination__item--dots">
+                <span class="pagination__dots">...</span>
+            </li>
+            <li class="pagination__item">
+                <button 
+                    type="button" 
+                    class="pagination__link" 
+                    data-page="10"
+                    aria-label="Страница 10"
+                >
+                    10
+                </button>
+            </li>
+        </ul>
+        
+        <button 
+            class="pagination__button pagination__button--next" 
+            type="button"
+            aria-label="Следующая страница"
+        >
+            <svg class="pagination__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </nav>
+
+    <script src="index.js"></script>
+    <script>
+        window.EVENT_CONFIG = {
+            useMock: true, // Установите false для использования реального API
+            baseURL: "./o/events",
+            siteId: "20121",
+            companyId: "20097",
+            currentUserId: "38201"
+        }
+    </script>
+</body>
+</html>

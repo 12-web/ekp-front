@@ -95,7 +95,7 @@
                 {
                     name: "user_do",
                     type: "STRING",
-                    value: currentUser?.organizationBriefs?.name || "",
+                    value: currentUser?.organizationBriefs[0]?.name || "",
                 },
                 { name: "error_id", type: "STRING", value: "404" },
                 { name: "error_message", type: "STRING", value: "Страница не найдена" },

@@ -208,16 +208,16 @@
         const currentUser = await getCurrentUser();
 
         sendSPA({
-                componentId: "news_tag_pressed",
+                componentid: "news_tag_pressed",
                 constaeventtype: "undefined",
                 component: "OTHER",
                 customparams: [
                     {as_user_id: true, value: currentUser?.name || ""},
                     {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                    {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                     {name: 'tag', type: 'STRING', value: tag.textContent},
                     {name: 'page', type: 'STRING', value: document.title},
-                    {name: 'location_tag', type: 'STRING', "категория новостей"},
+                    {name: 'location_tag', type: 'STRING', value: "категория новостей"},
                     {name: 'action_tag', type: 'STRING', value: "выбрал тег"},
                 ],
             });

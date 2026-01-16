@@ -79,12 +79,12 @@
               const customparams = [
                   {as_user_id: true, value: currentUser?.name || ""},
                   {name: 'user_id', type: 'STRING', value: currentUser?.name || ""},
-                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs?.name || ""},
+                  {name: 'user_do', type: 'STRING', value: currentUser?.organizationBriefs[0]?.name || ""},
                   {name: 'new_location_main', type: 'STRING', value: "новости по теме"},
               ];
 
               sendSPA({
-                  componentId: "news_pressed",
+                  componentid: "news_pressed",
                   constaeventtype: "undefined",
                   component: "OTHER",
                   customparams,
